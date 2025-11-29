@@ -80,13 +80,13 @@ export default function ContactForm() {
   };
 
   return (
-    <section id="contact" className="relative before:absolute before:inset-0 before:-z-20 before:bg-gray-100">
+    <section id="contact" className="relative bg-gray-50 py-16 transition-all duration-700 md:py-24">
       <div className="mx-auto w-full px-4 sm:px-6">
         <div className="py-12 md:py-20">
           <div className="mx-auto max-w-2xl">
             <div className="mb-8 text-center">
               <h2
-                className="mb-4 text-3xl font-bold md:text-4xl"
+                className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl"
                 data-aos="zoom-y-out"
               >
                 Request a Search or Get in Touch
@@ -102,7 +102,7 @@ export default function ContactForm() {
             </div>
             <form
               onSubmit={handleSubmit}
-              className="space-y-6 rounded-xl bg-white p-6 shadow-sm md:p-8"
+              className="space-y-6 rounded-xl bg-white p-6 shadow-lg md:p-8"
               data-aos="zoom-y-out"
               data-aos-delay={300}
             >
