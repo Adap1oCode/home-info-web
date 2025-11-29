@@ -1,7 +1,7 @@
 export default function AboutSection() {
   return (
     <section id="about">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="mx-auto w-full px-4 sm:px-6">
         <div className="pb-12 md:pb-20">
           <div className="mx-auto max-w-3xl text-center">
             <h2

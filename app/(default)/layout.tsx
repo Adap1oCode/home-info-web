@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -13,23 +13,28 @@ export default function DefaultLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    setMounted(true);
     // Initialize AOS after component has mounted to avoid hydration issues
-    const timer = setTimeout(() => {
+    if (typeof window !== "undefined") {
       AOS.init({
         once: true,
         disable: "phone",
         duration: 700,
         easing: "ease-out-cubic",
+        startEvent: "DOMContentLoaded",
+        useClassNames: false,
+        disableMutationObserver: false,
       });
-      // Refresh AOS to ensure all elements are processed
-      AOS.refresh();
-    }, 100);
+      
+      // Refresh AOS after a short delay to ensure all elements are processed
+      const timer = setTimeout(() => {
+        AOS.refresh();
+      }, 100);
 
-    return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
   }, []);
 
   return (

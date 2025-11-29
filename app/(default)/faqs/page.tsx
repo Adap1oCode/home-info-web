@@ -35,7 +35,7 @@ const faqs = [
 
 export default function FAQs() {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-20 sm:px-6">
+    <div className="mx-auto w-full px-4 py-20 sm:px-6">
       <h1 className="mb-12 text-center text-4xl font-bold">Frequently Asked Questions</h1>
       
       <div className="space-y-4">
