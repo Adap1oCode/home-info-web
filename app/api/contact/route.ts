@@ -14,6 +14,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Validate SMTP configuration
+    if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
+      console.error("SMTP configuration missing:", {
+        hasUser: !!process.env.SMTP_USER,
+        hasPassword: !!process.env.SMTP_PASSWORD,
+      });
+      return NextResponse.json(
+        { error: "Email service is not configured. Please contact the administrator." },
+        { status: 500 }
+      );
+    }
+
     // Create transporter
     // Note: You'll need to configure SMTP settings in environment variables
     const transporter = nodemailer.createTransport({
@@ -21,8 +33,8 @@ export async function POST(request: NextRequest) {
       port: parseInt(process.env.SMTP_PORT || "587"),
       secure: false, // true for 465, false for other ports
       auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASSWORD,
+        user: process.env.SMTP_USER.trim(),
+        pass: process.env.SMTP_PASSWORD.trim().replace(/\s+/g, " "), // Remove extra whitespace and normalize
       },
     });
 
@@ -174,10 +186,19 @@ Property Search Solutions Ltd | ICO Registered
       { message: "Email sent successfully" },
       { status: 200 }
     );
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error sending email:", error);
+    
+    // Provide more detailed error information in development
+    const errorMessage = process.env.NODE_ENV === "development" 
+      ? error.message || "Failed to send email. Please check your SMTP configuration."
+      : "Failed to send email. Please try again later.";
+    
     return NextResponse.json(
-      { error: "Failed to send email. Please try again later." },
+      { 
+        error: errorMessage,
+        details: process.env.NODE_ENV === "development" ? error.toString() : undefined
+      },
       { status: 500 }
     );
   }
