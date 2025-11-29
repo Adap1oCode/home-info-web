@@ -114,28 +114,6 @@ export default function Footer({ border = false }: { border?: boolean }) {
               </li>
             </ul>
           </div>
-
-          {/* 5th block */}
-          <div className="space-y-2 sm:col-span-6 md:col-span-3 lg:col-span-2">
-            <h3 className="text-sm font-medium text-white">Social</h3>
-            <ul className="flex gap-1">
-              <li>
-                <Link
-                  className="flex items-center justify-center text-blue-400 transition hover:text-blue-300"
-                  href="#0"
-                  aria-label="LinkedIn"
-                >
-                  <svg
-                    className="h-8 w-8 fill-current"
-                    viewBox="0 0 32 32"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M23.3 8H8.7c-.4 0-.7.3-.7.7v14.7c0 .3.3.7.7.7h14.7c.4 0 .7-.3.7-.7V8.7c-.1-.4-.4-.7-.8-.7zM12.7 21.6h-2.3V14h2.3v7.6zm-1.1-8.7c-.7 0-1.3-.6-1.3-1.3s.6-1.3 1.3-1.3 1.3.6 1.3 1.3-.5 1.3-1.3 1.3zm8.8 8.7h-2.3v-3.7c0-.9 0-2-1.2-2s-1.4.9-1.4 1.9v3.8h-2.3V14h2.2v1c.3-.6 1.1-1.2 2.2-1.2 2.4 0 2.8 1.6 2.8 3.6v4.2z"></path>
-                  </svg>
-                </Link>
-              </li>
-            </ul>
-          </div>
         </div>
       </div>
 
