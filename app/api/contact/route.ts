@@ -173,7 +173,7 @@ Property Search Solutions Ltd | ICO Registered
     // Send email
     const mailOptions = {
       from: process.env.SMTP_FROM || process.env.SMTP_USER,
-      to: "mohammedmohanad485@gmail.com",
+      to: process.env.SMTP_TO,
       replyTo: email,
       subject: `New Property Search Request - ${searchTypeLabels[searchType] || searchType} from ${firmName}`,
       text: textContent,
