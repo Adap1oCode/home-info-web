@@ -86,7 +86,7 @@ export default function ServicesSection() {
       </div>
       
       <div className="mx-auto w-full px-4 sm:px-6">
-        <div className="py-12 md:py-20">
+        <div>
           {/* Section header */}
           <div className="pb-16 text-center md:pb-20">
             <h2

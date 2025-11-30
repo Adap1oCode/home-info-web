@@ -32,7 +32,7 @@ export default function FAQsSection() {
   return (
     <section id="faqs" className="relative bg-[#FDFDFF] py-16 transition-all duration-700 md:py-24">
       <div className="mx-auto w-full px-4 sm:px-6">
-        <div className="py-12 md:py-20">
+        <div>
           <h2 className="mb-12 text-center text-4xl font-bold text-[#2D2D2D]">
             Frequently Asked Questions
           </h2>

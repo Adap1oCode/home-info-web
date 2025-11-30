@@ -9,10 +9,17 @@ export default function TrustSignals() {
   ];
 
   return (
-    <section className="relative bg-[#2D2D2D] py-16 text-white transition-all duration-700 md:py-24">
+    <section className="relative bg-[#2D2D2D] py-16 text-white transition-all duration-700 md:py-24 overflow-hidden">
+      {/* Decorative blue elements */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-[#4C96DE]/20 blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-[#4C96DE]/15 blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4C96DE]/10 blur-3xl"></div>
+        <div className="absolute top-1/4 left-1/4 h-80 w-80 rounded-full bg-[#4C96DE]/10 blur-3xl"></div>
+      </div>
+      
       <div className="mx-auto w-full px-4 sm:px-6">
-        <div className="py-12 md:py-20">
-          <div className="text-center">
+        <div className="text-center">
             <h2
               className="mb-8 text-3xl font-bold text-white md:text-4xl"
               data-aos="zoom-y-out"
@@ -23,7 +30,7 @@ export default function TrustSignals() {
               {signals.map((signal, index) => (
                 <div
                   key={index}
-                  className="group flex items-start space-x-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 p-4 text-left transition-all duration-300 hover:bg-white/15 hover:shadow-lg hover:border-[#4C96DE]/50"
+                  className="group flex items-start space-x-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 p-4 text-left transition-all duration-300 hover:bg-white/15 hover:shadow-lg hover:shadow-[#4C96DE]/20 hover:border-[#4C96DE]/50"
                   data-aos="zoom-y-out"
                   data-aos-delay={index * 100}
                 >
@@ -42,7 +49,6 @@ export default function TrustSignals() {
                 </div>
               ))}
             </div>
-          </div>
         </div>
       </div>
     </section>

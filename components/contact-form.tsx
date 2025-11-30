@@ -89,8 +89,7 @@ export default function ContactForm() {
       </div>
       
       <div className="mx-auto w-full px-4 sm:px-6">
-        <div className="py-12 md:py-20">
-          <div className="mx-auto">
+        <div className="mx-auto">
             <div className="mb-8 text-center">
               <h2
                 className="mb-4 text-3xl font-bold text-white md:text-4xl"
@@ -290,7 +289,6 @@ export default function ContactForm() {
                 .
               </p>
             </form>
-          </div>
         </div>
       </div>
     </section>

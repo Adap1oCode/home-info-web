@@ -13,7 +13,7 @@ export default function HeroHome() {
       
       <div className="relative mx-auto w-full px-4 sm:px-6">
         {/* Hero content */}
-        <div className="pb-12 pt-20 md:pb-16 md:pt-24 lg:pb-20 lg:pt-28">
+        <div className="py-16 md:py-24">
           <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center mx-auto">
             {/* Left Column - Content */}
             <div className="text-center lg:text-left" data-aos="fade-right">

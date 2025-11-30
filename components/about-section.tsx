@@ -8,8 +8,7 @@ export default function AboutSection() {
       </div>
       
       <div className="mx-auto w-full px-4 sm:px-6">
-        <div className="pb-12 md:pb-20">
-          <div>
+        <div>
             {/* Badge */}
             <div className="mb-6 flex justify-center" data-aos="zoom-y-out">
               <span className="inline-flex items-center rounded-full bg-[#4C96DE]/10 px-4 py-2 text-sm font-medium text-[#4C96DE] ring-1 ring-[#4C96DE]/20">
@@ -75,7 +74,6 @@ export default function AboutSection() {
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </div>
     </section>
