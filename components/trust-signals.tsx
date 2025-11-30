@@ -9,13 +9,12 @@ export default function TrustSignals() {
   ];
 
   return (
-    <section className="relative bg-[#2D2D2D] py-16 text-white transition-all duration-700 md:py-24 overflow-hidden">
+    <section className="relative bg-gradient-to-br from-[#1a2332] via-[#2d3a4f] to-[#1e2a3a] py-16 text-white transition-all duration-700 md:py-24 overflow-hidden">
       {/* Decorative blue elements */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-[#4C96DE]/20 blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-[#4C96DE]/15 blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4C96DE]/10 blur-3xl"></div>
-        <div className="absolute top-1/4 left-1/4 h-80 w-80 rounded-full bg-[#4C96DE]/10 blur-3xl"></div>
+        <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-br from-[#1a2332]/80 to-[#2d3a4f]/60"></div>
+        <div className="absolute bottom-0 right-0 h-[600px] w-[600px] rounded-full bg-[#4C96DE]/20 blur-[140px]"></div>
+        <div className="absolute top-1/2 left-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4C96DE]/15 blur-[130px]"></div>
       </div>
       
       <div className="mx-auto w-full px-4 sm:px-6">

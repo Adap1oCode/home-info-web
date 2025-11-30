@@ -30,7 +30,12 @@ const faqs = [
 
 export default function FAQsSection() {
   return (
-    <section id="faqs" className="relative bg-[#FDFDFF] py-16 transition-all duration-700 md:py-24">
+    <section id="faqs" className="relative overflow-hidden bg-gradient-to-br from-[#FDFDFF] via-white to-[#4C96DE]/5 py-16 transition-all duration-700 md:py-24">
+      {/* Decorative elements */}
+      <div className="absolute right-0 top-0 h-full w-1/3 bg-gradient-to-l from-[#4C96DE]/10 to-transparent" />
+      <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-[#4C96DE]/10 blur-3xl" />
+      <div className="absolute top-1/4 right-1/4 h-96 w-96 rounded-full bg-[#4C96DE]/10 blur-3xl" />
+      
       <div className="mx-auto w-full px-4 sm:px-6">
         <div>
           <h2 className="mb-12 text-center text-4xl font-bold text-[#2D2D2D]">
