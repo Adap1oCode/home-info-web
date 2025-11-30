@@ -16,15 +16,15 @@ export default function Header() {
             <li>
               <Link
                 href="/#contact"
-                className="btn-sm bg-white text-gray-800 shadow-sm hover:bg-gray-50"
+                className="btn-sm bg-white text-[#2D2D2D] shadow-sm hover:bg-gray-50"
               >
                 Contact
               </Link>
             </li>
             <li>
               <Link
-                href="/faqs"
-                className="btn-sm bg-gray-800 text-gray-200 shadow-sm hover:bg-gray-900"
+                href="/#faqs"
+                className="btn-sm bg-[#4C96DE] text-white shadow-sm hover:bg-[#4C96DE]/90"
               >
                 FAQs
               </Link>

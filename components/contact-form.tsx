@@ -80,19 +80,26 @@ export default function ContactForm() {
   };
 
   return (
-    <section id="contact" className="relative bg-gray-50 py-16 transition-all duration-700 md:py-24">
+    <section id="contact" className="relative bg-[#2D2D2D] py-16 transition-all duration-700 md:py-24 overflow-hidden">
+      {/* Decorative blue elements */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-[#4C96DE]/20 blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-[#4C96DE]/15 blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4C96DE]/10 blur-3xl"></div>
+      </div>
+      
       <div className="mx-auto w-full px-4 sm:px-6">
         <div className="py-12 md:py-20">
-          <div className="mx-auto max-w-2xl">
+          <div className="mx-auto">
             <div className="mb-8 text-center">
               <h2
-                className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl"
+                className="mb-4 text-3xl font-bold text-white md:text-4xl"
                 data-aos="zoom-y-out"
               >
                 Request a Search or Get in Touch
               </h2>
               <p
-                className="text-lg text-gray-700"
+                className="text-lg text-gray-300"
                 data-aos="zoom-y-out"
                 data-aos-delay={150}
               >
@@ -102,15 +109,17 @@ export default function ContactForm() {
             </div>
             <form
               onSubmit={handleSubmit}
-              className="space-y-6 rounded-xl bg-white p-6 shadow-lg md:p-8"
+              className="space-y-6 rounded-xl bg-white/10 backdrop-blur-sm border border-[#4C96DE]/30 p-6 shadow-lg shadow-[#4C96DE]/10 md:p-8 relative"
               data-aos="zoom-y-out"
               data-aos-delay={300}
             >
+              {/* Blue accent glow */}
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#4C96DE]/20 to-transparent rounded-xl blur opacity-50 -z-10"></div>
               <div className="grid gap-6 sm:grid-cols-2">
                 <div>
                   <label
                     htmlFor="name"
-                    className="mb-2 block text-sm font-medium text-gray-700"
+                    className="mb-2 block text-sm font-medium text-white"
                   >
                     Name *
                   </label>
@@ -121,13 +130,13 @@ export default function ContactForm() {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                    className="w-full rounded-lg border border-white/20 bg-white/10 text-white placeholder:text-gray-400 px-4 py-2 focus:border-[#4C96DE] focus:outline-none focus:ring-2 focus:ring-[#4C96DE]/30 focus:bg-white/15 transition-all"
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="firmName"
-                    className="mb-2 block text-sm font-medium text-gray-700"
+                    className="mb-2 block text-sm font-medium text-white"
                   >
                     Firm Name *
                   </label>
@@ -138,7 +147,7 @@ export default function ContactForm() {
                     required
                     value={formData.firmName}
                     onChange={handleChange}
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                    className="w-full rounded-lg border border-white/20 bg-white/10 text-white placeholder:text-gray-400 px-4 py-2 focus:border-[#4C96DE] focus:outline-none focus:ring-2 focus:ring-[#4C96DE]/30 focus:bg-white/15 transition-all"
                   />
                 </div>
               </div>
@@ -146,7 +155,7 @@ export default function ContactForm() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="mb-2 block text-sm font-medium text-gray-700"
+                    className="mb-2 block text-sm font-medium text-white"
                   >
                     Email *
                   </label>
@@ -157,13 +166,13 @@ export default function ContactForm() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                    className="w-full rounded-lg border border-white/20 bg-white/10 text-white placeholder:text-gray-400 px-4 py-2 focus:border-[#4C96DE] focus:outline-none focus:ring-2 focus:ring-[#4C96DE]/30 focus:bg-white/15 transition-all"
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="phone"
-                    className="mb-2 block text-sm font-medium text-gray-700"
+                    className="mb-2 block text-sm font-medium text-white"
                   >
                     Phone *
                   </label>
@@ -174,14 +183,14 @@ export default function ContactForm() {
                     required
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                    className="w-full rounded-lg border border-white/20 bg-white/10 text-white placeholder:text-gray-400 px-4 py-2 focus:border-[#4C96DE] focus:outline-none focus:ring-2 focus:ring-[#4C96DE]/30 focus:bg-white/15 transition-all"
                   />
                 </div>
               </div>
               <div>
                 <label
                   htmlFor="searchType"
-                  className="mb-2 block text-sm font-medium text-gray-700"
+                  className="mb-2 block text-sm font-medium text-white"
                 >
                   Search Type *
                 </label>
@@ -191,7 +200,7 @@ export default function ContactForm() {
                   required
                   value={formData.searchType}
                   onChange={handleChange}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                  className="w-full rounded-lg border border-white/20 bg-white/10 text-white px-4 py-2 focus:border-[#4C96DE] focus:outline-none focus:ring-2 focus:ring-[#4C96DE]/30 focus:bg-white/15 transition-all [&>option]:bg-[#2D2D2D] [&>option]:text-white"
                 >
                   <option value="">Select a search type</option>
                   <option value="local-authority">Local Authority</option>
@@ -204,7 +213,7 @@ export default function ContactForm() {
               <div>
                 <label
                   htmlFor="message"
-                  className="mb-2 block text-sm font-medium text-gray-700"
+                  className="mb-2 block text-sm font-medium text-white"
                 >
                   Message *
                 </label>
@@ -215,7 +224,7 @@ export default function ContactForm() {
                   rows={5}
                   value={formData.message}
                   onChange={handleChange}
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                  className="w-full rounded-lg border border-white/20 bg-white/10 text-white placeholder:text-gray-400 px-4 py-2 focus:border-[#4C96DE] focus:outline-none focus:ring-2 focus:ring-[#4C96DE]/30 focus:bg-white/15 transition-all"
                 />
               </div>
               {/* Status Messages */}
@@ -223,8 +232,8 @@ export default function ContactForm() {
                 <div
                   className={`rounded-lg p-4 ${
                     submitStatus.type === "success"
-                      ? "bg-green-50 text-green-800 border border-green-200"
-                      : "bg-red-50 text-red-800 border border-red-200"
+                      ? "bg-[#4C96DE]/20 text-white border border-[#4C96DE]/50"
+                      : "bg-red-500/20 text-white border border-red-500/50"
                   }`}
                 >
                   <p className="text-sm font-medium">{submitStatus.message}</p>
@@ -235,7 +244,7 @@ export default function ContactForm() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn group w-full bg-linear-to-t from-blue-600 to-blue-500 bg-[length:100%_100%] bg-[bottom] text-white shadow-sm hover:bg-[length:100%_150%] disabled:opacity-50 disabled:cursor-not-allowed sm:w-auto"
+                  className="btn group w-full bg-[#4C96DE] text-white shadow-lg shadow-[#4C96DE]/30 hover:bg-[#4C96DE]/90 hover:shadow-xl hover:shadow-[#4C96DE]/40 disabled:opacity-50 disabled:cursor-not-allowed sm:w-auto transition-all"
                 >
                   <span className="relative inline-flex items-center">
                     {isSubmitting ? (
@@ -265,7 +274,7 @@ export default function ContactForm() {
                     ) : (
                       <>
                         Send Request{" "}
-                        <span className="ml-1 tracking-normal text-blue-300 transition-transform group-hover:translate-x-0.5">
+                        <span className="ml-1 tracking-normal text-white/80 transition-transform group-hover:translate-x-0.5">
                           -&gt;
                         </span>
                       </>
@@ -273,9 +282,9 @@ export default function ContactForm() {
                   </span>
                 </button>
               </div>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-300">
                 Your information is handled securely and will never be shared. View our{" "}
-                <a href="/privacy-policy" className="text-blue-600 hover:underline">
+                <a href="/privacy-policy" className="text-[#4C96DE] hover:text-[#4C96DE]/80 hover:underline transition-colors">
                   Privacy Policy
                 </a>
                 .

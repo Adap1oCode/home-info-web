@@ -5,7 +5,7 @@ export default function ServicesSection() {
       description: "Planning, building control, highways, and enforcement notices",
       icon: (
         <svg
-          className="fill-blue-600"
+          className="fill-[#4C96DE]"
           xmlns="http://www.w3.org/2000/svg"
           width={16}
           height={16}
@@ -19,7 +19,7 @@ export default function ServicesSection() {
       description: "Flood risk, contaminated land, ground stability, and radon data",
       icon: (
         <svg
-          className="fill-blue-600"
+          className="fill-[#4C96DE]"
           xmlns="http://www.w3.org/2000/svg"
           width={16}
           height={16}
@@ -33,7 +33,7 @@ export default function ServicesSection() {
       description: "Sewer connections, water supply, and billing arrangements",
       icon: (
         <svg
-          className="fill-blue-600"
+          className="fill-[#4C96DE]"
           xmlns="http://www.w3.org/2000/svg"
           width={16}
           height={16}
@@ -51,7 +51,7 @@ export default function ServicesSection() {
       description: "Ownership, boundaries, easements, and restrictive covenants",
       icon: (
         <svg
-          className="fill-blue-600"
+          className="fill-[#4C96DE]"
           xmlns="http://www.w3.org/2000/svg"
           width={16}
           height={16}
@@ -65,7 +65,7 @@ export default function ServicesSection() {
       description: "Customised bundles to meet your firm's specific requirements",
       icon: (
         <svg
-          className="fill-blue-600"
+          className="fill-[#4C96DE]"
           xmlns="http://www.w3.org/2000/svg"
           width={16}
           height={16}
@@ -88,7 +88,7 @@ export default function ServicesSection() {
       <div className="mx-auto w-full px-4 sm:px-6">
         <div className="py-12 md:py-20">
           {/* Section header */}
-          <div className="mx-auto max-w-3xl pb-16 text-center md:pb-20">
+          <div className="pb-16 text-center md:pb-20">
             <h2
               className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl"
               data-aos="zoom-y-out"
@@ -108,11 +108,11 @@ export default function ServicesSection() {
             {services.map((service, index) => (
               <article
                 key={index}
-                className="group relative rounded-xl bg-white p-6 shadow-md border border-gray-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-blue-400"
+                className="group relative rounded-xl bg-white p-6 shadow-md border border-gray-200 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-[#4C96DE]"
                 data-aos="zoom-y-out"
                 data-aos-delay={index * 100}
               >
-                <h3 className="mb-2 flex items-center space-x-2 font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+                <h3 className="mb-2 flex items-center space-x-2 font-medium text-gray-900 group-hover:text-[#4C96DE] transition-colors duration-300">
                   <span className="transition-transform duration-300 group-hover:scale-110">{service.icon}</span>
                   <span>{service.title}</span>
                 </h3>

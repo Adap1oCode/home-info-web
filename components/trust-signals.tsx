@@ -9,10 +9,10 @@ export default function TrustSignals() {
   ];
 
   return (
-    <section className="relative bg-gradient-to-b from-gray-700 via-gray-800 to-gray-700 py-16 text-white transition-all duration-700 md:py-24">
+    <section className="relative bg-[#2D2D2D] py-16 text-white transition-all duration-700 md:py-24">
       <div className="mx-auto w-full px-4 sm:px-6">
         <div className="py-12 md:py-20">
-          <div className="mx-auto max-w-3xl text-center">
+          <div className="text-center">
             <h2
               className="mb-8 text-3xl font-bold text-white md:text-4xl"
               data-aos="zoom-y-out"
@@ -23,12 +23,12 @@ export default function TrustSignals() {
               {signals.map((signal, index) => (
                 <div
                   key={index}
-                  className="group flex items-start space-x-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 p-4 text-left transition-all duration-300 hover:bg-white/15 hover:shadow-lg hover:border-blue-400/50"
+                  className="group flex items-start space-x-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 p-4 text-left transition-all duration-300 hover:bg-white/15 hover:shadow-lg hover:border-[#4C96DE]/50"
                   data-aos="zoom-y-out"
                   data-aos-delay={index * 100}
                 >
                   <svg
-                    className="mt-0.5 h-5 w-5 flex-shrink-0 fill-blue-400 transition-transform duration-300 group-hover:scale-110"
+                    className="mt-0.5 h-5 w-5 flex-shrink-0 fill-[#4C96DE] transition-transform duration-300 group-hover:scale-110"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                   >
