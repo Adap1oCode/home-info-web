@@ -19,7 +19,7 @@ export default function HeroHome() {
             <div className="text-center lg:text-left" data-aos="fade-right">
               {/* Badge */}
               <div 
-                className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#4C96DE]/10 px-3 py-1.5 text-xs font-semibold text-[#4C96DE] shadow-sm"
+                className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#4C96DE]/10 px-4 py-2 text-sm font-semibold text-[#4C96DE] shadow-sm"
                 data-aos="fade-up"
                 data-aos-delay={100}
               >
@@ -93,7 +93,7 @@ export default function HeroHome() {
 
             {/* Right Column - Image */}
             <div 
-              className="relative order-first lg:order-last"
+              className="relative order-first lg:order-last lg:pt-8"
               data-aos="fade-left"
               data-aos-delay={300}
             >
