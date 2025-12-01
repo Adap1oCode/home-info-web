@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Property Search Solutions - Specialist Property Searches for Legal Professionals",
+  title: "Home - Home Information Searches Ltd -",
   description: "Fast, accurate, and fully compliant property searches delivered nationwide—trusted by conveyancers and solicitors across England and Wales.",
 };
 

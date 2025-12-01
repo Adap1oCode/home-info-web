@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Privacy Policy - Property Search Solutions",
+  title: "Privacy Policy - Home Information Searches Ltd -",
   description: "Privacy Policy for Property Search Solutions Ltd",
 };
 

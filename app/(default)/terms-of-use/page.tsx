@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Terms of Use - Property Search Solutions",
+  title: "Terms of Use - Home Information Searches Ltd -",
   description: "Terms of Use for Property Search Solutions Ltd",
 };
 

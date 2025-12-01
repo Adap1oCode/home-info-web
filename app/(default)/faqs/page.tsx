@@ -1,7 +1,7 @@
 import Accordion from "@/components/accordion";
 
 export const metadata = {
-  title: "FAQs - Property Search Solutions",
+  title: "FAQs - Home Information Searches Ltd -",
   description: "Frequently Asked Questions about Property Search Solutions",
 };
 
