@@ -10,7 +10,10 @@ const inter = Inter({
 
 export const metadata = {
   title: "Property Search Solutions - Specialist Property Searches for Legal Professionals",
-  description: "Fast, accurate, and fully compliant property searches delivered nationwide—trusted by conveyancers and solicitors across England and Wales.",
+  description: "Fast, accurate, and fully compliant property searches delivered nationwide—trusted by conveyancers and solicitors across England and Wales",
+  icons: {
+    icon: "/images/title.png",
+  },
 };
 
 export const viewport = {

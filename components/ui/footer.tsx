@@ -15,10 +15,9 @@ export default function Footer({ border = false }: { border?: boolean }) {
               <Logo size="large" />
             </div>
             <div className="space-y-1 text-sm text-[#2D2D2D]/80">
-              <div className="font-medium text-[#2D2D2D]">Property Search Solutions Ltd</div>
-              <div>Email: <a href="mailto:info@propertysearchsolutions.co.uk" className="text-[#4C96DE] hover:text-[#4C96DE]/80 hover:underline">info@propertysearchsolutions.co.uk</a></div>
-              <div>Phone: <a href="tel:01234567890" className="text-[#4C96DE] hover:text-[#4C96DE]/80 hover:underline">01234 567890</a></div>
-              <div className="mt-2 text-[#2D2D2D]/60">Registered in England & Wales | ICO Registration No. [Your Number]</div>
+              <div className="font-medium text-[#2D2D2D]">Home Information Searches (HIS) Ltd</div>
+              <div>Email: <a href="mailto:info@propertysearchsolutions.co.uk" className="text-[#4C96DE] hover:text-[#4C96DE]/80 hover:underline">info@homeinformationsearches.co.uk</a></div>
+              <div>Phone: <a href="tel:01234567890" className="text-[#4C96DE] hover:text-[#4C96DE]/80 hover:underline">07702 316 899</a></div>
             </div>
           </div>
 
