@@ -11,7 +11,7 @@ export default function HeroHome() {
       <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-[#4C96DE]/10 blur-3xl" />
       <div className="absolute top-1/4 right-1/4 h-96 w-96 rounded-full bg-[#4C96DE]/10 blur-3xl" />
       
-      <div className="relative mx-auto w-full px-4 sm:px-6">
+      <div className="relative mx-auto max-w-[1440px] w-full px-4 sm:px-6">
         {/* Hero content */}
         <div className="py-16 md:py-24">
           <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center mx-auto">
@@ -108,7 +108,7 @@ export default function HeroHome() {
                   <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#4C96DE]/10 to-[#4C96DE]/5 shadow-2xl shadow-[#4C96DE]/20">
                     <div className="aspect-[4/3] relative">
                       <Image
-                        src="/images/1764420868.png"
+                        src="/images/61cfebab-5753-4e74-89b8-7fd6f0990ed2.png"
                         alt="Specialist Property Searches for Legal Professionals"
                         fill
                         className="object-cover"

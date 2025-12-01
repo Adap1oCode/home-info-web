@@ -77,15 +77,13 @@ export default function ServicesSection() {
   ];
 
   return (
-    <section id="services" className="relative overflow-hidden bg-gradient-to-b from-gray-300 via-gray-400 to-gray-300 py-16 transition-all duration-700 md:py-24">
-      {/* Blue accent elements */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-blue-400/20 blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-blue-300/20 blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-3xl"></div>
-      </div>
+    <section id="services" className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-blue-50/30 to-[#4C96DE]/15 py-16 transition-all duration-700 md:py-24">
+      {/* Decorative elements */}
+      <div className="absolute right-0 top-0 h-full w-1/3 bg-gradient-to-l from-[#4C96DE]/20 to-transparent" />
+      <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-[#4C96DE]/20 blur-3xl" />
+      <div className="absolute top-1/4 right-1/4 h-96 w-96 rounded-full bg-[#4C96DE]/20 blur-3xl" />
       
-      <div className="mx-auto w-full px-4 sm:px-6">
+      <div className="mx-auto max-w-[1440px] w-full px-4 sm:px-6">
         <div>
           {/* Section header */}
           <div className="pb-16 text-center md:pb-20">

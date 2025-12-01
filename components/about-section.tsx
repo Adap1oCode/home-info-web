@@ -7,7 +7,7 @@ export default function AboutSection() {
         <div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-blue-200/20 blur-3xl"></div>
       </div>
       
-      <div className="mx-auto w-full px-4 sm:px-6">
+      <div className="mx-auto max-w-[1440px] w-full px-4 sm:px-6">
         <div>
             {/* Badge */}
             <div className="mb-6 flex justify-center" data-aos="zoom-y-out">
@@ -43,34 +43,34 @@ export default function AboutSection() {
               
               {/* Feature highlights */}
               <div className="grid gap-6 sm:grid-cols-3" data-aos="zoom-y-out" data-aos-delay={300}>
-                <div className="rounded-xl bg-white/80 p-6 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-md">
-                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-[#4C96DE]/10 text-[#4C96DE]">
-                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="rounded-xl bg-white/80 p-8 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-md">
+                  <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-lg bg-[#4C96DE]/10 text-[#4C96DE]">
+                    <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="mb-2 font-semibold text-gray-900">100% Accurate</h3>
-                  <p className="text-sm text-gray-600">Precise, verified property data</p>
+                  <h3 className="mb-3 text-lg font-semibold text-gray-900">100% Accurate</h3>
+                  <p className="text-base leading-relaxed text-gray-600">Precise, verified property data with comprehensive quality checks ensuring every report meets the highest standards of accuracy and reliability.</p>
                 </div>
                 
-                <div className="rounded-xl bg-white/80 p-6 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-md">
-                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-[#4C96DE]/10 text-[#4C96DE]">
-                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="rounded-xl bg-white/80 p-8 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-md">
+                  <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-lg bg-[#4C96DE]/10 text-[#4C96DE]">
+                    <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                   </div>
-                  <h3 className="mb-2 font-semibold text-gray-900">Fast Turnaround</h3>
-                  <p className="text-sm text-gray-600">Quick delivery, clear SLAs</p>
+                  <h3 className="mb-3 text-lg font-semibold text-gray-900">Fast Turnaround</h3>
+                  <p className="text-base leading-relaxed text-gray-600">Quick delivery with clear SLAs. Most searches completed within 3-5 working days, helping you meet tight conveyancing deadlines efficiently.</p>
                 </div>
                 
-                <div className="rounded-xl bg-white/80 p-6 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-md">
-                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-[#4C96DE]/10 text-[#4C96DE]">
-                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="rounded-xl bg-white/80 p-8 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-md">
+                  <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-lg bg-[#4C96DE]/10 text-[#4C96DE]">
+                    <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                   </div>
-                  <h3 className="mb-2 font-semibold text-gray-900">Fully Compliant</h3>
-                  <p className="text-sm text-gray-600">GDPR & regulatory compliant</p>
+                  <h3 className="mb-3 text-lg font-semibold text-gray-900">Fully Compliant</h3>
+                  <p className="text-base leading-relaxed text-gray-600">GDPR & regulatory compliant with ICO registration. Your data is handled securely and never shared with third parties, ensuring complete confidentiality.</p>
                 </div>
               </div>
             </div>

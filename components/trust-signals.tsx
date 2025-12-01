@@ -9,7 +9,7 @@ export default function TrustSignals() {
   ];
 
   return (
-    <section className="relative bg-gradient-to-br from-[#1a2332] via-[#2d3a4f] to-[#1e2a3a] py-16 text-white transition-all duration-700 md:py-24 overflow-hidden">
+    <section id="why-us" className="relative bg-gradient-to-br from-[#1a2332] via-[#2d3a4f] to-[#1e2a3a] py-16 text-white transition-all duration-700 md:py-24 overflow-hidden">
       {/* Decorative blue elements */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 left-0 h-full w-full bg-gradient-to-br from-[#1a2332]/80 to-[#2d3a4f]/60"></div>
@@ -17,7 +17,7 @@ export default function TrustSignals() {
         <div className="absolute top-1/2 left-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4C96DE]/15 blur-[130px]"></div>
       </div>
       
-      <div className="mx-auto w-full px-4 sm:px-6">
+      <div className="mx-auto max-w-[1440px] w-full px-4 sm:px-6">
         <div className="text-center">
             <h2
               className="mb-8 text-3xl font-bold text-white md:text-4xl"
@@ -29,7 +29,7 @@ export default function TrustSignals() {
               {signals.map((signal, index) => (
                 <div
                   key={index}
-                  className="group flex items-start space-x-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 p-4 text-left transition-all duration-300 hover:bg-white/15 hover:shadow-lg hover:shadow-[#4C96DE]/20 hover:border-[#4C96DE]/50"
+                  className="group flex items-start space-x-3 rounded-lg bg-white border border-gray-200 p-4 text-left transition-all duration-300 hover:shadow-lg hover:shadow-[#4C96DE]/20 hover:border-[#4C96DE]"
                   data-aos="zoom-y-out"
                   data-aos-delay={index * 100}
                 >
@@ -44,7 +44,7 @@ export default function TrustSignals() {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <span className="text-gray-200 group-hover:text-white transition-colors duration-300">{signal}</span>
+                  <span className="text-gray-900 group-hover:text-[#4C96DE] transition-colors duration-300">{signal}</span>
                 </div>
               ))}
             </div>

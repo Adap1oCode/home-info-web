@@ -36,7 +36,7 @@ export default function FAQsSection() {
       <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-[#4C96DE]/10 blur-3xl" />
       <div className="absolute top-1/4 right-1/4 h-96 w-96 rounded-full bg-[#4C96DE]/10 blur-3xl" />
       
-      <div className="mx-auto w-full px-4 sm:px-6">
+      <div className="mx-auto max-w-[1440px] w-full px-4 sm:px-6">
         <div>
           <h2 className="mb-12 text-center text-4xl font-bold text-[#2D2D2D]">
             Frequently Asked Questions

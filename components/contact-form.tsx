@@ -88,7 +88,7 @@ export default function ContactForm() {
         <div className="absolute top-1/2 left-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4C96DE]/15 blur-[130px]"></div>
       </div>
       
-      <div className="mx-auto w-full px-4 sm:px-6">
+      <div className="mx-auto max-w-[1440px] w-full px-4 sm:px-6">
         <div className="mx-auto">
             <div className="mb-8 text-center">
               <h2
@@ -108,17 +108,15 @@ export default function ContactForm() {
             </div>
             <form
               onSubmit={handleSubmit}
-              className="space-y-6 rounded-xl bg-white/10 backdrop-blur-sm border border-[#4C96DE]/30 p-6 shadow-lg shadow-[#4C96DE]/10 md:p-8 relative"
+              className="space-y-6 rounded-xl bg-white border border-gray-200 p-6 shadow-lg md:p-8 relative"
               data-aos="zoom-y-out"
               data-aos-delay={300}
             >
-              {/* Blue accent glow */}
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#4C96DE]/20 to-transparent rounded-xl blur opacity-50 -z-10"></div>
               <div className="grid gap-6 sm:grid-cols-2">
                 <div>
                   <label
                     htmlFor="name"
-                    className="mb-2 block text-sm font-medium text-white"
+                    className="mb-2 block text-sm font-medium text-gray-900"
                   >
                     Name *
                   </label>
@@ -129,13 +127,14 @@ export default function ContactForm() {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full rounded-lg border border-white/20 bg-white/10 text-white placeholder:text-gray-400 px-4 py-2 focus:border-[#4C96DE] focus:outline-none focus:ring-2 focus:ring-[#4C96DE]/30 focus:bg-white/15 transition-all"
+                    placeholder="Enter your full name"
+                    className="w-full rounded-lg border-2 border-gray-400 bg-white text-gray-900 placeholder:text-gray-500 px-4 py-3 shadow-sm focus:border-[#4C96DE] focus:outline-none focus:ring-2 focus:ring-[#4C96DE]/30 focus:shadow-md transition-all"
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="firmName"
-                    className="mb-2 block text-sm font-medium text-white"
+                    className="mb-2 block text-sm font-medium text-gray-900"
                   >
                     Firm Name *
                   </label>
@@ -146,7 +145,8 @@ export default function ContactForm() {
                     required
                     value={formData.firmName}
                     onChange={handleChange}
-                    className="w-full rounded-lg border border-white/20 bg-white/10 text-white placeholder:text-gray-400 px-4 py-2 focus:border-[#4C96DE] focus:outline-none focus:ring-2 focus:ring-[#4C96DE]/30 focus:bg-white/15 transition-all"
+                    placeholder="Enter your firm name"
+                    className="w-full rounded-lg border-2 border-gray-400 bg-white text-gray-900 placeholder:text-gray-500 px-4 py-3 shadow-sm focus:border-[#4C96DE] focus:outline-none focus:ring-2 focus:ring-[#4C96DE]/30 focus:shadow-md transition-all"
                   />
                 </div>
               </div>
@@ -154,7 +154,7 @@ export default function ContactForm() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="mb-2 block text-sm font-medium text-white"
+                    className="mb-2 block text-sm font-medium text-gray-900"
                   >
                     Email *
                   </label>
@@ -165,13 +165,14 @@ export default function ContactForm() {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full rounded-lg border border-white/20 bg-white/10 text-white placeholder:text-gray-400 px-4 py-2 focus:border-[#4C96DE] focus:outline-none focus:ring-2 focus:ring-[#4C96DE]/30 focus:bg-white/15 transition-all"
+                    placeholder="Enter your email address"
+                    className="w-full rounded-lg border-2 border-gray-400 bg-white text-gray-900 placeholder:text-gray-500 px-4 py-3 shadow-sm focus:border-[#4C96DE] focus:outline-none focus:ring-2 focus:ring-[#4C96DE]/30 focus:shadow-md transition-all"
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="phone"
-                    className="mb-2 block text-sm font-medium text-white"
+                    className="mb-2 block text-sm font-medium text-gray-900"
                   >
                     Phone *
                   </label>
@@ -182,14 +183,15 @@ export default function ContactForm() {
                     required
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full rounded-lg border border-white/20 bg-white/10 text-white placeholder:text-gray-400 px-4 py-2 focus:border-[#4C96DE] focus:outline-none focus:ring-2 focus:ring-[#4C96DE]/30 focus:bg-white/15 transition-all"
+                    placeholder="Enter your phone number"
+                    className="w-full rounded-lg border-2 border-gray-400 bg-white text-gray-900 placeholder:text-gray-500 px-4 py-3 shadow-sm focus:border-[#4C96DE] focus:outline-none focus:ring-2 focus:ring-[#4C96DE]/30 focus:shadow-md transition-all"
                   />
                 </div>
               </div>
               <div>
                 <label
                   htmlFor="searchType"
-                  className="mb-2 block text-sm font-medium text-white"
+                  className="mb-2 block text-sm font-medium text-gray-900"
                 >
                   Search Type *
                 </label>
@@ -199,7 +201,7 @@ export default function ContactForm() {
                   required
                   value={formData.searchType}
                   onChange={handleChange}
-                  className="w-full rounded-lg border border-white/20 bg-white/10 text-white px-4 py-2 focus:border-[#4C96DE] focus:outline-none focus:ring-2 focus:ring-[#4C96DE]/30 focus:bg-white/15 transition-all [&>option]:bg-[#2D2D2D] [&>option]:text-white"
+                  className="w-full rounded-lg border-2 border-gray-400 bg-white text-gray-900 px-4 py-3 shadow-sm focus:border-[#4C96DE] focus:outline-none focus:ring-2 focus:ring-[#4C96DE]/30 focus:shadow-md transition-all [&>option]:bg-white [&>option]:text-gray-900"
                 >
                   <option value="">Select a search type</option>
                   <option value="local-authority">Local Authority</option>
@@ -212,7 +214,7 @@ export default function ContactForm() {
               <div>
                 <label
                   htmlFor="message"
-                  className="mb-2 block text-sm font-medium text-white"
+                  className="mb-2 block text-sm font-medium text-gray-900"
                 >
                   Message *
                 </label>
@@ -223,7 +225,8 @@ export default function ContactForm() {
                   rows={5}
                   value={formData.message}
                   onChange={handleChange}
-                  className="w-full rounded-lg border border-white/20 bg-white/10 text-white placeholder:text-gray-400 px-4 py-2 focus:border-[#4C96DE] focus:outline-none focus:ring-2 focus:ring-[#4C96DE]/30 focus:bg-white/15 transition-all"
+                  placeholder="Enter your message here"
+                  className="w-full rounded-lg border-2 border-gray-400 bg-white text-gray-900 placeholder:text-gray-500 px-4 py-3 shadow-sm focus:border-[#4C96DE] focus:outline-none focus:ring-2 focus:ring-[#4C96DE]/30 focus:shadow-md transition-all"
                 />
               </div>
               {/* Status Messages */}
@@ -281,7 +284,7 @@ export default function ContactForm() {
                   </span>
                 </button>
               </div>
-              <p className="text-sm text-gray-300">
+              <p className="text-sm text-gray-600">
                 Your information is handled securely and will never be shared. View our{" "}
                 <a href="/privacy-policy" className="text-[#4C96DE] hover:text-[#4C96DE]/80 hover:underline transition-colors">
                   Privacy Policy

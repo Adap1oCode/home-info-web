@@ -4,7 +4,7 @@ import Logo from "./logo";
 export default function Footer({ border = false }: { border?: boolean }) {
   return (
     <footer className="bg-[#FDFDFF] text-[#2D2D2D]">
-      <div className="mx-auto w-full px-4 sm:px-6">
+      <div className="mx-auto max-w-[1440px] w-full px-4 sm:px-6">
         {/* Top area: Blocks */}
         <div
           className={`grid gap-10 py-8 sm:grid-cols-12 md:py-12 ${border ? "border-t border-gray-200" : ""}`}
