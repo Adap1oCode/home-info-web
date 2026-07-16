@@ -45,9 +45,21 @@ export default function Header() {
             <li>
               <Link
                 href="/#faqs"
-                className="btn-sm bg-[#4C96DE] text-white shadow-sm hover:bg-[#4C96DE]/90"
+                className="btn-sm bg-white text-[#2D2D2D] shadow-sm hover:bg-gray-50"
               >
                 FAQs
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/live-turnaround-tracker"
+                className="btn-sm inline-flex items-center gap-2 bg-[#4C96DE] text-white shadow-sm hover:bg-[#4C96DE]/90"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-300 opacity-70" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-300" />
+                </span>
+                Live Tracker
               </Link>
             </li>
           </ul>
@@ -124,10 +136,18 @@ export default function Header() {
               </Link>
               <Link
                 href="/#faqs"
-                className="block rounded-lg px-3 py-2 text-base font-medium bg-[#4C96DE] text-white hover:bg-[#4C96DE]/90"
+                className="block rounded-lg px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-[#4C96DE]"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 FAQs
+              </Link>
+              <Link
+                href="/live-turnaround-tracker"
+                className="flex items-center gap-2 rounded-lg bg-[#4C96DE] px-3 py-2 text-base font-medium text-white hover:bg-[#4C96DE]/90"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span className="h-2 w-2 rounded-full bg-emerald-300" />
+                Live Tracker
               </Link>
             </div>
           </div>
