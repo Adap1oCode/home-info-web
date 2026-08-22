@@ -1,130 +1,63 @@
 import Link from "next/link";
+
+import { company, contact, footerNav, legalNav, phoneHref } from "@/config/site";
 import Logo from "./logo";
+import { ConfigValue, Unconfirmed } from "./unconfirmed";
 
-export default function Footer({ border = false }: { border?: boolean }) {
+export default function Footer() {
   return (
-    <footer className="bg-[#FDFDFF] text-[#2D2D2D]">
-      <div className="mx-auto max-w-[1440px] w-full px-4 sm:px-6">
-        {/* Top area: Blocks */}
-        <div
-          className={`grid gap-10 py-8 sm:grid-cols-12 md:py-12 ${border ? "border-t border-gray-200" : ""}`}
-        >
-          {/* 1st block */}
-          <div className="space-y-2 sm:col-span-12 lg:col-span-6">
-            <div className="mb-4">
-              <Logo size="large" />
+    <footer className="pt-10 pb-13 text-[14.5px] text-tx-mid">
+      <div className="mx-auto max-w-[1240px] px-8">
+        <div className="grid grid-cols-[1.7fr_1fr_1fr_1fr_1fr] gap-11 pt-12 pb-13 max-lg:grid-cols-3 max-[620px]:grid-cols-2">
+          <div className="max-[620px]:col-span-full">
+            <Logo />
+            <p className="mt-4 mb-5 max-w-[27em] leading-relaxed">
+              An independent property search agent, working with conveyancers and solicitors across{" "}
+              {company.coverage}.
+            </p>
+            <a
+              href={phoneHref}
+              className="mb-1 block font-display text-[22px] font-bold tracking-[-0.03em] text-tx hover:text-brand-dark"
+            >
+              <Unconfirmed when={contact.phone.confirmed} title={contact.phone.note}>
+                {contact.phone.display}
+              </Unconfirmed>
+            </a>
+            <a href={`mailto:${contact.email}`} className="hover:text-brand-dark">
+              {contact.email}
+            </a>
+          </div>
+
+          {footerNav.map((col) => (
+            <div key={col.heading}>
+              <h4 className="mb-4 font-sans text-[11px] font-bold uppercase tracking-[0.14em] text-tx-low">
+                {col.heading}
+              </h4>
+              <ul className="list-none space-y-2.5">
+                {col.links.map((l) => (
+                  <li key={l.href}>
+                    <Link href={l.href} className="hover:text-brand-dark">
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className="space-y-1 text-sm text-[#2D2D2D]/80">
-              <div className="font-medium text-[#2D2D2D]">Home Information Searches (HIS) Ltd</div>
-              <div>Email: <a href="mailto:info@propertysearchsolutions.co.uk" className="text-[#4C96DE] hover:text-[#4C96DE]/80 hover:underline">info@homeinformationsearches.co.uk</a></div>
-              <div>Phone: <a href="tel:01234567890" className="text-[#4C96DE] hover:text-[#4C96DE]/80 hover:underline">07702 316 899</a></div>
-            </div>
-          </div>
-
-          {/* 2nd block */}
-          <div className="space-y-2 sm:col-span-6 md:col-span-3 lg:col-span-2 xl:col-span-2">
-            <h3 className="text-sm font-medium text-[#2D2D2D]">Services</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link
-                  className="text-[#2D2D2D]/80 transition hover:text-[#4C96DE]"
-                  href="/#services"
-                >
-                  Local Authority Searches
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="text-[#2D2D2D]/80 transition hover:text-[#4C96DE]"
-                  href="/#services"
-                >
-                  Environmental Searches
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="text-[#2D2D2D]/80 transition hover:text-[#4C96DE]"
-                  href="/#services"
-                >
-                  Drainage & Water
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="text-[#2D2D2D]/80 transition hover:text-[#4C96DE]"
-                  href="/#services"
-                >
-                  Title Checks
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* 3rd block */}
-          <div className="space-y-2 sm:col-span-6 md:col-span-3 lg:col-span-2 xl:col-span-2">
-            <h3 className="text-sm font-medium text-[#2D2D2D]">Company</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link
-                  className="text-[#2D2D2D]/80 transition hover:text-[#4C96DE]"
-                  href="/#about"
-                >
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="text-[#2D2D2D]/80 transition hover:text-[#4C96DE]"
-                  href="/#faqs"
-                >
-                  FAQs
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="text-[#2D2D2D]/80 transition hover:text-[#4C96DE]"
-                  href="/#contact"
-                >
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* 4th block */}
-          <div className="space-y-2 sm:col-span-6 md:col-span-3 lg:col-span-2 xl:col-span-2">
-            <h3 className="text-sm font-medium text-[#2D2D2D]">Legal</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link
-                  className="text-[#2D2D2D]/80 transition hover:text-[#4C96DE]"
-                  href="/privacy-policy"
-                >
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="text-[#2D2D2D]/80 transition hover:text-[#4C96DE]"
-                  href="/terms-of-use"
-                >
-                  Terms of Use
-                </Link>
-              </li>
-            </ul>
-          </div>
+          ))}
         </div>
-      </div>
 
-      {/* Big text */}
-      <div className="relative -mt-8 h-10 w-full" aria-hidden="true">
-        <div className="pointer-events-none absolute left-1/2 -z-10 -translate-x-1/2 text-center text-[200px] font-bold leading-none before:bg-linear-to-b before:from-[#2D2D2D]/20 before:to-[#2D2D2D]/10 before:to-80% before:bg-clip-text before:text-transparent before:content-['Property'] after:absolute after:inset-0 after:bg-[#2D2D2D]/30 after:bg-clip-text after:text-transparent after:mix-blend-darken after:content-['Property'] after:[text-shadow:0_1px_0_#2D2D2D]"></div>
-        {/* Glow */}
-        <div
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-2/3"
-          aria-hidden="true"
-        >
-          <div className="h-40 w-40 rounded-full border-[20px] border-[#4C96DE] blur-[60px]"></div>
+        <div className="flex flex-wrap items-center gap-5 border-t border-mist pt-6 text-[12.5px] text-tx-low">
+          <span>
+            &copy; {new Date().getFullYear()} {company.legalName}. Registered in {company.registeredIn}{" "}
+            no. <ConfigValue field={company.companyNumber} />.
+          </span>
+          <span className="ml-auto flex flex-wrap gap-5">
+            {legalNav.map((l) => (
+              <Link key={l.href} href={l.href} className="hover:text-brand-dark">
+                {l.label}
+              </Link>
+            ))}
+          </span>
         </div>
       </div>
     </footer>

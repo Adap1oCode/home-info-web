@@ -1,158 +1,131 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import Logo from "./logo";
+import { useState } from "react";
 
+import { contact, nav, phoneHref } from "@/config/site";
+import Logo from "./logo";
+import { Unconfirmed } from "./unconfirmed";
+
+/**
+ * Flat full-width bar. Deliberately not a floating pill — the hero below it is
+ * a full-bleed banner, and two competing rounded shapes at the top of the page
+ * read as a mistake.
+ */
 export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-2 z-30 w-full md:top-6">
-      <div className="mx-auto max-w-[1440px] w-full px-4 sm:px-6">
-        <div className="relative flex h-17 items-center justify-between gap-3 rounded-2xl bg-white/90 px-3 shadow-lg shadow-black/[0.03] backdrop-blur-xs before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(var(--color-gray-100),var(--color-gray-200))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)]">
-          {/* Site branding */}
-          <div className="flex flex-1 items-center h-full overflow-hidden">
-            <Logo />
-          </div>
+    <header className="sticky top-0 z-50 border-b border-mist bg-white/95 backdrop-blur-lg">
+      <div className="mx-auto flex h-[78px] max-w-[1240px] items-center gap-7 px-8 max-sm:h-[68px] max-sm:px-[18px]">
+        <Logo />
 
-          {/* Desktop Navigation links */}
-          <ul className="hidden md:flex flex-1 items-center justify-end gap-3">
-            <li>
+        <ul className="flex flex-1 list-none gap-6 max-[1120px]:hidden">
+          {nav.primary.map((item) => (
+            <li key={item.href}>
               <Link
-                href="/#services"
-                className="btn-sm bg-white text-[#2D2D2D] shadow-sm hover:bg-gray-50"
+                href={item.href}
+                className="text-[14.5px] font-medium text-tx-mid transition-colors hover:text-brand-dark"
               >
-                Services
+                {item.label}
               </Link>
             </li>
-            <li>
-              <Link
-                href="/#why-us"
-                className="btn-sm bg-white text-[#2D2D2D] shadow-sm hover:bg-gray-50"
-              >
-                Why Us
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/#contact"
-                className="btn-sm bg-white text-[#2D2D2D] shadow-sm hover:bg-gray-50"
-              >
-                Contact
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/#faqs"
-                className="btn-sm bg-white text-[#2D2D2D] shadow-sm hover:bg-gray-50"
-              >
-                FAQs
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/live-turnaround-tracker"
-                className="btn-sm inline-flex items-center gap-2 bg-[#4C96DE] text-white shadow-sm hover:bg-[#4C96DE]/90"
-              >
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-300 opacity-70" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-300" />
-                </span>
-                Live Tracker
-              </Link>
-            </li>
-          </ul>
+          ))}
+        </ul>
 
-          {/* Mobile menu button */}
+        <div className="ml-auto flex items-center gap-4">
+          {/*
+            Filled pill with the icon in its own white roundel, which also
+            echoes the three roundels in the logo. Blue here and coral on the
+            action beside it: two solid pills that read as a pair rather than
+            as two competing buttons, and the warm one is the one we want
+            pressed.
+          */}
+          <a
+            href={phoneHref}
+            className="hidden h-12 shrink-0 items-center gap-2.5 rounded-full bg-brand pr-5 pl-2 transition hover:bg-brand-dark min-[560px]:inline-flex"
+          >
+            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white text-brand">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z" />
+              </svg>
+            </span>
+            <span className="sr-only">Call us on </span>
+            <span className="font-display text-[16px] font-semibold tracking-[-0.015em] whitespace-nowrap text-white">
+              <Unconfirmed when={contact.phone.confirmed} title={contact.phone.note}>
+                {contact.phone.display}
+              </Unconfirmed>
+            </span>
+          </a>
+
+          <Link
+            href={nav.primaryCta.href}
+            className="inline-flex h-12 shrink-0 items-center rounded-xl bg-coral-deep px-6 text-[15px] font-semibold text-white transition hover:-translate-y-0.5 hover:bg-coral-ink max-md:hidden"
+          >
+            {nav.primaryCta.label}
+          </Link>
+
           <button
             type="button"
-            className="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#4C96DE]"
-            aria-controls="mobile-menu"
-            aria-expanded="false"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={() => setOpen(!open)}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            className="hidden rounded-lg p-2 text-tx transition hover:bg-sky max-[1120px]:inline-flex"
           >
-            <span className="sr-only">Open main menu</span>
-            {!mobileMenuOpen ? (
-              <svg
-                className="block h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            ) : (
-              <svg
-                className="block h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            )}
+            <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            >
+              {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+            </svg>
           </button>
         </div>
-
-        {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden mt-2 rounded-2xl bg-white shadow-lg border border-gray-200">
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              <Link
-                href="/#services"
-                className="block rounded-lg px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-[#4C96DE]"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Services
-              </Link>
-              <Link
-                href="/#why-us"
-                className="block rounded-lg px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-[#4C96DE]"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Why Us
-              </Link>
-              <Link
-                href="/#contact"
-                className="block rounded-lg px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-[#4C96DE]"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Contact
-              </Link>
-              <Link
-                href="/#faqs"
-                className="block rounded-lg px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-[#4C96DE]"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                FAQs
-              </Link>
-              <Link
-                href="/live-turnaround-tracker"
-                className="flex items-center gap-2 rounded-lg bg-[#4C96DE] px-3 py-2 text-base font-medium text-white hover:bg-[#4C96DE]/90"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <span className="h-2 w-2 rounded-full bg-emerald-300" />
-                Live Tracker
-              </Link>
-            </div>
-          </div>
-        )}
       </div>
+
+      {open && (
+        <nav id="mobile-nav" className="border-t border-mist bg-white px-6 py-4 min-[1121px]:hidden">
+          <ul className="list-none space-y-1">
+            {nav.primary.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className="block rounded-lg px-3 py-2.5 text-base font-medium text-tx-mid hover:bg-sky hover:text-brand-dark"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+            <li className="pt-2">
+              <Link
+                href={nav.primaryCta.href}
+                onClick={() => setOpen(false)}
+                className="block rounded-full bg-coral-deep px-5 py-3 text-center text-[15px] font-semibold text-white"
+              >
+                {nav.primaryCta.label}
+              </Link>
+            </li>
+            {/* The header phone hides under 560px, so it has to reappear here. */}
+            <li className="pt-2 min-[560px]:hidden">
+              <a
+                href={phoneHref}
+                className="block rounded-full bg-brand px-5 py-3 text-center font-display text-[15px] font-semibold text-white"
+              >
+                Call{" "}
+                <Unconfirmed when={contact.phone.confirmed} title={contact.phone.note}>
+                  {contact.phone.display}
+                </Unconfirmed>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      )}
     </header>
   );
 }

@@ -1,0 +1,106 @@
+{
+  "note": "Pexels licence: free for commercial use, no attribution required, but recorded here so it can be given.",
+  "rule": "Places and documents only — no stock photographs of people on this site.",
+  "photos": [
+    {
+      "id": "terraced-street",
+      "file": "/images/stock/terraced-street.jpg",
+      "query": "british terraced houses street",
+      "photographer": "Boys in Bristol Photography",
+      "photographerUrl": "https://www.pexels.com/@lebele",
+      "sourceUrl": "https://www.pexels.com/photo/cars-parked-in-a-neighborhood-12292600/",
+      "alt": "Picturesque view of parked cars along classic English townhouses under a blue sky.",
+      "source": "Pexels"
+    },
+    {
+      "id": "victorian-semis",
+      "file": "/images/stock/victorian-semis.jpg",
+      "query": "english suburban houses brick",
+      "photographer": "Ryan Collis",
+      "photographerUrl": "https://www.pexels.com/@ryan-collis-179324118",
+      "sourceUrl": "https://www.pexels.com/photo/city-street-between-houses-14078227/",
+      "alt": "Serene morning view of an English suburban street lined with charming red-brick houses in Farnham.",
+      "source": "Pexels"
+    },
+    {
+      "id": "town-hall",
+      "file": "/images/stock/town-hall.jpg",
+      "query": "english town hall civic building",
+      "photographer": "Michael D Beckwith",
+      "photographerUrl": "https://www.pexels.com/@michael-d-beckwith-2150568551",
+      "sourceUrl": "https://www.pexels.com/photo/majestic-stockport-town-hall-in-england-31283302/",
+      "alt": "Front view of the iconic Stockport Town Hall with a clear blue sky backdrop.",
+      "source": "Pexels"
+    },
+    {
+      "id": "village-cottages",
+      "file": "/images/stock/village-cottages.jpg",
+      "query": "english village cottages",
+      "photographer": "Samuel Sweet",
+      "photographerUrl": "https://www.pexels.com/@samuelsweet",
+      "sourceUrl": "https://www.pexels.com/photo/old-houses-in-cirencester-8202752/",
+      "alt": "Charming old cottages line a picturesque street in Bibury, England.",
+      "source": "Pexels"
+    },
+    {
+      "id": "new-build-estate",
+      "file": "/images/stock/new-build-estate.jpg",
+      "query": "new build housing estate uk",
+      "photographer": "Expect Best",
+      "photographerUrl": "https://www.pexels.com/@expect-best-79873",
+      "sourceUrl": "https://www.pexels.com/photo/facade-of-modern-building-against-clear-sky-323781/",
+      "alt": "Contemporary house in Poole featuring a striking mix of stone and wood facade with large windows.",
+      "source": "Pexels"
+    },
+    {
+      "id": "coastline-erosion",
+      "file": "/images/stock/coastline-erosion.jpg",
+      "query": "british coastline cliffs houses",
+      "photographer": "Lorna Pauli",
+      "photographerUrl": "https://www.pexels.com/@lorna-pauli-1320744316",
+      "sourceUrl": "https://www.pexels.com/photo/stunning-coastal-view-of-freshwater-bay-england-38587710/",
+      "alt": "Beautiful coastal landscape of Freshwater Bay with cliffs and blue sky on a sunny day.",
+      "source": "Pexels"
+    },
+    {
+      "id": "flood-plain",
+      "file": "/images/stock/flood-plain.jpg",
+      "query": "flooded field river england countryside",
+      "photographer": "Jay's Photography",
+      "photographerUrl": "https://www.pexels.com/@jaysphotography",
+      "sourceUrl": "https://www.pexels.com/photo/aerial-view-of-flooded-landscape-and-farmland-36210444/",
+      "alt": "Aerial shot of a flooded landscape with trees and farmland under a bright blue sky.",
+      "source": "Pexels"
+    },
+    {
+      "id": "canal-terraces",
+      "file": "/images/stock/canal-terraces.jpg",
+      "query": "canal houses england industrial town",
+      "photographer": "Altaf Shah",
+      "photographerUrl": "https://www.pexels.com/@altaf-shah-3143825",
+      "sourceUrl": "https://www.pexels.com/photo/houses-by-river-in-town-in-black-and-white-19035372/",
+      "alt": "Black and white aerial view of Hertfordshire showcasing buildings, canal, and urban architecture.",
+      "source": "Pexels"
+    },
+    {
+      "id": "welsh-valley-houses",
+      "file": "/images/stock/welsh-valley-houses.jpg",
+      "query": "wales terraced houses hillside",
+      "photographer": "Delyth Williams",
+      "photographerUrl": "https://www.pexels.com/@delyth-williams-256414522",
+      "sourceUrl": "https://www.pexels.com/photo/aerial-view-of-terraced-houses-in-welsh-valley-34884266/",
+      "alt": "A picturesque aerial view of terraced houses amidst lush greenery in a Welsh valley.",
+      "source": "Pexels"
+    },
+    {
+      "id": "conservation-street",
+      "file": "/images/stock/conservation-street.jpg",
+      "query": "georgian townhouses england street",
+      "photographer": "Dominika Gregušová",
+      "photographerUrl": "https://www.pexels.com/@dominikagregus",
+      "sourceUrl": "https://www.pexels.com/photo/brown-concrete-building-7826166/",
+      "alt": "Historic facade of a classic brown brick building with arched windows in London.",
+      "source": "Pexels"
+    }
+  ]
+}

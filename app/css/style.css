@@ -1,208 +1,118 @@
 @import 'tailwindcss';
 
-/* Additional styles */
+/* Form primitives only — the old blue theme.css has been retired. */
 @import './additional-styles/utility-patterns.css' layer(components);
-@import './additional-styles/theme.css';
 
 @plugin "@tailwindcss/forms" {
   strategy: base;
 }
 
+/* ============================================================================
+   DESIGN TOKENS
+
+   Built around the existing logo. Its blue was sampled straight from
+   /public/images/logo.png (the roundels and "Home Information" cluster around
+   #348CDC; the "SEARCHES." wordmark is charcoal #2E2E2E).
+
+   - `brand`  the logo blue. Primary actions, links, data highlights.
+   - `ink` / `navy`  the blue deepened into navy, for the two dark sections.
+   - `coral`  the one additional hue. The human side — her story, the
+              direct-line callout — and, since it is the only warm colour on a
+              blue site, the primary "Get a quote" action. Blue buttons
+              disappear into a blue page; this one does not.
+              Filled buttons use `coral-deep`, not `coral` — see below.
+   - `band-*` semantic only. They belong to turnaround performance inside the
+              tracker and must never be used decoratively. Green and amber
+              appear nowhere else on the site.
+   ========================================================================= */
 @theme {
-  --font-inter: Inter, sans-serif;
-  --font-mono: Roboto Mono, monospace;
+  /* surfaces */
+  --color-ink: #0d1f33;
+  --color-navy: #16324f;
+  --color-chalk: #f7f9fc;
+  --color-sky: #eaf2fb;
+  --color-sky-deep: #d9e8f7;
+  --color-mist: #dce5ef;
 
-  --text-xs: 0.75rem;
-  --text-xs--line-height: 1.5;
-  --text-sm: 0.875rem;
-  --text-sm--line-height: 1.5715;
-  --text-base: 1rem;
-  --text-base--line-height: 1.5;
-  --text-base--letter-spacing: -0.017em;
-  --text-lg: 1.125rem;
-  --text-lg--line-height: 1.5;
-  --text-lg--letter-spacing: -0.017em;
-  --text-xl: 1.25rem;
-  --text-xl--line-height: 1.5;
-  --text-xl--letter-spacing: -0.017em;
-  --text-2xl: 1.5rem;
-  --text-2xl--line-height: 1.415;
-  --text-2xl--letter-spacing: -0.037em;
-  --text-3xl: 1.875rem;
-  --text-3xl--line-height: 1.3333;
-  --text-3xl--letter-spacing: -0.037em;
-  --text-4xl: 2.25rem;
-  --text-4xl--line-height: 1.2777;
-  --text-4xl--letter-spacing: -0.037em;
-  --text-5xl: 3rem;
-  --text-5xl--line-height: 1;
-  --text-5xl--letter-spacing: -0.037em;
-  --text-6xl: 4rem;
-  --text-6xl--line-height: 1;
-  --text-6xl--letter-spacing: -0.037em;
-  --text-7xl: 4.5rem;
-  --text-7xl--line-height: 1;
-  --text-7xl--letter-spacing: -0.037em;
+  /* brand — sampled from the logo */
+  --color-brand: #348cdc;
+  --color-brand-dark: #1b6ebe;
+  --color-brand-light: #8fc2ec;
 
-  --animate-code-1: code-1;
-  --animate-code-2: code-2;
-  --animate-code-3: code-3;
-  --animate-code-4: code-4;
-  --animate-code-5: code-5;
-  --animate-code-6: code-6;
-  --animate-breath: breath;
-  --animate-float: float;
-  --animate-line: line;
-  --animate-infinite-scroll: infinite-scroll;  
+  /* the one additional hue — human, phone, and now the primary action */
+  --color-coral: #e8694c;
+  --color-coral-soft: #fdede7;
+  --color-coral-ink: #a63c25;
+  /* For coral on the navy sections. 5.9:1 on #143050, so it passes AA at any
+     size — plain `coral` only clears the large-text bar and reads muddy. */
+  --color-coral-light: #f79070;
+  /* Filled buttons with white text. White on plain `coral` is 3.18:1, which
+     fails AA for 15px button text; this is 4.88:1 and still reads orange.
+     Do not lighten it back towards `coral` without re-checking the ratio —
+     #c9502f looks near-identical and lands at 4.49:1, just under the line. */
+  --color-coral-deep: #c24a2b;
 
-  @keyframes code-1 {
-    0% {
+  /* turnaround bands — semantic only, tracker use only */
+  --color-band-fast: #1f9d6b;
+  --color-band-good: #348cdc;
+  --color-band-watch: #e1a130;
+  --color-band-slow: #c7402f;
+
+  /* text */
+  --color-tx: #16222e;
+  --color-tx-mid: #54626f;
+  --color-tx-low: #8593a0;
+
+  /* type */
+  --font-display: 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 1.25rem;
+  --radius-panel: 1.75rem;
+  --radius-hero: 2.5rem;
+
+  --animate-drift: drift;
+  /* Entrance for the hero callouts. Staggered per chip via animation-delay. */
+  --animate-chip-in: chip-in 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  @keyframes chip-in {
+    from {
       opacity: 0;
+      transform: translateY(14px) scale(0.92);
     }
-    2.5% {
+    to {
       opacity: 1;
-    }
-    97.5% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
+      transform: none;
     }
   }
-  @keyframes code-2 {
-    16.2% {
-      opacity: 0;
-    }
-    18.75% {
-      opacity: 1;
-    }
-    97.5% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-  @keyframes code-3 {
-    32.5% {
-      opacity: 0;
-    }
-    35% {
-      opacity: 1;
-    }
-    97.5% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-  @keyframes code-4 {
-    48.75% {
-      opacity: 0;
-    }
-    51.25% {
-      opacity: 1;
-    }
-    97.5% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-  @keyframes code-5 {
-    65% {
-      opacity: 0;
-    }
-    72.5% {
-      opacity: 1;
-    }
-    97.5% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-  @keyframes code-6 {
-    81.25% {
-      opacity: 0;
-    }
-    83.75% {
-      opacity: 1;
-    }
-    97.5% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-  @keyframes breath {
-    0%,
-    100% {
-      transform: scale(0.95);
-    }
-    50% {
-      transform: scale(1.1);
-    }
-  }
-  @keyframes float {
+  @keyframes drift {
     0%,
     100% {
       transform: translateY(0);
     }
     50% {
-      transform: translateY(-5%);
+      transform: translateY(-9px);
     }
   }
-  @keyframes line {
-    0%,
+  @keyframes ping-soft {
+    0% {
+      transform: scale(0.5);
+      opacity: 0.6;
+    }
     100% {
-      left: 0;
+      transform: scale(1.7);
       opacity: 0;
-    }
-    50% {
-      left: 100%;
-      transform: translateX(-100%);
-    }
-    10%,
-    40%,
-    60%,
-    90% {
-      opacity: 0;
-    }
-    25%,
-    75% {
-      opacity: 1;
-    }
-  }
-  @keyframes infinite-scroll {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-100%);
     }
   }
 }
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
 @layer base {
   *,
   ::after,
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
+    border-color: var(--color-mist, currentColor);
   }
 
   html,
@@ -215,5 +125,82 @@
   body {
     margin: 0;
     padding: 0;
+    /* Every figure on this site is data. Line them up. */
+    font-variant-numeric: tabular-nums;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.028em;
+    line-height: 1.1;
+  }
+
+  section {
+    scroll-margin-top: 96px;
+  }
+}
+
+@layer components {
+  /*
+   * The one vertical rhythm for page sections. Every <section> on the homepage
+   * uses this and nothing else.
+   *
+   * It exists because the spacing had drifted to five different values —
+   * 96, 104, 112, 120 and 132px — with three sections carrying no top padding
+   * at all and the accreditation strip carrying no bottom padding, so its
+   * logos collided with the white block underneath. Change the number here, in
+   * one place, rather than reintroducing per-section values.
+   */
+  .section-y {
+    @apply py-30 max-lg:py-19;
+  }
+
+  /* Small-caps section label used above every heading. */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full bg-sky px-4 py-2 text-[13px] font-semibold text-brand-dark;
+  }
+
+  /* Live indicator dot with a soft outward ping. */
+  .pip {
+    @apply relative h-[7px] w-[7px] shrink-0 rounded-full bg-brand;
+  }
+  .pip::after {
+    content: '';
+    @apply absolute -inset-[5px] rounded-full border-[1.5px] border-current opacity-40;
+    animation: ping-soft 2.6s ease-out infinite;
+  }
+
+  /*
+    Marks a value that has not been confirmed with the business. Visible in
+    development and on staging, so unverified copy never quietly looks finished.
+  */
+  /* Block placeholders — a whole panel standing in for missing content. */
+  .unconfirmed {
+    @apply rounded-[5px] bg-band-slow/20 shadow-[0_0_0_3px_rgb(255_111_97_/_0.2)];
+  }
+
+  /*
+   * Inline marker, for a single unverified value sitting inside real copy.
+   * It used to share the filled style above, which painted a muddy grey-red
+   * box behind the phone number in the middle of the blue header pill — it
+   * read as a rendering bug rather than as a flag. A dashed underline marks
+   * it just as clearly and survives any background colour.
+   */
+  .unconfirmed-inline {
+    @apply underline decoration-band-slow decoration-dashed decoration-2 underline-offset-[5px];
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

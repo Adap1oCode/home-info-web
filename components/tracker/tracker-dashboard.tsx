@@ -534,10 +534,10 @@ export default function TrackerDashboard({ data }: { data: PerformancePayload })
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <a
-              href="/#contact"
+              href="/quote"
               className="rounded-xl bg-[#4C96DE] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[#4C96DE]/30 transition hover:bg-[#4C96DE]/90"
             >
-              Order a search
+              Get a quote
             </a>
             <a
               href="/faqs"
