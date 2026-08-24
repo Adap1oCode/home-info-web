@@ -54,7 +54,15 @@ export type Integration = Confirmable & {
   id: string;
   name: string;
   blurb: string;
+  /** Path under /public, e.g. "/images/landmark.webp". */
   logo?: string;
+  /**
+   * Crop instead of fit. Set when the supplied file is not a clean lockup —
+   * a social-media avatar, a screenshot, anything with dead space baked in.
+   * The card then covers a wide box and centres, cutting the padding away
+   * rather than shrinking the mark to fit around it.
+   */
+  logoCrop?: boolean;
   /** Brand colours used by the wordmark fallback when no logo file exists. */
   wordmark?: { primary: string; sub?: string; subText?: string };
 };
@@ -279,7 +287,7 @@ export const integrations: Integration[] = [
     name: "HM Land Registry",
     blurb:
       "Official copies, title plans and local land charges direct, with each council's migration status tracked so we use the right route.",
-    logo: "hm-land-registry.svg",
+    logo: "/images/HMLR-logo.png",
     wordmark: { primary: "#4A4A4A", sub: "#8CAD1F", subText: "HM Government" },
     confirmed: true,
   },
@@ -287,7 +295,7 @@ export const integrations: Integration[] = [
     id: "ordnance-survey",
     name: "Ordnance Survey",
     blurb: "Licensed OS Data Hub mapping on every report, correctly attributed.",
-    logo: "ordnance-survey.svg",
+    logo: "/images/Ordnance-Survey-Logo-Sponsor.png",
     wordmark: { primary: "#4A3A8C", sub: "#E6007E", subText: "OS Data Hub" },
     confirmed: true,
     note: "Check docs/os/licensing-position.md before publishing the logo",
@@ -296,7 +304,7 @@ export const integrations: Integration[] = [
     id: "landmark",
     name: "Landmark",
     blurb: "Environmental, flood, contaminated land and ground stability data.",
-    logo: "landmark.svg",
+    logo: "/images/landmark-information.xb40986bd.webp",
     wordmark: { primary: "#1A1A1A", sub: "#E2231A", subText: "Information Group" },
     confirmed: true,
   },
@@ -304,7 +312,7 @@ export const integrations: Integration[] = [
     id: "martello",
     name: "Martello",
     blurb: "Drainage and water enquiries routed to the correct undertaker for the property.",
-    logo: "martello.svg",
+    logo: "/images/Image-1-Martello-003-1.jpg",
     wordmark: { primary: "#1F5E3D", subText: "Drainage & Water" },
     confirmed: true,
   },
@@ -313,7 +321,12 @@ export const integrations: Integration[] = [
     name: "Veriphy",
     blurb:
       "ID and AML, company checks and lawyer checks, so due diligence and searches come from one place.",
-    logo: "veriphy.svg",
+    /* A square social-media avatar: grey band carrying the wordmark, empty
+       green across the bottom. Fitted whole it reads as a cropped screenshot
+       beside four clean lockups, so it is cropped to the wordmark band instead.
+       Replace with a transparent logo when one is available and drop the flag. */
+    logo: "/images/veriphy.jpg",
+    logoCrop: true,
     wordmark: { primary: "#12466E", sub: "#2E8BC0", subText: "ID · AML · Checks" },
     confirmed: true,
   },

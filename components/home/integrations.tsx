@@ -1,3 +1,6 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
+
 import Link from "next/link";
 
 import { insurance, integrations, routes } from "@/config/site";
@@ -8,10 +11,26 @@ import { Unconfirmed } from "@/components/ui/unconfirmed";
  * listed — Groundsure, Future Climate Info, GeoCerta and Palladium came from a
  * competitor's site and were removed rather than asserted.
  *
- * Logo files live in /public/logos. Each <img> falls back to a brand-coloured
- * wordmark when the file is absent, so partners can be added without code
- * changes. Get written permission before publishing any partner logo.
+ * ── Logos ───────────────────────────────────────────────────────────────────
+ * `logo` in config/site.ts is a path under /public, e.g. "/images/landmark.webp".
+ *
+ * This is a server component, so presence is checked on disk at build time
+ * rather than guessed. A missing or unset file falls back to the brand-coloured
+ * wordmark, so a partner can be listed before its logo arrives and nothing ever
+ * renders a broken image. Veriphy deliberately uses that fallback: the supplied
+ * file is a square social-media avatar, half of it empty green, which reads as a
+ * cropped tile rather than a mark.
+ *
+ * The docblock used to claim each <img> fell back to a wordmark. There was no
+ * <img> — every one of these was the text fallback, and the five `logo` values
+ * in config had never been read by anything.
+ *
+ * Logos are trademarks. Get written permission before publishing one, and
+ * check each body's brand guidelines for how the mark may be shown.
  */
+
+/** Absolute path a config `logo` value resolves to. */
+const logoPath = (file: string) => path.join(process.cwd(), "public", file.replace(/^\//, ""));
 export default function Integrations() {
   // Talk is the next section and is also an inset card, so this one carries an
   // explicit bottom margin — otherwise the two card edges touch. Same value as
@@ -40,25 +59,30 @@ export default function Integrations() {
               Our systems connect directly to the suppliers and registries the reports come from,
               so what reaches your file is what the source returned.
             </p>
-            <p className="mb-4.5 max-w-[34em] text-[16.5px] leading-loose text-tx-mid">
-              We are registered with the{" "}
-              <strong className="font-semibold text-tx">PCCB as a Search Code subscriber</strong>,
-              and a member of <strong className="font-semibold text-tx">IPSA</strong>.
-            </p>
+            {/* "Registered with the PCCB as a Search Code subscriber, and a member
+                of IPSA" was here. The accreditations panel sits directly above this
+                section and shows all three as badges, linked to the bodies
+                themselves — saying it again in prose a screen later reads as
+                padding, and a claim repeated is not a claim strengthened. */}
             {/* was /how-we-work, which does not exist */}
             <Link href={routes.products} className="mt-2 inline-flex items-center gap-2 text-[14.5px] font-semibold text-brand-dark">
               Every report and who supplies it <span aria-hidden>&rarr;</span>
             </Link>
           </div>
 
-          <ul className="flex list-none flex-wrap gap-3.5">
+          {/* A grid, not flex-wrap. Wrapping with flex-1 stretched whatever landed
+              on the final row to fill it, so with five suppliers the last mark
+              rendered in a card several times the width of the others. A grid
+              gives every supplier the same cell whatever the count, and 3x2 comes
+              out even at six. */}
+          <ul className="grid list-none grid-cols-3 gap-3.5 max-[520px]:grid-cols-2">
             {integrations.map((i) => (
-              <li key={i.id} className="flex min-w-42.5 flex-1 basis-47.5 max-[520px]:min-w-32.5">
+              <li key={i.id} className="flex">
                 <span
                   title={i.blurb}
                   className="grid h-27 w-full place-items-center rounded-card border border-[#DCE5EF] bg-white p-4 transition hover:-translate-y-1 hover:shadow-[0_20px_42px_-26px_rgb(13_31_51_/_0.42)] max-[520px]:h-23"
                 >
-                  <Wordmark integration={i} />
+                  <Mark integration={i} />
                 </span>
               </li>
             ))}
@@ -66,7 +90,12 @@ export default function Integrations() {
         </div>
 
         {/* assurance row */}
-        <ul className="mt-14 grid list-none grid-cols-4 gap-4 border-t border-[#D6E5F4] pt-12 max-[900px]:grid-cols-2 max-[520px]:grid-cols-1">
+        {/* Three, not four. "Data handled properly — ICO registered and UK GDPR
+            compliant" restated the ICO badge in the panel above and has gone. The
+            Search Code card stays but now leads with the complaints procedure and
+            redress route, which is the part a solicitor cannot read off a badge —
+            it no longer opens by re-announcing that we are a subscriber. */}
+        <ul className="mt-14 grid list-none grid-cols-3 gap-4 border-t border-[#D6E5F4] pt-12 max-[900px]:grid-cols-2 max-[520px]:grid-cols-1">
           <Assurance tint="bg-sky text-brand-dark" title={
             <Unconfirmed when={insurance.professionalIndemnity.confirmed} title={insurance.professionalIndemnity.note}>
               {insurance.professionalIndemnity.cover} professional indemnity
@@ -74,15 +103,12 @@ export default function Integrations() {
           }>
             {insurance.detail}
           </Assurance>
-          <Assurance tint="bg-sky text-brand-dark" title="Search Code redress">
-            As a Search Code subscriber we have a published complaints procedure and independent
-            redress through the PCCB.
+          <Assurance tint="bg-sky text-brand-dark" title="If something goes wrong">
+            A published complaints procedure, and independent redress through the PCCB if you are
+            not satisfied with how we handle it.
           </Assurance>
           <Assurance tint="bg-coral-soft text-coral-ink" title="Sample reports">
             Ask us for a sample of any report before you send us a case.
-          </Assurance>
-          <Assurance tint="bg-[#EAF2FB] text-[#1B6EBE]" title="Data handled properly">
-            ICO registered and UK GDPR compliant. We do not pass your data to third parties.
           </Assurance>
         </ul>
       </div>
@@ -90,7 +116,41 @@ export default function Integrations() {
   );
 }
 
-function Wordmark({ integration }: { integration: (typeof integrations)[number] }) {
+function Mark({ integration }: { integration: (typeof integrations)[number] }) {
+  const { logo } = integration;
+
+  if (logo && existsSync(logoPath(logo))) {
+    /* Crop, not fit. A file with dead space baked in — Veriphy's is a square
+       avatar, wordmark across the middle, empty green below — shrinks to almost
+       nothing when fitted whole, because the padding is sized as if it were part
+       of the mark. Covering a wide box and centring cuts the padding away and
+       leaves the wordmark at the same visual weight as the lockups either side. */
+    if (integration.logoCrop) {
+      return (
+        <span className="relative h-13 w-[76%] overflow-hidden rounded-[6px]">
+          {/* Absolutely positioned, not h-full/w-full on a grid child: the card
+              centres its children, which cancels the stretch and let this render
+              at its natural 473px square, blowing the card open. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={logo} alt={integration.name} className="absolute inset-0 h-full w-full object-cover" />
+        </span>
+      );
+    }
+
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={logo}
+        alt={integration.name}
+        /* object-contain, so a mark grows until it hits the height cap or the
+           card's width. Martello's lockup carries its own dark green plate
+           rather than a transparent background — that is the supplied artwork,
+           and rounding it keeps it reading as a tile rather than a mistake. */
+        className="max-h-13 w-auto max-w-[72%] rounded-[6px] object-contain"
+      />
+    );
+  }
+
   const w = integration.wordmark;
   return (
     <span className="text-center leading-tight">
