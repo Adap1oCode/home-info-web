@@ -562,6 +562,18 @@ export const legalNav = [
 
 /* ------------------------------------------------------------------- seo */
 
+/**
+ * True when the build is rendering content that has NOT been verified with the
+ * business — unconfirmed regulatory claims, insurance figures, placeholder
+ * company numbers.
+ *
+ * Such a build must never be indexed. `app/robots.ts` disallows every crawler
+ * and `app/layout.tsx` emits `noindex, nofollow` while this is true, so the
+ * escape hatch that lets a staging site build is the same switch that keeps it
+ * out of Google. Forgetting one of the two is the failure this couples away.
+ */
+export const isUnverifiedBuild = process.env.NEXT_PUBLIC_ALLOW_UNCONFIRMED === "1";
+
 export const seo = {
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.homeinformationsearches.co.uk",
   titleTemplate: "%s | Home Information Searches",

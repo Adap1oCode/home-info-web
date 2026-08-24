@@ -3,7 +3,7 @@ import "./css/style.css";
 import type { Metadata, Viewport } from "next";
 import { Inter, Inter_Tight } from "next/font/google";
 
-import { seo } from "@/config/site";
+import { isUnverifiedBuild, seo } from "@/config/site";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,6 +33,9 @@ export const metadata: Metadata = {
     description: seo.defaultDescription,
   },
   icons: { icon: "/images/title.png" },
+  /* Belt and braces with robots.ts: robots.txt is advisory, a meta tag is not,
+     and a staging URL gets shared around long before anyone remembers either. */
+  ...(isUnverifiedBuild ? { robots: { index: false, follow: false } } : {}),
 };
 
 export const viewport: Viewport = {
