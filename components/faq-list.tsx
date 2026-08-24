@@ -16,12 +16,29 @@ export default function FaqList({
   items,
   /** Index opened on load. -1 leaves them all closed. */
   openIndex = 0,
+  /**
+   * Two columns on desktop, one below 900px.
+   *
+   * A grid rather than CSS `columns`: opening a <details> in a multi-column
+   * flow reflows every item after it across the column break, so answers jump
+   * between columns as the reader opens them. In a grid an open answer only
+   * grows its own row.
+   */
+  columns = 1,
 }: {
   items: Faq[];
   openIndex?: number;
+  columns?: 1 | 2;
 }) {
+  /* first:border-t only reaches item one, which leaves the second column
+     opening without a top rule. In two columns the first *row* needs it. */
+  const grid =
+    columns === 2
+      ? "grid grid-cols-2 gap-x-14 max-[900px]:grid-cols-1 [&>*:nth-child(-n+2)]:border-t max-[900px]:[&>*:nth-child(2)]:border-t-0"
+      : "";
+
   return (
-    <div>
+    <div className={grid}>
       {items.map((faq, i) => (
         <details
           key={faq.id}
