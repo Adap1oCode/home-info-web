@@ -1,6 +1,6 @@
 export const metadata = {
   title: "Privacy Policy - Home Information Searches Ltd -",
-  description: "Privacy Policy for Property Search Solutions Ltd",
+  description: "Privacy Policy for Home Information Searches (HIS) Ltd",
 };
 
 export default function PrivacyPolicy() {

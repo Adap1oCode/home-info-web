@@ -1,6 +1,6 @@
 export const metadata = {
   title: "Terms of Use - Home Information Searches Ltd -",
-  description: "Terms of Use for Property Search Solutions Ltd",
+  description: "Terms of Use for Home Information Searches (HIS) Ltd",
 };
 
 export default function TermsOfUse() {
