@@ -110,7 +110,7 @@ export const company = {
   shortName: "HIS",
 
   /** Companies House number — shown in the footer. */
-  companyNumber: { value: "00000000", confirmed: false, note: "Get from Companies House" },
+  companyNumber: { value: "07718782", confirmed: true },
   registeredIn: "England & Wales",
   vatNumber: { value: "", confirmed: false, note: "Only shown if non-empty" },
 
@@ -120,7 +120,9 @@ export const company = {
   /** Years trading. Drives the hero, the story section and the stat row. */
   yearsInSearch: { value: 30, confirmed: false, note: "Confirm exact number" },
   founderStartYear: { value: 1994, confirmed: false, note: "Year she started in search" },
-  familyBusinessBefore: { value: true, confirmed: false, note: "Confirm the family history claim" },
+  /* Corroborated by Roger Bower's testimonial: he instructed Val "and her late
+     father" from the nineteen eighties. See `testimonials` below. */
+  familyBusinessBefore: { value: true, confirmed: true },
 } as const;
 
 /* ---------------------------------------------------------------- founder */
@@ -128,8 +130,7 @@ export const company = {
 export const founder = {
   name: {
     value: "Val Bennett",
-    confirmed: false,
-    note: "Confirm the surname and which form she wants used publicly",
+    confirmed: true,
   },
   /** Warmer form, used where the copy is speaking rather than crediting. */
   shortName: { value: "Val", confirmed: true },
@@ -162,8 +163,8 @@ export const founder = {
 export const contact = {
   phone: {
     display: "07702 316 899",
-    confirmed: false,
-    note: "A landline would carry better with law firms than a mobile",
+    confirmed: true,
+    note: "A landline would carry better with law firms than a mobile, but this is the number she gives out.",
   },
   email: "info@homeinformationsearches.co.uk",
 
@@ -488,7 +489,7 @@ export const nav = {
    */
   primary: [
     { label: "Searches", href: routes.products },
-    { label: "Turnaround", href: routes.tracker },
+    { label: "Live Tracker", href: routes.tracker },
     { label: "Councils", href: routes.councils },
     { label: "Guides", href: routes.guides },
     { label: "Founder", href: routes.founder },

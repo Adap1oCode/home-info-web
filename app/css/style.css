@@ -64,7 +64,8 @@
   --color-tx-low: #8593a0;
 
   /* type */
-  --font-display: 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+  /* Sora — see app/layout.tsx. Body copy stays Inter below. */
+  --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
 
   --radius-card: 1.25rem;
@@ -175,23 +176,19 @@
   }
 
   /*
-    Marks a value that has not been confirmed with the business. Visible in
-    development and on staging, so unverified copy never quietly looks finished.
-  */
-  /* Block placeholders — a whole panel standing in for missing content. */
+   * Block placeholder — a whole panel standing in for content we do not have
+   * yet, currently only the founder photograph. This one stays: it marks an
+   * empty hole rather than a claim, and it should keep looking unfinished
+   * until a real photograph exists.
+   *
+   * The inline marker that used to sit here is gone. It underlined every
+   * unconfirmed value in dashed red, and once the site went live on the real
+   * domain that meant the header phone number and every accreditation —
+   * PCCB, Search Code, the Property Ombudsman, ICO — were struck through in
+   * red for visitors. See components/ui/unconfirmed.tsx.
+   */
   .unconfirmed {
     @apply rounded-[5px] bg-band-slow/20 shadow-[0_0_0_3px_rgb(255_111_97_/_0.2)];
-  }
-
-  /*
-   * Inline marker, for a single unverified value sitting inside real copy.
-   * It used to share the filled style above, which painted a muddy grey-red
-   * box behind the phone number in the middle of the blue header pill — it
-   * read as a rendering bug rather than as a flag. A dashed underline marks
-   * it just as clearly and survives any background colour.
-   */
-  .unconfirmed-inline {
-    @apply underline decoration-band-slow decoration-dashed decoration-2 underline-offset-[5px];
   }
 }
 

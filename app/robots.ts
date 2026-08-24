@@ -15,8 +15,10 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        // Template auth pages pending replacement with a real portal link.
-        disallow: ["/api/", "/signin", "/signup", "/reset-password"],
+        /* The template auth pages this used to hide are deleted, not hidden —
+           they were unmodified Cruip scaffolding, complete with a mock browser
+           showing cruip.com and a dead "Register" form. */
+        disallow: ["/api/"],
       },
     ],
     sitemap: `${seo.siteUrl}/sitemap.xml`,

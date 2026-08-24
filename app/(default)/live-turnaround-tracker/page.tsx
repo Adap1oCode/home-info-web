@@ -1,8 +1,4 @@
-import { Sora } from "next/font/google";
-
 import TrackerDashboard, { type PerformancePayload } from "@/components/tracker/tracker-dashboard";
-
-const sora = Sora({ subsets: ["latin"], variable: "--font-sora", display: "swap" });
 
 export const metadata = {
   title: "Live Turnaround Tracker - Home Information Searches Ltd",
@@ -41,9 +37,9 @@ export default async function LiveTurnaroundTracker() {
     );
   }
 
-  return (
-    <div className={sora.variable}>
-      <TrackerDashboard data={data} />
-    </div>
-  );
+  /* Sora used to be loaded here, for this page only. It is the site-wide
+     display face now (app/layout.tsx), so this page no longer needs its own
+     copy of it — and the rest of the site no longer looks like a different
+     website from its own headline page. */
+  return <TrackerDashboard data={data} />;
 }
