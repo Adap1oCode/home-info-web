@@ -152,14 +152,11 @@ export default function FounderPage() {
                   &mdash; {quote.attribution}
                 </figcaption>
               </figure>
-            ) : (
-              <p className="unconfirmed my-10 rounded-panel border-l-4 border-coral bg-coral-soft p-8 text-[15px] leading-relaxed text-tx-mid">
-                A quote in her own words belongs here, taken from a recorded conversation. Nothing
-                renders until <code className="font-mono text-[13px]">founder.pullQuote</code> is
-                filled in and confirmed &mdash; deliberately, so no one is quoted saying something
-                they did not say.
-              </p>
-            )}
+            ) : null}
+            {/* No placeholder -- same removal as components/home/story.tsx. A panel
+                explaining the config mechanism to a developer has no business on a
+                page a solicitor reads. The absence of a quote is not a gap that
+                needs apologising for. */}
 
             <h2 className="mt-14 text-[clamp(24px,2.6vw,32px)] tracking-[-0.03em]">
               Still to come on this page

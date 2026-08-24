@@ -103,14 +103,13 @@ export default function Story() {
                   &mdash; {quote.attribution}
                 </figcaption>
               </figure>
-            ) : (
-              <p className="unconfirmed my-9 rounded-panel border-l-4 border-coral bg-coral-soft p-8 text-[15px] leading-relaxed text-tx-mid">
-                A pull quote belongs here, in her own words, taken from a recorded conversation.
-                Nothing renders until <code className="font-mono text-[13px]">founder.pullQuote</code>{" "}
-                is filled in and confirmed — deliberately, so no one is quoted saying something they
-                did not say.
-              </p>
-            )}
+            ) : null}
+            {/* No placeholder. This used to render a pink panel explaining the
+                config mechanism -- "nothing renders until founder.pullQuote is
+                filled in and confirmed" -- in the middle of the founder story, and
+                it was live on the production homepage, addressed to a developer.
+                The docblock above always said the section runs without the quote;
+                the code was rendering an apology for its absence instead. */}
 
             <p className="max-w-[38em] text-[16.5px] leading-loose text-tx-mid">
               Most of our work comes from firms who have used us for years, and from the people they
