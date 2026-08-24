@@ -28,14 +28,27 @@ export default function Story() {
               </span>
             </div>
 
-            <div className="aspect-[1/1.16] overflow-hidden rounded-t-full rounded-b-panel bg-gradient-to-b from-brand-light to-sky shadow-[0_40px_80px_-52px_rgb(13_31_51_/_0.55)]">
-              <div className="unconfirmed flex h-full w-full items-center justify-center p-8 text-center">
-                <span className="text-[14px] leading-relaxed font-medium text-navy/70">
-                  Photograph for the story section.
-                  <br />
-                  <span className="text-[12.5px]">Her at work, or the team. Not stock.</span>
-                </span>
-              </div>
+            {/* The arch holds a place, not a person.
+                A stock face here would be read as Val or as her team, directly under
+                a heading that says who you are actually dealing with — which is the
+                one thing this section cannot fake. A Georgian terrace is honest
+                scenery: it is the work, not a stand-in for the people doing it. The
+                arched windows also rhyme with the arch they sit inside.
+                Vetted already — see scripts/fetch-stock.mjs. */}
+            <div className="relative aspect-[1/1.16] overflow-hidden rounded-t-full rounded-b-panel bg-navy shadow-[0_40px_80px_-52px_rgb(13_31_51_/_0.55)]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/stock/conservation-street.jpg"
+                alt="A brick Georgian terrace with arched sash windows"
+                className="h-full w-full object-cover"
+              />
+              {/* The roundel sits bottom-right over this, so the wash is weighted
+                  there — it keeps white-on-blue legible against a busy brick
+                  facade without flattening the whole photograph. */}
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-[radial-gradient(circle_at_75%_85%,rgb(13_31_51_/_0.55)_0%,transparent_58%)]"
+              />
             </div>
           </div>
 
