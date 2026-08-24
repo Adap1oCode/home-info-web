@@ -93,6 +93,8 @@ export default function Accreditations() {
                   url={a.url}
                   confirmed={a.confirmed}
                   note={a.note}
+                  lead={a.lead}
+                  status={a.status}
                 />
               </li>
             ))}
@@ -110,6 +112,8 @@ function Cell({
   url,
   confirmed,
   note,
+  lead = false,
+  status,
 }: {
   logo?: string;
   logoAspect?: Accreditation["logoAspect"];
@@ -117,6 +121,8 @@ function Cell({
   url?: string;
   confirmed: boolean;
   note?: string;
+  lead?: boolean;
+  status?: string;
 }) {
   const body = (
     <>
@@ -156,6 +162,19 @@ function Cell({
           {name}
         </Unconfirmed>
       </b>
+
+      {/* Only the lead credential keeps a status line. The other four read
+          "Member", "Registered subscriber", "Redress scheme" — table stakes that
+          every search firm in the country can print, and four of them buried the
+          one that is not. Most IPSA members are members; almost none sit on the
+          executive board. Wording follows IPSA's own announcement: Val "accepted
+          an invitation to join the IPSA Executive Board". Not "non-executive" —
+          they are different roles and IPSA published this one. */}
+      {lead && status && (
+        <span className="mt-1.5 block text-[11.5px] leading-snug font-semibold text-balance text-brand-dark">
+          {status}
+        </span>
+      )}
     </>
   );
 

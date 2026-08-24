@@ -207,7 +207,7 @@ export const accreditations: Accreditation[] = [
     url: "https://ipsa-online.org.uk/",
     lead: true,
     confirmed: true,
-    note: "Confirmed current by the business",
+    note: "IPSA's own announcement: Val 'accepted an invitation to join the IPSA Executive Board'. Executive, not non-executive — the two are different roles and this is IPSA's published wording.",
   },
   {
     id: "pccb",
