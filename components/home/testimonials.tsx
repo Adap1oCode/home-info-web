@@ -11,7 +11,9 @@ export default function Testimonials() {
   if (shown.length === 0) return null;
 
   return (
-    <section className="section-y">
+    /* `id` makes /#testimonials a linkable anchor for outreach. scroll-mt clears
+       the sticky header, which otherwise covers the heading on jump. */
+    <section id="testimonials" className="section-y scroll-mt-24">
       <div className="mx-auto max-w-[1240px] px-8 max-sm:px-6">
         <div className="mb-18 max-w-[54rem] max-lg:mb-12">
           <span className="eyebrow">From the firms who use us</span>
