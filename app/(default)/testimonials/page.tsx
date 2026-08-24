@@ -54,7 +54,12 @@ export default function TestimonialsPage() {
 
       <section className="relative overflow-hidden bg-ink py-16 text-white max-lg:py-12">
         <div className="mx-auto max-w-[1240px] px-8 max-sm:px-6">
-          <span className="eyebrow text-white/60">From the firms who use us</span>
+          {/* Not `.eyebrow` — that utility is bg-sky + text-brand-dark, built for light
+              sections. On this navy hero it rendered as a pale pill with white text on
+              it, i.e. an invisible label. Matches the founder page's dark-hero chip. */}
+          <span className="inline-flex items-center rounded-full border border-white/20 bg-white/8 px-4 py-2 text-[13px] font-medium text-white/85">
+            From the firms who use us
+          </span>
           <h1 className="mt-6 max-w-[20ch] font-display text-[clamp(32px,4vw,52px)] leading-[1.05] tracking-[-0.03em]">
             What our clients say.
           </h1>
