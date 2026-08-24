@@ -98,6 +98,7 @@ export const routes = {
   glossary: "/guides/glossary",
   quote: "/quote",
   founder: "/founder",
+  testimonials: "/testimonials",
   faqs: "/faqs",
 } as const;
 
@@ -425,11 +426,25 @@ export type VolumeBandId = (typeof quote.volumeBands)[number]["id"];
 /* ---------------------------------------------------------- testimonials */
 
 /**
- * Empty until real ones arrive. The testimonials section does not render at
- * all while this array is empty — which is the correct behaviour. Never fill
- * it with invented quotes.
+ * Real, attributable quotes only — supplied by the business, never written for
+ * a client. The section renders nothing while this array is empty, and each
+ * entry must carry `confirmed: true` to appear at all.
+ *
+ * Keep the sender's own words. Light punctuation to join their line breaks into
+ * sentences is fine; rewriting them is not.
  */
-export const testimonials: Testimonial[] = [];
+export const testimonials: Testimonial[] = [
+  {
+    quote:
+      "I must be one of Val Bennett's oldest clients, having instructed her, and her late father, as long ago as the nineteen eighties. Fantastic service — nothing too much trouble. I would wholeheartedly recommend them to anyone.",
+    name: "Roger Bower",
+    role: "Lowick Mckay Solicitors",
+    location: "Hale Barns, Cheshire",
+    source: "direct",
+    confirmed: true,
+    note: "Sent direct to the business. Full postal address on the original withheld deliberately — town and county place the firm without publishing its street.",
+  },
+];
 
 /* ---------------------------------------------------- performance tracker */
 
@@ -527,7 +542,10 @@ export const footerNav = [
   },
   {
     heading: "Company",
-    links: [{ label: `${founder.role} — ${founder.shortName.value}`, href: founder.href }],
+    links: [
+      { label: `${founder.role} — ${founder.shortName.value}`, href: founder.href },
+      { label: "What clients say", href: routes.testimonials },
+    ],
   },
 ];
 

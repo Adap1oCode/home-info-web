@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { founder, seo } from "@/config/site";
+import { founder, routes, seo } from "@/config/site";
 import { guides } from "@/content/guides";
 import { getPublishableCouncils } from "@/lib/councils";
 import { getProducts, groupProducts } from "@/lib/products";
@@ -19,8 +19,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
     { url: `${seo.siteUrl}/`, lastModified: now, changeFrequency: "weekly", priority: 1 },
     { url: `${seo.siteUrl}/councils`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
-    { url: `${seo.siteUrl}/turnaround`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
+    {
+      /* Was "/turnaround", which is not a route — see routes.tracker in config/site.ts. */
+      url: `${seo.siteUrl}${routes.tracker}`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.9,
+    },
     { url: `${seo.siteUrl}${founder.href}`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
+    {
+      url: `${seo.siteUrl}${routes.testimonials}`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
     { url: `${seo.siteUrl}/faqs`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${seo.siteUrl}/privacy-policy`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
     { url: `${seo.siteUrl}/terms-of-use`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
