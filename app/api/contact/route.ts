@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { graphMailConfigured, sendGraphMail } from "@/lib/email/send-graph-mail";
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,29 +14,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate SMTP configuration
-    if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
-      console.error("SMTP configuration missing:", {
-        hasUser: !!process.env.SMTP_USER,
-        hasPassword: !!process.env.SMTP_PASSWORD,
-      });
+    if (!graphMailConfigured() || !process.env.ENQUIRY_TO) {
+      console.error("[api/contact] Graph mail not configured");
       return NextResponse.json(
         { error: "Email service is not configured. Please contact the administrator." },
         { status: 500 }
       );
     }
 
-    // Create transporter
-    // Note: You'll need to configure SMTP settings in environment variables
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || "smtp.gmail.com",
-      port: parseInt(process.env.SMTP_PORT || "587"),
-      secure: false, // true for 465, false for other ports
-      auth: {
-        user: process.env.SMTP_USER.trim(),
-        pass: process.env.SMTP_PASSWORD.trim().replace(/\s+/g, " "), // Remove extra whitespace and normalize
-      },
-    });
 
     // Email content with professional HTML template
     const searchTypeLabels: { [key: string]: string } = {
@@ -137,8 +122,8 @@ export async function POST(request: NextRequest) {
                     <tr>
                         <td style="padding: 20px 30px; background-color: #f9fafb; border-top: 1px solid #e5e7eb; border-radius: 0 0 8px 8px; text-align: center;">
                             <p style="margin: 0; color: #6b7280; font-size: 12px;">
-                                This email was sent from the Property Search Solutions contact form.<br>
-                                Property Search Solutions Ltd | ICO Registered
+                                This email was sent from the Home Information Searches contact form.<br>
+                                Home Information Searches (HIS) Ltd | ICO Registered
                             </p>
                         </td>
                     </tr>
@@ -166,21 +151,18 @@ Message:
 ${message}
 
 ---
-This email was sent from the Property Search Solutions contact form.
-Property Search Solutions Ltd | ICO Registered
+This email was sent from the Home Information Searches contact form.
+Home Information Searches (HIS) Ltd | ICO Registered
     `;
 
     // Send email
-    const mailOptions = {
-      from: process.env.SMTP_FROM || process.env.SMTP_USER,
-      to: process.env.SMTP_TO,
+    await sendGraphMail({
+      to: process.env.ENQUIRY_TO!,
       replyTo: email,
       subject: `New Property Search Request - ${searchTypeLabels[searchType] || searchType} from ${firmName}`,
       text: textContent,
       html: htmlContent,
-    };
-
-    await transporter.sendMail(mailOptions);
+    });
 
     return NextResponse.json(
       { message: "Email sent successfully" },

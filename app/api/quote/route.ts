@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { graphMailConfigured, sendGraphMail } from "@/lib/email/send-graph-mail";
 
 import { company, quote } from "@/config/site";
 
@@ -58,8 +58,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Too many reports selected." }, { status: 400 });
     }
 
-    if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
-      console.error("[api/quote] SMTP not configured");
+    if (!graphMailConfigured() || !process.env.ENQUIRY_TO) {
+      console.error("[api/quote] Graph mail not configured");
       return NextResponse.json(
         { error: "We could not send that just now. Please call us instead." },
         { status: 500 },
@@ -170,19 +170,10 @@ export async function POST(request: NextRequest) {
       ...(trimmedNote ? ["", "Note:", trimmedNote] : []),
     ].join("\n");
 
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || "smtp.gmail.com",
-      port: parseInt(process.env.SMTP_PORT || "587"),
-      secure: false,
-      auth: {
-        user: process.env.SMTP_USER.trim(),
-        pass: process.env.SMTP_PASSWORD.trim().replace(/\s+/g, " "),
-      },
-    });
-
-    await transporter.sendMail({
-      from: process.env.SMTP_FROM || process.env.SMTP_USER,
-      to: process.env.SMTP_TO,
+    /* Sends as info@ over Graph and keeps a copy in its Sent Items.
+       replyTo is the enquirer, so replying in Outlook goes to them. */
+    await sendGraphMail({
+      to: process.env.ENQUIRY_TO!,
       replyTo: email,
       subject: header(
         `Quote request — ${firmName} — ${products.length} report${products.length === 1 ? "" : "s"}, ${volumeLabel}`,

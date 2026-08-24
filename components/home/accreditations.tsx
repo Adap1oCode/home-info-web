@@ -46,11 +46,19 @@ import { Unconfirmed } from "@/components/ui/unconfirmed";
  * most set conditions on how their mark may be displayed.
  */
 
-/** Wide, text-heavy marks need less height than square ones to read as equals. */
+/**
+ * Wide, text-heavy marks need less height than square ones to read as equals —
+ * a 16:9 wordmark set to the same height as a square crest overpowers it.
+ *
+ * These are ceilings, not sizes: every mark is object-contain, so a logo only
+ * grows until it hits its height cap or the cell's width, whichever comes
+ * first. Raised from 16/16/12 now the status lines are gone and the marks are
+ * the content rather than a garnish above it.
+ */
 const logoHeight: Record<NonNullable<Accreditation["logoAspect"]>, string> = {
-  square: "max-h-16",
-  tall: "max-h-16",
-  wide: "max-h-12",
+  square: "max-h-24",
+  tall: "max-h-24",
+  wide: "max-h-18",
 };
 
 export default function Accreditations() {
@@ -66,14 +74,13 @@ export default function Accreditations() {
     <section className="section-y pt-18 max-lg:pt-12">
       <div className="mx-auto max-w-[1240px] px-8 max-sm:px-6">
         <div className="overflow-hidden rounded-panel border border-mist bg-white shadow-[0_28px_60px_-42px_rgb(13_31_51_/_0.5)]">
-          <div className="flex flex-wrap items-baseline justify-between gap-x-10 gap-y-1.5 border-b border-mist px-7 py-5 max-sm:px-5">
+          {/* Centred, and the standfirst is gone. It explained the row rather than
+              adding to it, and a caption that says "these are links" earns less than
+              the space it took from the marks. The cells are still links. */}
+          <div className="border-b border-mist px-7 py-5 text-center max-sm:px-5">
             <h2 className="text-[11.5px] font-bold tracking-[0.15em] text-tx-mid uppercase">
-              Accredited, regulated and insured
+              Accredited and regulated
             </h2>
-            <p className="text-[13px] leading-snug text-tx-low">
-              Each badge links to the issuing body, so you can check us rather than take our word for
-              it.
-            </p>
           </div>
 
           <ul className="grid list-none grid-cols-5 gap-px bg-mist max-[1140px]:grid-cols-3 max-[1140px]:[&>li:last-child]:col-span-2 max-[620px]:grid-cols-2">
@@ -83,11 +90,9 @@ export default function Accreditations() {
                   logo={a.logo}
                   logoAspect={a.logoAspect}
                   name={a.name}
-                  status={a.status}
                   url={a.url}
                   confirmed={a.confirmed}
                   note={a.note}
-                  lead={a.lead}
                 />
               </li>
             ))}
@@ -102,20 +107,16 @@ function Cell({
   logo,
   logoAspect = "square",
   name,
-  status,
   url,
   confirmed,
   note,
-  lead = false,
 }: {
   logo?: string;
   logoAspect?: Accreditation["logoAspect"];
   name: string;
-  status: string;
   url?: string;
   confirmed: boolean;
   note?: string;
-  lead?: boolean;
 }) {
   const body = (
     <>
@@ -124,7 +125,7 @@ function Cell({
           against the tint. overflow-hidden so nothing escapes the radius.
           Every body now supplies a real mark; the fallback below is only for
           an entry added to config before its logo file arrives. */}
-      <span className="grid h-20 w-full place-items-center overflow-hidden rounded-xl bg-white px-3">
+      <span className="grid h-28 w-full place-items-center overflow-hidden rounded-xl bg-white px-2">
         {logo ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -150,36 +151,11 @@ function Cell({
         )}
       </span>
 
-      <b className="mt-4 block font-display text-[14px] leading-tight font-bold tracking-[-0.02em] text-balance text-tx">
+      <b className="mt-3.5 block font-display text-[14.5px] leading-tight font-bold tracking-[-0.02em] text-balance text-tx">
         <Unconfirmed when={confirmed} title={note}>
           {name}
         </Unconfirmed>
       </b>
-      {/* Not a flex row. Several of these statuses wrap at cell width, and as a
-          flex sibling the arrow then centred itself against the full two-line
-          block and floated off at the cell's right edge, detached from the
-          words. Inline keeps it on the heels of the last one. */}
-      <span
-        className={`mt-1.5 block text-[11.5px] leading-snug text-balance ${
-          lead ? "font-semibold text-brand-dark" : "text-tx-low"
-        }`}
-      >
-        {status}
-        {url && (
-          <svg
-            width="10"
-            height="10"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.4"
-            className="ml-1 inline-block align-middle opacity-70"
-            aria-hidden
-          >
-            <path d="M8 5h11v11M19 5 6 18" />
-          </svg>
-        )}
-      </span>
     </>
   );
 
