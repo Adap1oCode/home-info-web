@@ -145,8 +145,24 @@ export const founder = {
   role: "Founder",
   /** Her own page. Linked from the hero, the story section and the footer. */
   href: routes.founder,
-  /** /public/images/founder.jpg — a real photograph, not stock. */
-  photo: { src: "", alt: "", confirmed: false, note: "Real photo required; do not use stock" },
+  /**
+   * Her own photograph, supplied by the business for this use.
+   *
+   * Provenance, recorded rather than quietly forgotten: the file she sent
+   * carried a "Made with AI" badge in the corner, meaning it has been through a
+   * filter. val-portrait.jpg is a square crop of it, framed on her face; the
+   * corner the badge occupied is outside the crop. It is her likeness, not a
+   * synthetic person, and she supplied it herself knowing where it would go.
+   *
+   * An unfiltered original would still be better, and it is worth asking for --
+   * IPSA published a genuine photograph of her in their board announcement, so
+   * one exists. Replace this the day it arrives.
+   */
+  photo: {
+    src: "/images/val-portrait.jpg",
+    alt: "Val Bennett, founder of Home Information Searches",
+    confirmed: true,
+  },
   credentials: ["Executive Board Member, IPSA"],
   /**
    * Pull quote for the story section.

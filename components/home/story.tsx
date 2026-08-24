@@ -19,12 +19,30 @@ export default function Story() {
       <div className="mx-auto max-w-[1240px] px-17 max-lg:px-6">
         <div className="grid grid-cols-[0.8fr_1.2fr] items-center gap-19.5 max-[980px]:grid-cols-1 max-[980px]:gap-14">
           <div className="relative max-[980px]:mx-auto max-[980px]:max-w-90">
-            <div className="absolute -right-8 bottom-10 z-[3] grid h-34 w-34 place-content-center rounded-full bg-brand text-center text-white shadow-[0_22px_48px_-22px_rgb(13_31_51_/_0.5)] max-[980px]:-right-3">
-              <span className="font-display text-[42px] leading-none font-bold tracking-[-0.05em]">
-                <ConfigValue field={company.yearsInSearch} />
+            {/* Val, in the roundel that used to hold the number.
+                Small and circular on purpose. A candid phone photograph reads as
+                intentional at this size in a way it never does blown up across the
+                arch, and the ring does the framing a studio backdrop would. The
+                brand blue survives as the ring rather than as a filled disc, so the
+                composition keeps its blue anchor. */}
+            <div className="absolute -right-8 bottom-10 z-[3] h-34 w-34 overflow-hidden rounded-full bg-brand ring-4 ring-brand shadow-[0_22px_48px_-22px_rgb(13_31_51_/_0.5)] outline outline-4 outline-white max-[980px]:-right-3">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={founder.photo.src}
+                alt={founder.photo.alt}
+                className="h-full w-full object-cover"
+              />
+            </div>
+
+            {/* The years moved off the roundel to make room, and became a chip on
+                the arch. It is the same claim the heading makes alongside, so it is
+                reinforcement rather than the only place the number appears. */}
+            <div className="absolute top-6 -left-5 z-[3] rounded-full bg-white px-4.5 py-2.5 text-center shadow-[0_18px_38px_-20px_rgb(13_31_51_/_0.55)] max-[980px]:-left-2">
+              <span className="font-display text-[19px] leading-none font-bold tracking-[-0.03em] text-brand-dark">
+                <ConfigValue field={company.yearsInSearch} format={(v) => `${v} years`} />
               </span>
-              <span className="mt-1.5 text-[10.5px] font-bold uppercase tracking-[0.1em] opacity-70">
-                Years in
+              <span className="mt-1 block text-[9.5px] font-bold tracking-[0.12em] text-tx-low uppercase">
+                In property search
               </span>
             </div>
 
