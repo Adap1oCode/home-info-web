@@ -487,12 +487,15 @@ export const nav = {
    * conveyancing supplier's nav for. Say "searches" in the nav, the footer, the
    * breadcrumbs and the homepage section — one word for one thing, everywhere.
    */
+  /* Founder is hidden for now — the page still exists and still renders a
+     placeholder where her photograph should be, so nothing links to it until
+     there is a real photograph. Restore this entry, the footer link, the
+     story-section link and the sitemap entry together. */
   primary: [
     { label: "Searches", href: routes.products },
     { label: "Live Tracker", href: routes.tracker },
     { label: "Councils", href: routes.councils },
     { label: "Guides", href: routes.guides },
-    { label: "Founder", href: routes.founder },
   ],
   /** Deep-links to the real client portal in the reseller platform. */
   portalUrl: { value: "", confirmed: false, note: "Production URL of /portal in home-info" },
@@ -543,10 +546,7 @@ export const footerNav = [
   },
   {
     heading: "Company",
-    links: [
-      { label: `${founder.role} — ${founder.shortName.value}`, href: founder.href },
-      { label: "What clients say", href: routes.testimonials },
-    ],
+    links: [{ label: "What clients say", href: routes.testimonials }],
   },
 ];
 
@@ -581,7 +581,10 @@ export const seo = {
   defaultTitle: "Home Information Searches — independent property searches",
   defaultDescription:
     "Independent property searches for conveyancers and solicitors across England and Wales, with turnaround times published council by council.",
-  ogImage: "/images/og-default.png",
+  /* Was "/images/og-default.png", which does not exist — every share preview
+     on LinkedIn, WhatsApp and Slack was falling back to nothing. Points at a
+     real file until a purpose-made 1200x630 card exists. */
+  ogImage: "/images/hero-buyers.jpg",
   locale: "en_GB",
 };
 

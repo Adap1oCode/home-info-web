@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { founder, routes, seo } from "@/config/site";
+import { routes, seo } from "@/config/site";
 import { guides } from "@/content/guides";
 import { getPublishableCouncils } from "@/lib/councils";
 import { getProducts, groupProducts } from "@/lib/products";
@@ -26,7 +26,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily",
       priority: 0.9,
     },
-    { url: `${seo.siteUrl}${founder.href}`, lastModified: now, changeFrequency: "monthly", priority: 0.6 },
     {
       url: `${seo.siteUrl}${routes.testimonials}`,
       lastModified: now,

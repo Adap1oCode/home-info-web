@@ -1,0 +1,14 @@
+{
+  "note": "Pexels licence: free to use, attribution appreciated but not required. Recorded here so the source of every photograph on the site is traceable.",
+  "images": [
+    {
+      "file": "public/images/hero-buyers.jpg",
+      "photographer": "Vitaly Gariev",
+      "photographer_url": "https://www.pexels.com/@silverkblack",
+      "source": "https://www.pexels.com/photo/happy-couple-enjoying-new-home-with-keys-36729696/",
+      "used_on": "Homepage hero roundel",
+      "temporary": true,
+      "why": "Placeholder while real photography is commissioned. See scripts/fetch-stock.mjs for the standing rule this departs from."
+    }
+  ]
+}

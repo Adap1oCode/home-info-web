@@ -43,7 +43,14 @@ export const metadata: Metadata = {
     siteName: "Home Information Searches",
     title: seo.defaultTitle,
     description: seo.defaultDescription,
+    /* seo.ogImage existed in config but was never wired in here, so no og:image
+       tag was emitted at all and every share — LinkedIn, WhatsApp, Slack —
+       rendered as a bare text link. It also pointed at og-default.png, which is
+       not in the repo. Both fixed; a purpose-made 1200x630 card should replace
+       the hero photo when there is one. */
+    images: [{ url: seo.ogImage, width: 1200, height: 630, alt: seo.defaultTitle }],
   },
+  twitter: { card: "summary_large_image", title: seo.defaultTitle, images: [seo.ogImage] },
   icons: { icon: "/images/title.png" },
   /* Belt and braces with robots.ts: robots.txt is advisory, a meta tag is not,
      and a staging URL gets shared around long before anyone remembers either. */

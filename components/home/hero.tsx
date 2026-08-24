@@ -191,8 +191,8 @@ function HeroImagery({ fastest }: { fastest: { council: string; minutes: number 
       <div className="relative aspect-square overflow-hidden rounded-full ring-8 ring-white/10 shadow-[0_40px_90px_-40px_rgb(0_0_0_/_0.85)]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/images/hero-uk.jpg"
-          alt="A terrace of period houses on a residential street"
+          src="/images/hero-buyers.jpg"
+          alt="A couple with the keys to their new home, surrounded by moving boxes"
           className="h-full w-full object-cover"
         />
         <div aria-hidden className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,transparent_40%,rgb(13_31_51_/_0.45)_100%)]" />

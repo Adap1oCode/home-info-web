@@ -86,13 +86,10 @@ export default function Story() {
               refer to us. That is the part of the business we care most about keeping.
             </p>
 
-            <div className="mt-8.5 flex flex-wrap gap-6.5 border-t border-mist pt-7.5">
-              <Link href={founder.href} className="inline-flex items-center gap-2 text-[14.5px] font-semibold text-brand-dark">
-                More about <ConfigValue field={founder.shortName} /> <span aria-hidden>&rarr;</span>
-              </Link>
-              {/* "What IPSA membership means" pointed at /about/ipsa, which was
-                  never built. Worth writing — until then there is no link. */}
-            </div>
+            {/* The "More about Val" link is hidden with the rest of the founder
+                route — see nav.primary in config/site.ts. "What IPSA membership
+                means" pointed at /about/ipsa, which was never built. With both
+                gone this row holds nothing, so the rule above it goes too. */}
           </div>
         </div>
       </div>
