@@ -11,13 +11,67 @@ import { tracker } from "@/config/site";
  * averaging a fast council with a slow one describes neither. Do not derive it
  * here either.
  */
+/**
+ * One council's turnaround distribution, mirroring compute.ts.
+ *
+ * Everything suffixed `_work_days` is on the same working-day clock and is safe
+ * to show side by side. `quickest_hours` is NOT — it is elapsed wall-clock time,
+ * so a "24 min" quickest beside a "13.7 day" average is two different clocks
+ * presented as one scale. Use `quickest_work_days` when you need a low end.
+ *
+ * Publish p10..p90 as the range rather than min..max:
+ *  - min is not a best case. 12% of orders score 0 working days, and an order
+ *    completed on a Saturday scores 0 by construction. Liverpool's min is 0
+ *    against a median of 13.
+ *  - max is not comparable between councils — it grows with n, and it is usually
+ *    a single file. Durham's p90 is 12 days; its max is 43, on n=34.
+ */
 export type CouncilStat = {
   council: string;
   n: number;
+  /** Elapsed clock hours of the quickest order. Different clock — see above. */
   quickest_hours: number;
+  /** Mean. Always present. */
   average_work_days: number;
   longest_work_days: number;
+
+  /*
+   * The percentile fields below are NOT in the live payload yet.
+   *
+   * They were typed as required ahead of the compute.ts change that produces
+   * them, so TypeScript believed in them, the council pages called
+   * .toFixed(1) on median_work_days, and every top-20 council page shipped
+   * with "undefined" in three of its four tiles — 41 of them on Rochdale
+   * alone — until a build finally crashed on Oldham.
+   *
+   * Optional until the API sends them. Anything reading these must check
+   * first; hasPercentiles() below is the guard.
+   */
+  quickest_work_days?: number;
+  /** 1 in 10 back this fast or faster — the honest "best case". */
+  p10_work_days?: number;
+  /** The typical file. Preferred headline: one bad order cannot move it. */
+  median_work_days?: number;
+  /** 9 in 10 back by here — the honest "worst case". */
+  p90_work_days?: number;
 };
+
+/**
+ * True when the API has sent the percentile fields.
+ *
+ * Callers render the richer best/typical/worst tiles when this passes and fall
+ * back to the mean, the quickest and the longest when it does not — so the
+ * pages upgrade on their own the day compute.ts starts sending them.
+ */
+export function hasPercentiles(
+  s: CouncilStat,
+): s is CouncilStat & { p10_work_days: number; median_work_days: number; p90_work_days: number } {
+  return (
+    typeof s.p10_work_days === "number" &&
+    typeof s.median_work_days === "number" &&
+    typeof s.p90_work_days === "number"
+  );
+}
 
 export type ProductStat = { code: string; name: string; orders: number; share_pct: number };
 export type MonthStat = { month: string; label: string; received: number; partial: boolean };
@@ -26,6 +80,8 @@ export type PerformancePayload = {
   reseller: { id: string; name: string };
   as_of: string;
   window_days: number;
+  /** Completed orders held out of the turnaround figures, but still counted in the KPIs. */
+  excluded_from_turnaround: number;
   kpis: {
     completed_week: number;
     completed_month: number;
@@ -60,11 +116,17 @@ export async function getPerformance(): Promise<PerformancePayload | null> {
 
 /* ------------------------------------------------------------ formatting */
 
-/** Turnaround band. Thresholds match the tracker dashboard. */
-export function band(averageWorkDays: number) {
-  if (averageWorkDays <= 3) return { key: "fast", label: "3 days or under", color: "var(--color-band-fast)" } as const;
-  if (averageWorkDays <= 7) return { key: "good", label: "4–7 days", color: "var(--color-band-good)" } as const;
-  if (averageWorkDays <= 14) return { key: "watch", label: "8–14 days", color: "var(--color-band-watch)" } as const;
+/**
+ * Turnaround band. Thresholds match the tracker dashboard.
+ *
+ * Feed this the MEDIAN, not the mean. Banding on the mean lets one dragged file
+ * recolour a whole council — Durham's median is 10 working days and its mean is
+ * 11.8, entirely because 3 of its 34 orders sit past the 90th percentile.
+ */
+export function band(medianWorkDays: number) {
+  if (medianWorkDays <= 3) return { key: "fast", label: "3 days or under", color: "var(--color-band-fast)" } as const;
+  if (medianWorkDays <= 7) return { key: "good", label: "4–7 days", color: "var(--color-band-good)" } as const;
+  if (medianWorkDays <= 14) return { key: "watch", label: "8–14 days", color: "var(--color-band-watch)" } as const;
   return { key: "slow", label: "15 days or more", color: "var(--color-band-slow)" } as const;
 }
 
@@ -105,6 +167,9 @@ export function formatQuickest(hours: number): string {
  *
  * `excludeCouncil` keeps the dial's council out of the rows beneath it.
  */
+/** The median where we have it, the mean where we do not. */
+export const typical = (c: CouncilStat) => c.median_work_days ?? c.average_work_days;
+
 export function representativeCouncils(
   councils: CouncilStat[],
   count = 5,
@@ -114,8 +179,10 @@ export function representativeCouncils(
     .filter((c) => c.council !== excludeCouncil)
     .sort((a, b) => b.n - a.n)
     .slice(0, count)
-    // Fastest first: the rows read as a ladder rather than an unsorted list.
-    .sort((a, b) => a.average_work_days - b.average_work_days);
+    /* Fastest first: the rows read as a ladder rather than an unsorted list.
+       Sorts on the median where the API sends one and the mean where it does
+       not, so this keeps working either side of the percentile rollout. */
+    .sort((a, b) => typical(a) - typical(b) || (a.p90_work_days ?? a.longest_work_days) - (b.p90_work_days ?? b.longest_work_days));
 }
 
 export function shortCouncil(name: string): string {
@@ -138,7 +205,10 @@ export const formatInt = (n: number) => n.toLocaleString("en-GB");
 export function methodologyNote(): string {
   return (
     `Working days (weekends and bank holidays excluded), from order placed to completed, ` +
-    `over the last ${tracker.windowDays} days. Councils with fewer than ` +
+    `over the last ${tracker.windowDays} days. Typical is the median — half of searches ` +
+    `come back faster. Best and worst case are the 10th and 90th percentiles, so eight ` +
+    `searches in ten land between them; we publish those rather than our single fastest ` +
+    `and slowest, which describe one file each. Councils with fewer than ` +
     `${tracker.minCompletionsPerCouncil} completed searches are not shown. ` +
     `Top ${tracker.topCouncils} by volume. Updated daily.`
   );

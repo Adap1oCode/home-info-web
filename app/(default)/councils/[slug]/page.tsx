@@ -18,6 +18,7 @@ import {
   formatInt,
   formatQuickest,
   getPerformance,
+  hasPercentiles,
   methodologyNote,
   shortCouncil,
   type CouncilStat,
@@ -148,14 +149,54 @@ export default async function CouncilPage({ params }: { params: Promise<{ slug: 
           {stat ? (
             <>
               <div className="mt-8 grid grid-cols-4 gap-4 max-lg:grid-cols-2 max-[440px]:grid-cols-1">
-                <Metric
-                  value={stat.average_work_days.toFixed(1)}
-                  unit="working days"
-                  label="Average"
-                  colour={band(stat.average_work_days).color}
-                />
-                <Metric value={formatQuickest(stat.quickest_hours)} label="Quickest" />
-                <Metric value={`${stat.longest_work_days.toFixed(0)}`} unit="working days" label="Longest" />
+                {/* Best / typical / worst, all on the working-day clock.
+                    This used to read Average · Quickest · Longest, which mixed
+                    clocks — quickest was elapsed hours — and put two single
+                    orders either side of a mean. p10 and p90 describe the
+                    service; the absolute fastest and slowest describe one file
+                    each. */}
+                {hasPercentiles(stat) ? (
+                  <>
+                    <Metric
+                      value={`${stat.p10_work_days}`}
+                      unit="working days"
+                      label="Best case — 1 in 10 this fast"
+                    />
+                    <Metric
+                      value={stat.median_work_days.toFixed(1)}
+                      unit="working days"
+                      label="Typical — half are faster"
+                      colour={band(stat.median_work_days).color}
+                    />
+                    <Metric
+                      value={`${stat.p90_work_days}`}
+                      unit="working days"
+                      label="Worst case — 9 in 10 by here"
+                    />
+                  </>
+                ) : (
+                  /* The API does not send percentiles yet. These three are the
+                     mean, the fastest single order and the slowest — a weaker
+                     description of the service, but every figure is real. The
+                     branch above takes over on its own once compute.ts ships. */
+                  <>
+                    <Metric
+                      value={formatQuickest(stat.quickest_hours)}
+                      label="Quickest returned"
+                    />
+                    <Metric
+                      value={stat.average_work_days.toFixed(1)}
+                      unit="working days"
+                      label="Average"
+                      colour={band(stat.average_work_days).color}
+                    />
+                    <Metric
+                      value={`${stat.longest_work_days}`}
+                      unit="working days"
+                      label="Longest"
+                    />
+                  </>
+                )}
                 <Metric value={formatInt(stat.n)} label="Completed searches" />
               </div>
               <p className="mt-6 max-w-[46em] text-[13.5px] leading-relaxed text-tx-low">

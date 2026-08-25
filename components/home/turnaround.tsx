@@ -4,8 +4,9 @@ import { routes, tracker } from "@/config/site";
 import {
   band,
   formatInt,
-  formatQuickest,
+  hasPercentiles,
   representativeCouncils,
+  typical,
   shortCouncil,
   type CouncilStat,
   type PerformancePayload,
@@ -23,7 +24,7 @@ export default function Turnaround({ data }: { data: PerformancePayload | null }
   const busiest = councils.length ? [...councils].sort((a, b) => b.n - a.n)[0] : null;
   // Fastest few plus the slowest, so the section shows what the copy claims.
   const rows = representativeCouncils(councils, 5, busiest?.council);
-  const worst = Math.max(...rows.map((c) => c.average_work_days), 1);
+  const worst = Math.max(...rows.map(typical), 1);
 
   return (
     /*
@@ -104,13 +105,13 @@ export default function Turnaround({ data }: { data: PerformancePayload | null }
   );
 }
 
-/** Arc showing one council's average against the tracker's slowest band. */
+/** Arc showing one council's typical turnaround against the slowest band. */
 function Dial({ council }: { council: CouncilStat }) {
   const R = 90;
   const C = 2 * Math.PI * R;
   // Scale against 20 working days — beyond that the arc simply reads as full.
-  const pct = Math.min(council.average_work_days / 20, 1);
-  const raw = band(council.average_work_days);
+  const pct = Math.min(typical(council) / 20, 1);
+  const raw = band(typical(council));
   const b = { ...raw, color: onDark(raw.color) };
 
   return (
@@ -139,16 +140,23 @@ function Dial({ council }: { council: CouncilStat }) {
         </svg>
         <div className="absolute inset-0 grid place-content-center text-center">
           <span className="font-display text-[56px] leading-none font-bold tracking-[-0.05em]" style={{ color: b.color }}>
-            {council.average_work_days.toFixed(1)}
+            {typical(council).toFixed(1)}
           </span>
-          <span className="mt-1.5 text-[11.5px] tracking-[0.09em] text-white/50">WORKING DAYS</span>
+          <span className="mt-1.5 text-[11.5px] tracking-[0.09em] text-white/50">WORKING DAYS, TYPICAL</span>
         </div>
       </div>
 
       <p className="mt-6 border-t border-white/14 pt-5.5 text-[14px] leading-relaxed text-white/60">
-        Quickest <b className="text-white">{formatQuickest(council.quickest_hours)}</b> &middot; longest{" "}
-        <b className="text-white">{council.longest_work_days.toFixed(0)} days</b>
-        <br />
+        {/* p10–p90, not the single fastest and slowest. The old line paired an
+            elapsed-hours "quickest" with a working-day "longest" — two clocks,
+            and two individual files, either side of an average. */}
+        {hasPercentiles(council) && (
+          <>
+            8 in 10 come back between <b className="text-white">{council.p10_work_days}</b> and{" "}
+            <b className="text-white">{council.p90_work_days} working days</b>
+            <br />
+          </>
+        )}
         Based on <b className="text-white">{formatInt(council.n)}</b> completed searches
       </p>
     </div>
@@ -166,7 +174,7 @@ const onDark = (color: string) =>
   color.includes("band-slow") ? `color-mix(in srgb, ${color} 74%, white)` : color;
 
 function CouncilRow({ c, worst }: { c: CouncilStat; worst: number }) {
-  const raw = band(c.average_work_days);
+  const raw = band(typical(c));
   const b = { ...raw, color: onDark(raw.color) };
   return (
     <li>
@@ -182,18 +190,18 @@ function CouncilRow({ c, worst }: { c: CouncilStat; worst: number }) {
         </span>
 
         <span className="text-[13.5px] text-white/45 max-[820px]:order-4 max-[820px]:col-span-full">
-          Longest {c.longest_work_days.toFixed(0)} days
+          8 in 10 within {c.p90_work_days ?? c.longest_work_days} days
         </span>
 
         <span className="flex items-center gap-3.5 max-[820px]:order-3 max-[820px]:col-span-full">
           <span className="h-[7px] min-w-17.5 flex-1 overflow-hidden rounded-full bg-white/10">
             <span
               className="block h-full rounded-full"
-              style={{ width: `${Math.max((c.average_work_days / worst) * 100, 6)}%`, background: b.color }}
+              style={{ width: `${Math.max((typical(c) / worst) * 100, 6)}%`, background: b.color }}
             />
           </span>
           <span className="font-display text-[19px] font-bold tracking-[-0.03em] whitespace-nowrap" style={{ color: b.color }}>
-            {c.average_work_days.toFixed(1)}d
+            {typical(c).toFixed(1)}d
           </span>
         </span>
 
@@ -207,7 +215,7 @@ function CouncilRow({ c, worst }: { c: CouncilStat; worst: number }) {
              4.9:1 against this, where 4.5 is the bar for 11.5px text. */
           style={{ background: "rgb(0 0 0 / 0.25)", color: b.color }}
         >
-          Quickest {formatQuickest(c.quickest_hours)}
+          Best case {c.p10_work_days ?? typical(c).toFixed(1)}d
         </span>
       </Link>
     </li>

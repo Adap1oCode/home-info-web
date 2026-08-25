@@ -4,13 +4,38 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 /* ----------------------------- data contract ----------------------------- */
 
+/**
+ * One council's turnaround distribution.
+ *
+ * Everything suffixed `_work_days` shares the working-day clock and can be shown
+ * side by side. `quickest_hours` cannot — it is elapsed wall-clock time. Showing
+ * a "24 min" quickest next to a "13.7 day" average, as this row used to, put two
+ * different clocks on one line and read as a range when it was nothing of the
+ * sort.
+ *
+ * The published range is p10..p90, not min..max. Min is not a best case: 12% of
+ * orders score 0 working days and a Saturday completion scores 0 by
+ * construction (Liverpool's min is 0 against a median of 13). Max is not
+ * comparable between councils: it grows with n and is usually one file (Durham
+ * p90 12, max 43, on n=34). Both stay available on hover.
+ */
 export type CouncilStat = {
   council: string;
   n: number;
   quickest_hours: number;
+  /* Not sent by the API yet — see normaliseCouncils below, which fills them
+     from what the payload does carry so nothing downstream renders NaN. */
+  quickest_work_days?: number;
+  p10_work_days?: number;
+  median_work_days?: number;
   average_work_days: number;
+  p90_work_days?: number;
   longest_work_days: number;
 };
+/** A CouncilStat after normaliseCouncils has filled the percentile fields. */
+export type FilledCouncilStat = CouncilStat &
+  Required<Pick<CouncilStat, "median_work_days" | "p10_work_days" | "p90_work_days" | "quickest_work_days">>;
+
 export type ProductStat = { code: string; name: string; orders: number; share_pct: number };
 export type MonthStat = { month: string; label: string; received: number; partial: boolean };
 export type PerformancePayload = {
@@ -26,6 +51,8 @@ export type PerformancePayload = {
     top_count: number;
   };
   fastest: { council: string; minutes: number } | null;
+  /** Completed orders held out of the turnaround figures, still counted in the KPIs. */
+  excluded_from_turnaround: number;
   councils: CouncilStat[];
   products: ProductStat[];
   monthly: MonthStat[];
@@ -46,12 +73,7 @@ function shortCouncil(name: string): string {
     .trim();
 }
 
-function fmtQuickest(hours: number): string {
-  if (hours < 1) return `${Math.round(hours * 60)} min`;
-  if (hours < 48) return `${Math.round(hours)} hrs`;
-  return `${Math.round(hours / 24)} days`;
-}
-
+/** Banded on the MEDIAN — a mean lets one dragged file recolour a whole council. */
 function band(avg: number) {
   if (avg <= 3) return { key: "fast", color: "#10b981", soft: "#d1fae5", label: "≤ 3 days" };
   if (avg <= 7) return { key: "good", color: "#4C96DE", soft: "#dbeafe", label: "4–7 days" };
@@ -146,10 +168,12 @@ function Kpi({
 
 /* ---------------------------- council leaderboard ------------------------- */
 
-function Leaderboard({ councils }: { councils: CouncilStat[] }) {
+function Leaderboard({ councils }: { councils: FilledCouncilStat[] }) {
   const { ref, inView } = useInView<HTMLDivElement>();
   const [q, setQ] = useState("");
-  const axisMax = Math.max(21, Math.ceil(Math.max(...councils.map((c) => c.average_work_days))));
+  // Scaled to the widest p90, not the widest single order. One 43-day Durham
+  // file would otherwise squash every other council into the left quarter.
+  const axisMax = Math.max(21, Math.ceil(Math.max(...councils.map((c) => c.p90_work_days))));
 
   const rows = councils.filter((c) => c.council.toLowerCase().includes(q.trim().toLowerCase()));
 
@@ -176,7 +200,7 @@ function Leaderboard({ councils }: { councils: CouncilStat[] }) {
           ].map((l) => (
             <span key={l.t} className="inline-flex items-center gap-1.5">
               <span className="h-2.5 w-2.5 rounded-full" style={{ background: l.c }} />
-              {l.t} avg
+              {l.t} typical
             </span>
           ))}
         </div>
@@ -184,13 +208,24 @@ function Leaderboard({ councils }: { councils: CouncilStat[] }) {
 
       <div className="divide-y divide-gray-100">
         {rows.map((c, i) => {
-          const b = band(c.average_work_days);
-          const w = Math.min((c.average_work_days / axisMax) * 100, 100);
-          const longPos = Math.min((c.longest_work_days / axisMax) * 100, 100);
+          // Banded, sorted and headlined on the median. Everything positional
+          // below is a working-day figure, so the bar is one consistent scale.
+          const b = band(c.median_work_days);
+          const pos = (v: number) => Math.min(Math.max((v / axisMax) * 100, 0), 100);
+          const lo = pos(c.p10_work_days);
+          const hi = pos(c.p90_work_days);
+          const mid = pos(c.median_work_days);
+          const d = (v: number) => (v % 1 ? v.toFixed(1) : String(v));
           return (
             <div
               key={c.council}
               className="grid grid-cols-[1.4rem_9rem_1fr_5rem] items-center gap-3 py-3 sm:grid-cols-[1.6rem_12rem_1fr_6rem] sm:gap-4"
+              title={
+                `${c.council} — ${c.n.toLocaleString()} completed searches\n` +
+                `typical (median) ${d(c.median_work_days)} working ${c.median_work_days === 1 ? "day" : "days"} · mean ${d(c.average_work_days)}\n` +
+                `8 in 10 land between ${d(c.p10_work_days)} and ${d(c.p90_work_days)}\n` +
+                `absolute fastest ${d(c.quickest_work_days)}, slowest ${d(c.longest_work_days)}`
+              }
             >
               <div className="text-right text-xs font-semibold text-gray-300" style={{ fontFamily: SORA }}>
                 {i + 1}
@@ -200,40 +235,48 @@ function Leaderboard({ councils }: { councils: CouncilStat[] }) {
                 <div className="truncate text-sm font-semibold text-gray-900" title={c.council}>
                   {shortCouncil(c.council)}
                 </div>
-                <div className="mt-0.5 flex items-center gap-1.5">
-                  <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 px-1.5 py-0.5 text-[10px] font-bold text-emerald-600">
-                    <svg viewBox="0 0 24 24" className="h-2.5 w-2.5 fill-current">
-                      <path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z" />
-                    </svg>
-                    {fmtQuickest(c.quickest_hours)}
-                  </span>
-                  <span className="text-[10px] text-gray-400">{c.n.toLocaleString()} searches</span>
-                </div>
+                {/* The lightning "quickest" badge used to sit here. It was the single
+                    luckiest order in 90 days, quoted in clock hours beside an average
+                    in working days — "24 min" next to "13.7 days". It is on hover now,
+                    where it is detail rather than the headline. */}
+                <div className="mt-0.5 text-[10px] text-gray-400">{c.n.toLocaleString()} searches</div>
               </div>
 
               <div className="relative h-7">
                 <div className="absolute inset-y-0 left-0 right-0 my-auto h-2.5 rounded-full bg-gray-100" />
+                {/* p10 → p90: where 8 searches in 10 land. */}
                 <div
-                  className="absolute inset-y-0 left-0 my-auto h-2.5 rounded-full transition-[width] duration-1000 ease-out"
+                  className="absolute inset-y-0 my-auto h-2.5 rounded-full transition-[width,opacity] duration-1000 ease-out"
                   style={{
-                    width: inView ? `${w}%` : "0%",
-                    background: `linear-gradient(90deg, ${b.color}cc, ${b.color})`,
+                    left: `${lo}%`,
+                    width: inView ? `${Math.max(hi - lo, 1.2)}%` : "0%",
+                    opacity: inView ? 1 : 0,
+                    background: `${b.color}66`,
                     transitionDelay: `${i * 45}ms`,
                   }}
                 />
-                {/* longest marker */}
+                {/* Median: half the searches come back faster than this line. */}
                 <div
-                  className="absolute inset-y-0 my-auto h-4 w-[3px] rounded-full bg-gray-300"
-                  style={{ left: `calc(${longPos}% - 1.5px)` }}
-                  title={`Longest: ${c.longest_work_days} working days`}
+                  className="absolute inset-y-0 my-auto h-5 w-[3px] rounded-full transition-opacity duration-700"
+                  style={{
+                    left: `calc(${mid}% - 1.5px)`,
+                    background: b.color,
+                    opacity: inView ? 1 : 0,
+                    transitionDelay: `${i * 45 + 250}ms`,
+                  }}
                 />
               </div>
 
-              <div className="text-right">
-                <span className="text-lg font-bold text-gray-900" style={{ fontFamily: SORA }}>
-                  {c.average_work_days % 1 ? c.average_work_days.toFixed(1) : c.average_work_days}
-                </span>
-                <span className="ml-0.5 text-[11px] text-gray-400">days</span>
+              <div className="text-right leading-tight">
+                <div>
+                  <span className="text-lg font-bold text-gray-900" style={{ fontFamily: SORA }}>
+                    {d(c.median_work_days)}
+                  </span>
+                  <span className="ml-0.5 text-[11px] text-gray-400">days</span>
+                </div>
+                <div className="text-[10px] tabular-nums text-gray-400">
+                  {d(c.p10_work_days)}–{d(c.p90_work_days)}
+                </div>
               </div>
             </div>
           );
@@ -243,8 +286,9 @@ function Leaderboard({ councils }: { councils: CouncilStat[] }) {
         )}
       </div>
       <p className="mt-4 text-xs text-gray-400">
-        Bar = average working days (fastest first). Grey tick = the single longest we recorded. Lightning badge = the
-        quickest. “n” = searches completed.
+        The shaded band is where 8 searches in 10 land; the line inside it is the median — half come back faster than
+        that. Rows are ordered by median, quickest first. Hover a row for the mean and for the single fastest and slowest
+        we recorded. Everything is in working days.
       </p>
     </div>
   );
@@ -392,11 +436,42 @@ function VolumeArea({ monthly }: { monthly: MonthStat[] }) {
 
 /* --------------------------------- shell ---------------------------------- */
 
-export default function TrackerDashboard({ data }: { data: PerformancePayload }) {
+/**
+ * Fill the percentile fields the public API does not send yet.
+ *
+ * The dashboard was rewritten to describe the service in p10/median/p90, which
+ * is the better description — one bad order cannot move a median. The API still
+ * sends only quickest, mean and longest, so every one of those reads came back
+ * undefined and the page rendered "NaN" and "undefined working days".
+ *
+ * Rather than guard ten call sites, the gap is closed once here: the median
+ * falls back to the mean, the best case to the quickest, the worst to the
+ * longest. Every figure shown is still a real measured number — just a coarser
+ * description than the percentiles will give. Delete this the day
+ * compute.ts starts sending them; the shape is identical.
+ */
+function normaliseCouncils(councils: CouncilStat[]): FilledCouncilStat[] {
+  return councils.map((c) => ({
+    ...c,
+    median_work_days: c.median_work_days ?? c.average_work_days,
+    p10_work_days: c.p10_work_days ?? Math.round((c.quickest_hours / 24) * 10) / 10,
+    p90_work_days: c.p90_work_days ?? c.longest_work_days,
+    quickest_work_days: c.quickest_work_days ?? Math.round((c.quickest_hours / 24) * 10) / 10,
+  }));
+}
+
+export default function TrackerDashboard({ data: raw }: { data: PerformancePayload }) {
   const hero = useInView<HTMLDivElement>();
+  const data = useMemo(
+    () => ({ ...raw, councils: normaliseCouncils(raw.councils) }),
+    [raw],
+  );
 
   const derived = useMemo(() => {
-    const within2w = data.councils.filter((c) => c.average_work_days <= 10).length;
+    // Counted on the p90, not the mean: "9 in 10 back within two working weeks"
+    // is a promise that holds. The same sentence on a mean, or on a median, is
+    // true of only half the files and would not survive a client asking.
+    const within2w = data.councils.filter((c) => c.p90_work_days <= 10).length;
     const monthlyAvg = Math.round(
       data.monthly.filter((m) => !m.partial).reduce((s, m) => s + m.received, 0) /
         Math.max(1, data.monthly.filter((m) => !m.partial).length),
@@ -479,11 +554,12 @@ export default function TrackerDashboard({ data }: { data: PerformancePayload })
             </h2>
             <p className="mt-3 text-gray-600">
               A blended average would be meaningless — turnaround depends entirely on the local authority. So we publish
-              every busy council we work with: the ones that answer in minutes, and the few that take longer.{" "}
+              every busy council we work with: the ones that answer in minutes, and the few that take longer. Each row
+              shows the whole spread rather than a single flattering number.{" "}
               <span className="font-semibold text-gray-900">
                 {derived.within2w} of {data.kpis.top_count}
               </span>{" "}
-              come back within two working weeks.
+              get 9 searches in 10 back within two working weeks.
             </p>
           </div>
 
@@ -549,7 +625,17 @@ export default function TrackerDashboard({ data }: { data: PerformancePayload })
           <p className="mt-10 text-xs text-slate-400">
             Turnaround measured in working days (weekends &amp; bank holidays excluded), from order placed to completed
             search returned, over the rolling {data.window_days} days to {asOf}. Completed orders only; councils with
-            fewer than 5 searches are excluded.
+            fewer than 5 searches are excluded. The headline figure per council is the median and the band spans the
+            10th to 90th percentile — we publish the spread rather than a best case, because a single lucky or unlucky
+            file should not move a published number.
+            {data.excluded_from_turnaround > 0 && (
+              <>
+                {" "}
+                {data.excluded_from_turnaround} completed{" "}
+                {data.excluded_from_turnaround === 1 ? "search is" : "searches are"} held out of the turnaround figures
+                at a client&rsquo;s request; they remain in the volume counts above.
+              </>
+            )}
           </p>
         </div>
       </section>
