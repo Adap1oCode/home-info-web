@@ -5,7 +5,6 @@ import {
   band,
   formatInt,
   formatQuickest,
-  methodologyNote,
   representativeCouncils,
   shortCouncil,
   type CouncilStat,
@@ -48,13 +47,16 @@ export default function Turnaround({ data }: { data: PerformancePayload | null }
             <span className="pip bg-brand-light" />
             Live turnaround tracker
           </span>
+          {/* Was "Their published target, next to what we actually achieved."
+              Nothing in this section shows a council's published target -- it shows
+              our quickest, average and longest -- so the headline promised a
+              comparison the rows underneath do not make. */}
           <h2 className="mt-6 text-[clamp(30px,3.5vw,46px)] tracking-[-0.03em]">
-            Their published target, next to what we actually achieved.
+            What we actually achieved, council by council.
           </h2>
           <p className="mt-6 max-w-[40em] text-[19px] leading-relaxed text-white/65">
-            Every local authority publishes a target. We measure every search we complete — order
-            placed to delivered, in working days — and publish the quickest, the average and the
-            longest for each council, including the ones where we are slower than we would like.
+            Not target times. The quickest, the average and the longest for every council we work
+            with &mdash; including the ones where we are slower than we would like.
           </p>
         </div>
 
@@ -88,9 +90,11 @@ export default function Turnaround({ data }: { data: PerformancePayload | null }
                 >
                   Open the live tracker
                 </Link>
-                <p className="ml-auto max-w-[30em] text-[13px] leading-relaxed text-white/40">
-                  {methodologyNote()}
-                </p>
+                {/* The methodology note lived here -- working days, 90-day window,
+                    the 5-search floor, top 20, updated daily. Four sentences of
+                    footnote under two buttons, set in white/40 which is 3.76:1 on
+                    this background and fails AA anyway. It belongs on the tracker,
+                    which states it in full. */}
               </div>
             </div>
           </div>
@@ -106,7 +110,8 @@ function Dial({ council }: { council: CouncilStat }) {
   const C = 2 * Math.PI * R;
   // Scale against 20 working days — beyond that the arc simply reads as full.
   const pct = Math.min(council.average_work_days / 20, 1);
-  const b = band(council.average_work_days);
+  const raw = band(council.average_work_days);
+  const b = { ...raw, color: onDark(raw.color) };
 
   return (
     <div className="rounded-panel border border-white/10 bg-white/5 p-9 text-center max-[1080px]:max-w-100">
@@ -150,8 +155,19 @@ function Dial({ council }: { council: CouncilStat }) {
   );
 }
 
+/**
+ * --color-band-slow is 3.33:1 on bg-ink, which fails AA. It cannot simply be
+ * lightened in the token: the same value is small text on white in the quote
+ * builder and on the council pages, where lightening it would fail the other
+ * way. So it is lifted towards white here, on the one dark background that
+ * needs it, which takes it to about 5:1.
+ */
+const onDark = (color: string) =>
+  color.includes("band-slow") ? `color-mix(in srgb, ${color} 74%, white)` : color;
+
 function CouncilRow({ c, worst }: { c: CouncilStat; worst: number }) {
-  const b = band(c.average_work_days);
+  const raw = band(c.average_work_days);
+  const b = { ...raw, color: onDark(raw.color) };
   return (
     <li>
       <Link
@@ -183,7 +199,13 @@ function CouncilRow({ c, worst }: { c: CouncilStat; worst: number }) {
 
         <span
           className="rounded-full px-3.5 py-1.5 text-[11.5px] font-bold tracking-[0.04em] whitespace-nowrap"
-          style={{ background: `color-mix(in srgb, ${b.color} 16%, transparent)`, color: b.color }}
+          /* Darker than the section, not a tint of b.color.
+             Tinting the chip with 16% of its own text colour left the two within
+             3.0-3.9:1 for three of the four bands, worst on the red. A white wash
+             was no better: lifting the background lifts it towards the text.
+             Going darker moves the two apart instead -- every band now clears
+             4.9:1 against this, where 4.5 is the bar for 11.5px text. */
+          style={{ background: "rgb(0 0 0 / 0.25)", color: b.color }}
         >
           Quickest {formatQuickest(c.quickest_hours)}
         </span>
