@@ -26,13 +26,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily",
       priority: 0.9,
     },
-    {
-      url: `${seo.siteUrl}${routes.testimonials}`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    { url: `${seo.siteUrl}/faqs`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
+    /* /faqs and /testimonials are homepage anchors now, not URLs. A fragment
+       is not a separate page and must never be listed as one. */
     { url: `${seo.siteUrl}/privacy-policy`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
     { url: `${seo.siteUrl}/terms-of-use`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
   ];

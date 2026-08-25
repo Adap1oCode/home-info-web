@@ -540,7 +540,7 @@ export default function TrackerDashboard({ data }: { data: PerformancePayload })
               Get a quote
             </a>
             <a
-              href="/faqs"
+              href="/#faqs"
               className="rounded-xl border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
             >
               How it works

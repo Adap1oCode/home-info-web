@@ -106,8 +106,18 @@ export const routes = {
   glossary: "/guides/glossary",
   quote: "/quote",
   founder: "/founder",
-  testimonials: "/testimonials",
-  faqs: "/faqs",
+  /**
+   * Anchors, not pages.
+   *
+   * Neither had enough of its own to justify a URL. /testimonials carried one
+   * quote, the same one the homepage shows, so it was a second address for
+   * nothing. /faqs held eleven questions to the homepage's six — five extra,
+   * which is not a page's worth, and split one set of answers over two URLs
+   * competing for the same queries. The homepage now carries all eleven and
+   * both old paths 301 to the anchor (see next.config.js).
+   */
+  testimonials: "/#testimonials",
+  faqs: "/#faqs",
 } as const;
 
 /* ---------------------------------------------------------------- company */

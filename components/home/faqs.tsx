@@ -1,14 +1,16 @@
-import Link from "next/link";
-
 import FaqList, { FaqJsonLd } from "@/components/faq-list";
 import { routes } from "@/config/site";
-import { faqs, featuredFaqs } from "@/content/faqs";
+import { faqs } from "@/content/faqs";
 
 /**
- * Six questions here, the full set on /faqs.
+ * Every question, here. There is no /faqs any more.
  *
- * The subset is not padding — showing all ten on both pages would put the same
- * ten answers on two URLs and give a crawler no reason to index the second one.
+ * The split was six featured here and all eleven on a separate page, which put
+ * one set of answers on two URLs competing for the same queries and left the
+ * homepage set looking arbitrary. The five that were page-only are the ones a
+ * reader is most likely to have — what a purchase actually needs, what it
+ * costs, whether lenders accept personal searches. Holding those back to make a
+ * second page work was the wrong trade.
  *
  * No phone number here. It used to sit in a sticky side column at 30px, one
  * section above the closing CTA which shows it again at 42px — two large
@@ -30,19 +32,17 @@ export default function Faqs() {
               The things we get asked most.
             </h2>
           </div>
+          {/* The "all N questions" link pointed at the page this section replaced.
+              Every question is on this page now, so there is nowhere to send them. */}
           <p className="max-w-[30em] text-[16.5px] leading-relaxed text-tx-mid">
-            Straight answers, including the ones that end in &ldquo;you do not need
-            that&rdquo;.{" "}
-            <Link href={routes.faqs} className="font-semibold text-brand-dark whitespace-nowrap">
-              All {faqs.length} questions &rarr;
-            </Link>
+            Straight answers, including the ones that end in &ldquo;you do not need that&rdquo;.
           </p>
         </div>
 
-        <FaqList items={featuredFaqs} columns={2} />
+        <FaqList items={faqs} columns={2} />
       </div>
 
-      <FaqJsonLd items={featuredFaqs} />
+      <FaqJsonLd items={faqs} />
     </section>
   );
 }
