@@ -55,7 +55,7 @@ export default function Pillars({ data }: { data: PerformancePayload | null }) {
         <div className="mb-18 max-w-[54rem] max-lg:mb-12">
           <span className="eyebrow">Why firms move to us</span>
           <h2 className="mt-6 text-[clamp(30px,3.5vw,46px)] tracking-[-0.03em]">
-            Three things we are judged on — and what we can show you for each.
+            Three things we are judged on.
           </h2>
         </div>
 
@@ -71,9 +71,10 @@ export default function Pillars({ data }: { data: PerformancePayload | null }) {
             tone="dark"
             body={
               <>
-                Every report is read against the property, the title and the enquiry before it
-                reaches your file. Where there is something you will want to look at twice, we say so
-                at the top — rather than leaving it for you to find on page nine.
+                {/* The first sentence was word for word step three of the process
+                    section below. One statement, in the place it belongs. */}
+                Where there is something you will want to look at twice, we say so at the top, not
+                on page nine.
               </>
             }
             value="Every report"
@@ -96,9 +97,9 @@ export default function Pillars({ data }: { data: PerformancePayload | null }) {
             tone="light"
             body={
               <>
-                Most providers quote a range. We publish what we actually achieved — the quickest,
-                the average and the longest — for each individual council, rather than one blended
-                figure that hides the difference between them.
+                {/* "The quickest, the average and the longest" was said three times on
+                    this page, and the tracker two sections below shows the numbers. */}
+                Most providers quote a range. We publish the figures council by council.
               </>
             }
             value={k ? `${k.within_5_days_of_top} of ${k.top_count}` : "Council by council"}
@@ -115,11 +116,11 @@ export default function Pillars({ data }: { data: PerformancePayload | null }) {
             tone="coral"
             body={
               <>
-                One direct number, not a ticket queue — and the person who picks it up has worked in
-                property search for{" "}
-                <ConfigValue field={company.yearsInSearch} format={(v) => `${v} years`} />. If a
-                completion moves or a client raises something unusual, you can talk it through with
-                someone who already knows the file.
+                {/* The second sentence was near word for word the "Some things are
+                    quicker on the phone" section, and the years are the story
+                    section's headline. Both are better where they already are. */}
+                One direct number, not a ticket queue, answered by someone who already knows the
+                file.
               </>
             }
             value={

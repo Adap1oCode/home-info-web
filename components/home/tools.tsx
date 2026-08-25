@@ -46,9 +46,11 @@ export default function Tools() {
     <section id="tools" className="section-y bg-white">
       <div className="mx-auto max-w-[1240px] px-8 max-sm:px-6">
         <div className="mb-18 max-w-[54rem] max-lg:mb-12">
-          <span className="eyebrow">Work it out yourself</span>
+          {/* Was "Work it out yourself", which reads as a brush-off on a page
+              whose argument is that a person answers the phone. */}
+          <span className="eyebrow">Tools</span>
           <h2 className="mt-6 text-[clamp(30px,3.5vw,46px)] tracking-[-0.03em]">
-            Answers before you&rsquo;ve spoken to anyone.
+            Get a price, or check a council&rsquo;s turnaround.
           </h2>
           <p className="mt-6 max-w-[40em] text-[19px] leading-relaxed text-tx-mid">
             These use the same live data as our turnaround tracker and the same pricing as your

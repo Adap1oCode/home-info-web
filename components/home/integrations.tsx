@@ -53,11 +53,11 @@ export default function Integrations() {
             </span>
             <span className="eyebrow">Where the data comes from</span>
             <h2 className="mt-5.5 mb-6.5 text-[clamp(30px,3.5vw,46px)] tracking-[-0.03em]">
-              Direct integrations with the organisations that hold the data.
+              Who we order from.
             </h2>
             <p className="mb-4.5 max-w-[34em] text-[16.5px] leading-loose text-tx-mid">
-              Our systems connect directly to the suppliers and registries the reports come from,
-              so what reaches your file is what the source returned.
+              We order direct from the supplier, so nothing is re-typed or re-packaged on the way
+              to your file.
             </p>
             {/* "Registered with the PCCB as a Search Code subscriber, and a member
                 of IPSA" was here. The accreditations panel sits directly above this

@@ -36,7 +36,8 @@ export default function Guides() {
               standing on a sky band — left alone the pill vanishes and the
               label reads as loose blue text while every other section on the
               page shows it as a pill. */}
-          <span className="eyebrow bg-white">Worth reading</span>
+          {/* "Worth reading" was ours to earn, not to assert. */}
+          <span className="eyebrow bg-white">Guides</span>
           <h2 className="mt-6 text-[clamp(30px,3.5vw,46px)] tracking-[-0.03em]">
             Guides and explainers.
           </h2>

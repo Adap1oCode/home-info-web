@@ -12,7 +12,7 @@ const steps = [
   {
     n: 3,
     title: "A person reads it",
-    body: "Read against the property, the title and the enquiry, so that what comes back answers the question you actually asked.",
+    body: "Read against the property, the title and the enquiry before it goes out.",
   },
   {
     n: 4,
@@ -26,7 +26,7 @@ export default function Process() {
     <section className="section-y">
       <div className="mx-auto max-w-[1240px] px-8 max-sm:px-6">
         <div className="mb-18 max-w-[54rem] max-lg:mb-12">
-          <span className="eyebrow">How an order actually runs</span>
+          <span className="eyebrow">How an order runs</span>
           <h2 className="mt-6 text-[clamp(30px,3.5vw,46px)] tracking-[-0.03em]">
             Four steps — and we do the chasing in all of them.
           </h2>
