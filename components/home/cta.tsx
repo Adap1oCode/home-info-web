@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import PropertyLookup from "@/components/home/property-lookup";
+
 import { contact, nav, phoneHref } from "@/config/site";
 import { Unconfirmed } from "@/components/ui/unconfirmed";
 
@@ -26,7 +28,14 @@ export default function Cta() {
               Tell us the property and which reports you need, and we will price it against that
               council&rsquo;s own fees.
             </p>
-            <div className="mt-9 flex flex-wrap gap-3">
+            {/* The postcode box, not a second full enquiry form. The quote
+                builder asks a solicitor to pick report types before they have
+                given us anything; this asks for a postcode, answers a question
+                they actually have, and only then asks for an email. The full
+                builder is still the link below for anyone who wants it. */}
+            <PropertyLookup className="mt-9" />
+
+            <div className="mt-7 flex flex-wrap gap-3">
               <Link
                 href={nav.primaryCta.href}
                 className="inline-flex items-center gap-2.5 rounded-xl bg-coral-deep px-7 py-4 text-[15px] font-semibold text-white transition hover:-translate-y-0.5 hover:bg-coral"
