@@ -29,6 +29,8 @@ const esc = (v: unknown) =>
     .replace(/'/g, "&#39;");
 
 type Incoming = {
+  /** Optional. The council decides the fee, so this is what makes a quote exact. */
+  propertyAddress?: string;
   name?: string;
   firmName?: string;
   email?: string;
@@ -41,7 +43,7 @@ type Incoming = {
 export async function POST(request: NextRequest) {
   try {
     const body = (await request.json()) as Incoming;
-    const { name, firmName, email, phone, volume, note, products } = body;
+    const { propertyAddress, name, firmName, email, phone, volume, note, products } = body;
 
     if (!name || !firmName || !email || !Array.isArray(products) || products.length === 0) {
       return NextResponse.json(
@@ -114,6 +116,12 @@ export async function POST(request: NextRequest) {
 
         <tr><td style="padding:26px 30px;">
           <table role="presentation" style="width:100%;border-collapse:collapse;margin-bottom:22px;">
+            ${
+              propertyAddress?.trim()
+                ? `<tr><td style="padding:12px;background:#F7F9FC;border-bottom:1px solid #DCE5EF;font-weight:700;width:150px;">Property</td>
+                <td style="padding:12px;border-bottom:1px solid #DCE5EF;font-weight:700;">${esc(propertyAddress.trim())}</td></tr>`
+                : ""
+            }
             <tr><td style="padding:12px;background:#F7F9FC;border-bottom:1px solid #DCE5EF;font-weight:700;width:150px;">Name</td>
                 <td style="padding:12px;border-bottom:1px solid #DCE5EF;">${esc(name)}</td></tr>
             <tr><td style="padding:12px;background:#F7F9FC;border-bottom:1px solid #DCE5EF;font-weight:700;">Firm</td>
@@ -156,6 +164,7 @@ export async function POST(request: NextRequest) {
       `Quote request — ${firmName}`,
       `${products.length} report(s) · ${volumeLabel}`,
       "",
+      ...(propertyAddress?.trim() ? [`Property: ${propertyAddress.trim()}`] : []),
       `Name:  ${name}`,
       `Firm:  ${firmName}`,
       `Email: ${email}`,
@@ -175,8 +184,12 @@ export async function POST(request: NextRequest) {
     await sendGraphMail({
       to: process.env.ENQUIRY_TO!,
       replyTo: email,
+      /* Property first in the subject where we have it: in an inbox list the
+         address identifies the enquiry faster than the report count does. */
       subject: header(
-        `Quote request — ${firmName} — ${products.length} report${products.length === 1 ? "" : "s"}, ${volumeLabel}`,
+        propertyAddress?.trim()
+          ? `Quote request — ${firmName} — ${propertyAddress.trim()}`
+          : `Quote request — ${firmName} — ${products.length} report${products.length === 1 ? "" : "s"}, ${volumeLabel}`,
       ),
       text,
       html,

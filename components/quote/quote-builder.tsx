@@ -40,7 +40,7 @@ export default function QuoteBuilder({
   const [query, setQuery] = useState("");
   const [openGroup, setOpenGroup] = useState<string | null>(groups[0] ?? null);
   const [volume, setVolume] = useState<string>("");
-  const [form, setForm] = useState({ name: "", firmName: "", email: "", phone: "", note: "" });
+  const [form, setForm] = useState({ propertyAddress: "", name: "", firmName: "", email: "", phone: "", note: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
 
@@ -231,7 +231,25 @@ export default function QuoteBuilder({
         {/* --------------------------------------------------- details */}
         <div className="mt-12">
           <Step n={3} title="Who should we come back to?" />
-          <div className="mt-5 grid grid-cols-2 gap-4 max-[640px]:grid-cols-1">
+
+          {/* The address was missing entirely, while three places on the site told
+              the reader to send one — the homepage CTA, the tools section and the
+              FAQ that promises "send an address and you will have a figure back".
+              A conveyancer following that instruction had nowhere to put it but
+              the free-text note. It stays optional: some enquiries are genuinely
+              "what do you charge at volume" rather than "price this house". */}
+          <div className="mt-5">
+            <Field
+              label="Property address or postcode"
+              value={form.propertyAddress}
+              onChange={(v) => setForm({ ...form, propertyAddress: v })}
+            />
+            <p className="mt-1.5 text-[13px] text-tx-low">
+              Optional, but it lets us price against the right council&rsquo;s fees first time.
+            </p>
+          </div>
+
+          <div className="mt-4 grid grid-cols-2 gap-4 max-[640px]:grid-cols-1">
             <Field label="Your name" required value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
             <Field label="Firm" required value={form.firmName} onChange={(v) => setForm({ ...form, firmName: v })} />
             <Field label="Email" type="email" required value={form.email} onChange={(v) => setForm({ ...form, email: v })} />
