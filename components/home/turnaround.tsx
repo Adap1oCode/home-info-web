@@ -22,7 +22,7 @@ export default function Turnaround({ data }: { data: PerformancePayload | null }
   // The dial features the highest-volume council, which is the most representative sample.
   const busiest = councils.length ? [...councils].sort((a, b) => b.n - a.n)[0] : null;
   // Fastest few plus the slowest, so the section shows what the copy claims.
-  const rows = representativeCouncils(councils, 5);
+  const rows = representativeCouncils(councils, 5, busiest?.council);
   const worst = Math.max(...rows.map((c) => c.average_work_days), 1);
 
   return (
@@ -55,8 +55,8 @@ export default function Turnaround({ data }: { data: PerformancePayload | null }
             What we actually achieved, council by council.
           </h2>
           <p className="mt-6 max-w-[40em] text-[19px] leading-relaxed text-white/65">
-            Not target times. The quickest, the average and the longest for every council we work
-            with &mdash; including the ones where we are slower than we would like.
+            Not target times. The quickest, the average and the longest for the authorities we work
+            in day in, day out &mdash; including the ones where we are slower than we would like.
           </p>
         </div>
 

@@ -89,11 +89,33 @@ export function formatQuickest(hours: number): string {
  * slow ones too. This keeps the fastest few and always includes the slowest, so
  * the section says what it shows.
  */
-export function representativeCouncils(councils: CouncilStat[], count = 5): CouncilStat[] {
-  if (councils.length <= count) return councils;
-  const fastest = councils.slice(0, count - 1);
-  const slowest = councils[councils.length - 1];
-  return [...fastest, slowest];
+/**
+ * The handful of councils shown on the homepage, by volume.
+ *
+ * This used to take the four fastest plus the single slowest, which sounds
+ * balanced and is not: it is a flattering sample with one alibi attached. On
+ * live data it showed Salford (62 completed searches) and Blackpool (98) while
+ * dropping Rochdale — the second busiest council we serve, at 200 — purely
+ * because three others happened to be quicker. Someone scanning this is looking
+ * for the council their case is in, and that is a question about volume.
+ *
+ * No band is engineered in or out. On current data the busiest five span 0.8 to
+ * 21.6 working days on their own, which is a fairer picture than any hand-picked
+ * spread would be — and the full set is a click away on the tracker.
+ *
+ * `excludeCouncil` keeps the dial's council out of the rows beneath it.
+ */
+export function representativeCouncils(
+  councils: CouncilStat[],
+  count = 5,
+  excludeCouncil?: string,
+): CouncilStat[] {
+  return [...councils]
+    .filter((c) => c.council !== excludeCouncil)
+    .sort((a, b) => b.n - a.n)
+    .slice(0, count)
+    // Fastest first: the rows read as a ladder rather than an unsorted list.
+    .sort((a, b) => a.average_work_days - b.average_work_days);
 }
 
 export function shortCouncil(name: string): string {
