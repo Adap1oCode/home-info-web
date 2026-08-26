@@ -26,6 +26,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily",
       priority: 0.9,
     },
+    {
+      /* Was missing entirely. It is the target of the header CTA, both hero
+         buttons and the footer, and it sets its own canonical to this URL —
+         so the one page the whole site funnels toward was the one real route
+         absent from the sitemap. (/founder is also absent, but deliberately:
+         it stays unlinked until there is a real photograph of her.) */
+      url: `${seo.siteUrl}${routes.quote}`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
     /* /faqs and /testimonials are homepage anchors now, not URLs. A fragment
        is not a separate page and must never be listed as one. */
     { url: `${seo.siteUrl}/privacy-policy`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },

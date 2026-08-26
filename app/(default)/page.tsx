@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 
 import Accreditations from "@/components/home/accreditations";
 import Cta from "@/components/home/cta";
@@ -15,12 +14,14 @@ import Testimonials from "@/components/home/testimonials";
 import Tools from "@/components/home/tools";
 import Turnaround from "@/components/home/turnaround";
 import { getPerformance } from "@/lib/performance";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Independent property searches for conveyancers",
   description:
     "Independent property searches for conveyancers and solicitors across England and Wales, with turnaround times published council by council.",
-};
+  path: "/",
+});
 
 /** Matches the performance API's own daily snapshot cadence. */
 export const revalidate = 86_400;

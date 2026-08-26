@@ -1,15 +1,14 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 
-import { seo } from "@/config/site";
 import { glossary } from "@/content/guides";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Property search glossary",
   description:
     "LLC1, CON29, CON29O, chancel repair, Article 4 and the rest — the terms that appear on a search report, explained plainly and on one page.",
-  alternates: { canonical: `${seo.siteUrl}/guides/glossary` },
-};
+  path: "/guides/glossary",
+});
 
 const anchor = (term: string) => term.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 

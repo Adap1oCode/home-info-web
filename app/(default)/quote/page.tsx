@@ -1,18 +1,18 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 
 import QuoteBuilder from "@/components/quote/quote-builder";
-import { contact, phoneHref, quote, seo } from "@/config/site";
+import { contact, phoneHref, quote } from "@/config/site";
 import { getProducts, groupProducts, toSearchItems } from "@/lib/products";
+import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 86_400;
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Build a quote",
   description:
     "Pick the reports you need, tell us roughly what volume you do, and we will come back with a price. No account needed and no obligation.",
-  alternates: { canonical: `${seo.siteUrl}/quote` },
-};
+  path: "/quote",
+});
 
 export default async function QuotePage() {
   const products = await getProducts();

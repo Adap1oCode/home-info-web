@@ -1,8 +1,7 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 
 import BoundaryMap from "@/components/councils/boundary-map";
-import { seo } from "@/config/site";
+
 import {
   BOUNDARY_ATTRIBUTION,
   getBoundary,
@@ -11,15 +10,16 @@ import {
   type PublicCouncil,
 } from "@/lib/councils";
 import { formatInt, getPerformance, shortCouncil } from "@/lib/performance";
+import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 86_400;
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Local authorities we cover",
   description:
     "Every local authority we order property searches from across England and Wales, grouped by region, with the turnaround we have measured where we have enough data to publish one.",
-  alternates: { canonical: `${seo.siteUrl}/councils` },
-};
+  path: "/councils",
+});
 
 export default async function CouncilsIndex() {
   const [councils, perf] = await Promise.all([getPublishableCouncils(), getPerformance()]);

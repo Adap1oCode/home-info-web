@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { contact, nav, phoneHref, seo } from "@/config/site";
+import { contact, nav, phoneHref } from "@/config/site";
 import { getProducts, groupProducts, GROUP_INTROS } from "@/lib/products";
 import { Unconfirmed } from "@/components/ui/unconfirmed";
+import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 86_400;
 
@@ -31,12 +32,7 @@ export async function generateMetadata({
     GROUP_INTROS[group.name] ??
     `The ${group.name.toLowerCase()} reports you can order from us, with the supplier named for each.`;
 
-  return {
-    title: group.name,
-    description,
-    alternates: { canonical: `${seo.siteUrl}/products/${group.slug}` },
-    openGraph: { title: group.name, description, url: `${seo.siteUrl}/products/${group.slug}` },
-  };
+  return pageMetadata({ title: group.name, description, path: `/products/${group.slug}` });
 }
 
 export default async function ProductGroupPage({

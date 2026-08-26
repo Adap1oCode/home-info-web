@@ -1,7 +1,14 @@
-export const metadata = {
-  title: "Privacy Policy - Home Information Searches Ltd -",
-  description: "Privacy Policy for Home Information Searches (HIS) Ltd",
-};
+import { pageMetadata } from "@/lib/seo";
+
+/* Was "Privacy Policy - Home Information Searches Ltd -", which the title
+   template then appended the company name to a second time — and the trailing
+   hyphen was left dangling in the browser tab. */
+export const metadata = pageMetadata({
+  title: "Privacy policy",
+  description:
+    "How Home Information Searches collects, uses and stores personal data, how long we keep it, and the rights you have over it under UK GDPR.",
+  path: "/privacy-policy",
+});
 
 export default function PrivacyPolicy() {
   return (

@@ -3,10 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import CouncilPicker from "@/components/councils/council-picker";
-import { contact, nav, phoneHref, seo } from "@/config/site";
+import { contact, nav, phoneHref } from "@/config/site";
 import { guideBySlug, guides, type Guide } from "@/content/guides";
 import { getPickerCouncils } from "@/lib/councils";
 import { Unconfirmed } from "@/components/ui/unconfirmed";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateStaticParams() {
   return guides.map((g) => ({ slug: g.slug }));
@@ -21,18 +22,16 @@ export async function generateMetadata({
   const guide = guideBySlug(slug);
   if (!guide) return { title: "Not found" };
 
-  return {
+  /* The answer doubles as the meta description — it is written to stand alone.
+     Clamped because these run 198–295 characters and every one of them was
+     being cut off mid-sentence in the results page; clampDescription stops at
+     the last full stop that fits instead. */
+  return pageMetadata({
     title: guide.question,
-    // The answer doubles as the meta description — it is written to stand alone.
     description: guide.answer,
-    alternates: { canonical: `${seo.siteUrl}/guides/${guide.slug}` },
-    openGraph: {
-      title: guide.question,
-      description: guide.answer,
-      url: `${seo.siteUrl}/guides/${guide.slug}`,
-      type: "article",
-    },
-  };
+    path: `/guides/${guide.slug}`,
+    type: "article",
+  });
 }
 
 export default async function GuidePage({ params }: { params: Promise<{ slug: string }> }) {

@@ -1,10 +1,17 @@
 import TrackerDashboard, { type PerformancePayload } from "@/components/tracker/tracker-dashboard";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Live Turnaround Tracker - Home Information Searches Ltd",
+/* The company name is appended by seo.titleTemplate in the root layout. This
+   carried it a second time, so the tab read "Live Turnaround Tracker - Home
+   Information Searches Ltd | Home Information Searches" — 83 characters, the
+   brand twice, and the words anyone actually searches for pushed past the
+   truncation point. */
+export const metadata = pageMetadata({
+  title: "Live search turnaround times by council",
   description:
     "Live property-search turnaround times, published council by council and refreshed daily. See how fast, how consistent, and how many searches we complete.",
-};
+  path: "/live-turnaround-tracker",
+});
 
 // Refresh at most once a day — matches the daily snapshot cadence of the API.
 export const revalidate = 86400;

@@ -1,7 +1,12 @@
-export const metadata = {
-  title: "Terms of Use - Home Information Searches Ltd -",
-  description: "Terms of Use for Home Information Searches (HIS) Ltd",
-};
+import { pageMetadata } from "@/lib/seo";
+
+/* Same double company name and dangling hyphen as the privacy policy. */
+export const metadata = pageMetadata({
+  title: "Terms of use",
+  description:
+    "The terms on which Home Information Searches supplies property search reports, including liability, payment and cancellation.",
+  path: "/terms-of-use",
+});
 
 export default function TermsOfUse() {
   return (

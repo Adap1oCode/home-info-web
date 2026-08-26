@@ -23,6 +23,7 @@ import {
   shortCouncil,
   type CouncilStat,
 } from "@/lib/performance";
+import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 86_400;
 
@@ -52,12 +53,8 @@ export async function generateMetadata({
     `authority searches there, the turnaround we have measured, and links to the ` +
     `council's own planning and land charges services.`;
 
-  return {
-    title,
-    description,
-    alternates: { canonical: `${seo.siteUrl}/councils/${council.slug}` },
-    openGraph: { title, description, url: `${seo.siteUrl}/councils/${council.slug}` },
-  };
+  /* Runs to about 185 characters, so it goes through the clamp like the rest. */
+  return pageMetadata({ title, description, path: `/councils/${council.slug}` });
 }
 
 export default async function CouncilPage({ params }: { params: Promise<{ slug: string }> }) {

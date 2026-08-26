@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ConfigValue, Unconfirmed } from "@/components/ui/unconfirmed";
 import { company, contact, founder, nav, phoneHref, seo } from "@/config/site";
+import { pageMetadata } from "@/lib/seo";
 
 /**
  * The founder page.
@@ -14,11 +14,11 @@ import { company, contact, founder, nav, phoneHref, seo } from "@/config/site";
  * what we actually achieve", an invented career history would be the single
  * most damaging thing on it.
  */
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: `${founder.name.value} — ${founder.role}`,
   description: `${founder.name.value} has worked in property search since ${company.founderStartYear.value} and sits on the executive board of IPSA. Who you are actually dealing with at ${company.tradingName}.`,
-  alternates: { canonical: `${seo.siteUrl}${founder.href}` },
-};
+  path: founder.href,
+});
 
 export default function FounderPage() {
   const quote = founder.pullQuote;

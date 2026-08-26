@@ -1,15 +1,14 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 
-import { seo } from "@/config/site";
 import { glossary, guideCategories, guides } from "@/content/guides";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Guides — straight answers on property searches",
+export const metadata = pageMetadata({
+  title: "Guides for conveyancers",
   description:
     "Short, direct answers to the questions conveyancers actually ask about property searches: timing, ordering, what each search covers, and when you do not need one.",
-  alternates: { canonical: `${seo.siteUrl}/guides` },
-};
+  path: "/guides",
+});
 
 export default function GuidesHub() {
   return (

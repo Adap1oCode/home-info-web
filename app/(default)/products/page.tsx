@@ -1,21 +1,21 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 
 import ProductSearch from "@/components/products/product-search";
-import { nav, seo } from "@/config/site";
+import { nav } from "@/config/site";
 import { getProducts, groupProducts, toSearchItems, GROUP_INTROS } from "@/lib/products";
+import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 86_400;
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   /* Leads with what the page is rather than with a phrase about us. The old
      "What we can order for you" put four function words before the first term
      anyone searches for, and read as a page about our purchasing. */
   title: "Property searches and reports",
   description:
     "The full range of property searches, environmental and drainage reports, and client due diligence you can order from us — grouped by type, with the supplier named for each.",
-  alternates: { canonical: `${seo.siteUrl}/products` },
-};
+  path: "/products",
+});
 
 export default async function ProductsHub() {
   const products = await getProducts();
