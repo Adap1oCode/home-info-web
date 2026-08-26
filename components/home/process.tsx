@@ -41,7 +41,7 @@ export default function Process() {
             <li
               key={s.n}
               className="reveal group relative text-center"
-              style={{ ["--reveal-offset" as string]: `${i * 5}%` }}
+              style={{ ["--reveal-delay" as string]: `${i * 60}ms` }}
             >
               <span className="relative z-[2] mx-auto mb-6.5 grid h-20 w-20 place-items-center rounded-full border-2 border-mist bg-white font-display text-[26px] font-bold text-brand-dark transition group-hover:scale-105 group-hover:border-brand group-hover:bg-brand group-hover:text-white">
                 {s.n}

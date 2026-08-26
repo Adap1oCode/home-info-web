@@ -90,7 +90,7 @@ export default function Testimonials() {
                `text-tx` resets the white inherited from the section. */
             <li
               key={`${t.name}-${i}`}
-              style={{ ["--reveal-offset" as string]: `${(i % 3) * 6}%` }}
+              style={{ ["--reveal-delay" as string]: `${(i % 3) * 70}ms` }}
               className={`reveal rounded-hero bg-white text-tx ${
                 feature
                   ? "grid grid-cols-[1.45fr_0.55fr] items-center gap-13 p-13 max-[900px]:grid-cols-1 max-[900px]:gap-7 max-[900px]:p-9.5"

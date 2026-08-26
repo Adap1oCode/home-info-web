@@ -1,4 +1,5 @@
 import Header from "@/components/ui/header";
+import ScrollReveal from "@/components/scroll-reveal";
 import Footer from "@/components/ui/footer";
 
 /**
@@ -11,6 +12,8 @@ export default function DefaultLayout({ children }: { children: React.ReactNode 
       <Header />
       <main className="grow">{children}</main>
       <Footer />
+      {/* Renders nothing; adds the reveal classes on scroll. */}
+      <ScrollReveal />
     </>
   );
 }

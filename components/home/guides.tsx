@@ -49,7 +49,7 @@ export default function Guides() {
               key={g.slug}
               href={`${routes.guides}/${g.slug}`}
               className="reveal flex flex-col rounded-hero border border-mist bg-white p-9.5 transition hover:-translate-y-1 hover:border-brand-light hover:bg-[#F3F9FE]"
-              style={{ ["--reveal-offset" as string]: `${(i % 3) * 6}%` }}
+              style={{ ["--reveal-delay" as string]: `${(i % 3) * 70}ms` }}
             >
               <span className="w-fit rounded-full bg-sky px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.09em] text-brand-dark">
                 {g.category}

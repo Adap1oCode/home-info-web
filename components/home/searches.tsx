@@ -42,7 +42,7 @@ export default function Searches() {
                  one overriding the other. Do not rewrite either in terms of
                  the other. */
               className="reveal flex flex-col rounded-hero border border-mist bg-white p-9.5 pb-8.5 transition duration-200 hover:-translate-y-1.5 hover:border-brand-light hover:shadow-[0_28px_56px_-34px_rgb(52_140_220_/_0.6)]"
-              style={{ ["--reveal-offset" as string]: `${(i % 3) * 6}%` }}
+              style={{ ["--reveal-delay" as string]: `${(i % 3) * 70}ms` }}
             >
               <h3 className="mb-3.5 text-[25px]">{s.name}</h3>
               <p className="mb-6.5 flex-1 text-[15px] leading-relaxed text-tx-mid">{s.blurb}</p>
