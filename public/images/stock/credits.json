@@ -101,6 +101,66 @@
       "sourceUrl": "https://www.pexels.com/photo/brown-concrete-building-7826166/",
       "alt": "Historic facade of a classic brown brick building with arched windows in London.",
       "source": "Pexels"
+    },
+    {
+      "id": "family-boxes",
+      "file": "/images/stock/family-boxes.jpg",
+      "query": "family moving house cardboard boxes",
+      "photographer": "cottonbro studio",
+      "photographerUrl": "https://www.pexels.com/@cottonbro",
+      "sourceUrl": "https://www.pexels.com/photo/woman-in-white-long-sleeve-shirt-sitting-beside-woman-in-white-long-sleeve-shirt-4569303/",
+      "alt": "A joyful family unpacking boxes in their new home, highlighting family closeness and excitement.",
+      "source": "Pexels"
+    },
+    {
+      "id": "family-kitchen",
+      "file": "/images/stock/family-kitchen.jpg",
+      "query": "family unpacking new home smiling",
+      "photographer": "MART  PRODUCTION",
+      "photographerUrl": "https://www.pexels.com/@mart-production",
+      "sourceUrl": "https://www.pexels.com/photo/girl-happy-seeing-the-gift-from-her-parents-8434754/",
+      "alt": "A joyful family unpacking boxes in their new home, embracing togetherness.",
+      "source": "Pexels"
+    },
+    {
+      "id": "couple-boxes",
+      "file": "/images/stock/couple-boxes.jpg",
+      "query": "moving day boxes living room",
+      "photographer": "cottonbro studio",
+      "photographerUrl": "https://www.pexels.com/@cottonbro",
+      "sourceUrl": "https://www.pexels.com/photo/man-in-gray-long-sleeve-shirt-sitting-beside-woman-in-white-long-sleeve-shirt-4554240/",
+      "alt": "A happy couple surrounded by boxes while moving into a new apartment, symbolizing fresh beginnings.",
+      "source": "Pexels"
+    },
+    {
+      "id": "sold-sign",
+      "file": "/images/stock/sold-sign.jpg",
+      "query": "sold sign house uk",
+      "photographer": "Alena Darmel",
+      "photographerUrl": "https://www.pexels.com/@a-darmel",
+      "sourceUrl": "https://www.pexels.com/photo/sign-in-a-window-7641828/",
+      "alt": "Close-up of a brick house with a 'Sold' sign in the window, showcasing real estate sales.",
+      "source": "Pexels"
+    },
+    {
+      "id": "keys-indoors",
+      "file": "/images/stock/keys-indoors.jpg",
+      "query": "woman smiling holding house keys",
+      "photographer": "Kampus Production",
+      "photographerUrl": "https://www.pexels.com/@kampus",
+      "sourceUrl": "https://www.pexels.com/photo/a-couple-receiving-keys-from-a-broker-8730048/",
+      "alt": "Smiling couple receiving keys, celebrating new home purchase indoors.",
+      "source": "Pexels"
+    },
+    {
+      "id": "couple-keys-door",
+      "file": "/images/stock/couple-keys-door.jpg",
+      "query": "couple keys front door new home",
+      "photographer": "Thirdman",
+      "photographerUrl": "https://www.pexels.com/@thirdman",
+      "sourceUrl": "https://www.pexels.com/photo/a-man-in-blue-long-sleeves-holding-a-key-while-standing-beside-a-woman-wearing-beige-long-sleeves-8470840/",
+      "alt": "Happy couple holding keys in front of their new home, celebrating their purchase.",
+      "source": "Pexels"
     }
   ]
 }

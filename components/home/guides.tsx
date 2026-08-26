@@ -44,11 +44,12 @@ export default function Guides() {
         </div>
 
         <div className="grid grid-cols-3 gap-5.5 max-[900px]:grid-cols-1">
-          {featured.map((g) => (
+          {featured.map((g, i) => (
             <Link
               key={g.slug}
               href={`${routes.guides}/${g.slug}`}
-              className="flex flex-col rounded-hero border border-mist bg-white p-9.5 transition hover:-translate-y-1 hover:border-brand-light hover:bg-[#F3F9FE]"
+              className="reveal flex flex-col rounded-hero border border-mist bg-white p-9.5 transition hover:-translate-y-1 hover:border-brand-light hover:bg-[#F3F9FE]"
+              style={{ ["--reveal-offset" as string]: `${(i % 3) * 6}%` }}
             >
               <span className="w-fit rounded-full bg-sky px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.09em] text-brand-dark">
                 {g.category}

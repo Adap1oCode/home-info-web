@@ -78,8 +78,14 @@ export type SearchProduct = {
 
 export type Testimonial = Confirmable & {
   quote: string;
+  /** The person, or the firm where the sender signed off as the firm. */
   name: string;
-  role: string;
+  /**
+   * Optional, because a quote can arrive signed off by a firm rather than a
+   * person. Leave it out in that case — never invent a job title to fill the
+   * field. The section joins whichever of role and location exist.
+   */
+  role?: string;
   location?: string;
   source?: "direct" | "google" | "trustpilot";
 };
@@ -484,7 +490,78 @@ export const testimonials: Testimonial[] = [
     confirmed: true,
     note: "Sent direct to the business. Full postal address on the original withheld deliberately — town and county place the firm without publishing its street.",
   },
+  {
+    quote:
+      "We have been using Home Information Searches for a number of years and the service has always been excellent. They have always dealt with our requests in a professional and swift manner. Val Bennett has always been helpful when dealing with any queries and is a pleasure to work with. We would definitely recommend their services to others.",
+    name: "Julie Marshall",
+    role: "Collings Solicitors",
+    location: "Altrincham, Cheshire",
+    source: "direct",
+    confirmed: true,
+    note: "Supplied by the business 26 Aug 2026. The original was signed off by the firm alone; Julie Marshall given as the sender separately. Firm name confirmed as 'Collings Solicitors' — it is not 'Collingwood'.",
+  },
+  {
+    quote:
+      "Thanks for all your assistance in obtaining searches on all our purchase cases, using your Company makes the process so much easier. I appreciate the quick and efficient service your Company provides and the way you keep us updated, I would definitely recommend any solicitors to use you.",
+    name: "Janet Daniels",
+    role: "Residential Conveyancer, Lowick Mckay",
+    location: "Stockport",
+    source: "direct",
+    confirmed: true,
+    note: "Supplied by the business 26 Aug 2026. Her own wording kept, including the capitalised 'Company' — only a stray space before a comma and a double space were closed up. Second quote from Lowick Mckay alongside Roger Bower's; different office, so both stay.",
+  },
 ];
+
+/* ------------------------------------------------------------ hero photos */
+
+export type HeroPhoto = {
+  /** Built by scripts/build-hero-images.mjs — 900x900, cropped and re-encoded. */
+  src: string;
+  /** Only the first is announced; the rest are decorative duplicates of the idea. */
+  alt: string;
+};
+
+/**
+ * The hero roundel cycles through these.
+ *
+ * ── Why a timed cycle and not a random pick per visit ────────────────────────
+ * The homepage is statically rendered with `revalidate = 86_400`, and
+ * getPerformance() uses a cached fetch, so a random choice made on the server
+ * is baked into the cached HTML — every visitor would see the same "random"
+ * photograph until the next revalidation a day later. Doing it per visitor
+ * means client-side JS, a hydration mismatch and a visible flash of the wrong
+ * image. A CSS cycle needs no JavaScript, and everyone sees all four.
+ *
+ * ── What belongs here ───────────────────────────────────────────────────────
+ * The client's moment: keys, boxes, a room on moving day. See the scope rule
+ * in scripts/fetch-stock.mjs — nobody who could be mistaken for our staff, and
+ * no forced grins. Six of the first seven candidates were rejected; the
+ * reasons are recorded in that script so the mistakes are not repeated.
+ *
+ * Order matters: the first is the one served eagerly and the one still shown
+ * when a visitor prefers reduced motion, so it should be the strongest.
+ */
+export const heroPhotos: HeroPhoto[] = [
+  {
+    src: "/images/hero/keys-on-the-floor.jpg",
+    alt: "A couple lying on the floor of their new home among moving boxes, looking at the keys",
+  },
+  {
+    src: "/images/hero/child-in-the-box.jpg",
+    alt: "A child playing in a cardboard box while her parents unpack in a new kitchen",
+  },
+  {
+    src: "/images/hero/unpacking-together.jpg",
+    alt: "A family unpacking a box together in the living room of their new home",
+  },
+  {
+    src: "/images/hero/first-night-in.jpg",
+    alt: "A couple sitting on the floor of an empty room among labelled moving boxes",
+  },
+];
+
+/** Seconds for one full pass. Split evenly, so four photos hold ~7s each. */
+export const heroCycleSeconds = 28;
 
 /* ---------------------------------------------------- performance tracker */
 
@@ -530,11 +607,23 @@ export const nav = {
      placeholder where her photograph should be, so nothing links to it until
      there is a real photograph. Restore this entry, the footer link, the
      story-section link and the sitemap entry together. */
+  /* Testimonials and FAQs are anchors, not pages — "/#testimonials" and
+     "/#faqs". They are the two nav items without a URL of their own, and they
+     stay that way: the split that gave each one a page is what /faqs and
+     /testimonials were folded up to undo. From another page the link lands on
+     the homepage and jumps to the section; the scroll-margin that clears this
+     header is the global `section` rule in app/css/style.css.
+
+     Both sit after the four real pages, in that order. Testimonials is the
+     firms who already use us; FAQs is last because it is what someone reaches
+     for when nothing above has answered them. */
   primary: [
     { label: "Searches", href: routes.products },
     { label: "Live Tracker", href: routes.tracker },
     { label: "Councils", href: routes.councils },
     { label: "Guides", href: routes.guides },
+    { label: "Testimonials", href: routes.testimonials },
+    { label: "FAQs", href: routes.faqs },
   ],
   /** Deep-links to the real client portal in the reseller platform. */
   portalUrl: { value: "", confirmed: false, note: "Production URL of /portal in home-info" },

@@ -2,11 +2,24 @@
  * Pulls a curated set of stock photography from Pexels into
  * public/images/stock/, and records who took each one in credits.json.
  *
- * ── Scope rule, deliberately enforced here rather than left to judgement ────
- * Places and documents only. No faces, no "team" shots, no stock people
- * standing in for us or for our clients. The site's whole proposition is that
- * the numbers on it are real; a stock handshake on the same page undercuts
- * that, and every competitor already has one.
+ * ── Scope rule ──────────────────────────────────────────────────────────────
+ * This rule was "places and documents only, no faces". The business has
+ * changed it: a page of streets and civic buildings is accurate and completely
+ * cold, and the moment this company actually sits inside — someone getting the
+ * keys — has a person in it. Warmth is the point, so people are now wanted.
+ *
+ * The original concern was never faces as such. It was stock people standing
+ * in for US: a fake team, a solicitor shaking a client's hand, anything a
+ * reader could take as a photograph of this firm. That line holds, and it is
+ * the one to judge new photographs against:
+ *
+ *   WANTED  — the client's moment. Keys, boxes, a doorstep, an empty room on
+ *             moving day. Plainly illustrative, and nobody mistakes it for us.
+ *   NOT     — anyone who could read as our staff or our office. No handshakes,
+ *             no headsets, no suited group round a laptop, no "advisor with
+ *             clipboard". Every competitor has those and they fool no one.
+ *
+ * Judge warmth as strictly as accuracy. A forced grin is worse than a street.
  *
  * Real photography of Val and the team is commissioned separately, and the
  * story-section placeholder stays a placeholder until it exists.
@@ -58,6 +71,28 @@ const WANTED = [
   { id: "canal-terraces", query: "canal houses england industrial town", pick: 0 },
   { id: "welsh-valley-houses", query: "wales terraced houses hillside", pick: 0 },
   { id: "conservation-street", query: "georgian townhouses england street", pick: 0 },
+
+  /* ── people: the client's moment ─────────────────────────────────────────
+     A first pass at this lost six of seven, and the reasons are worth keeping
+     so nobody repeats them: "couple holding keys new home smiling" returned
+     studio hands against a green wall with a cannabis-leaf keyring; "family
+     outside front door new house" returned a styled vintage editorial shot in
+     Eastern Europe; two queries returned the same engagement-portrait couple
+     against a wooden wall; "first time buyers" returned a flat lay with the
+     words hand-lettered into the photograph.
+
+     What fixed it: name the OBJECT as well as the feeling. Boxes, a sold sign,
+     a kitchen. "Happy couple" alone returns lifestyle portraiture that could be
+     advertising anything; "unpacking boxes in their new home" returns the
+     moment. `pick` is an index into an UNFILTERED search — do not add an
+     orientation filter to these without re-checking every index, because the
+     filter reorders the results and the pins silently point at other photos. */
+  { id: "family-boxes", query: "family moving house cardboard boxes", pick: 1, orientation: "any" },
+  { id: "family-kitchen", query: "family unpacking new home smiling", pick: 2, orientation: "any" },
+  { id: "couple-boxes", query: "moving day boxes living room", pick: 3, orientation: "any" },
+  { id: "sold-sign", query: "sold sign house uk", pick: 1, orientation: "any" },
+  { id: "keys-indoors", query: "woman smiling holding house keys", pick: 4, orientation: "any" },
+  { id: "couple-keys-door", query: "couple keys front door new home", pick: 4, orientation: "any" },
 ];
 
 async function readKey() {
@@ -90,7 +125,9 @@ async function main() {
 
     const url = new URL("https://api.pexels.com/v1/search");
     url.searchParams.set("query", want.query);
-    url.searchParams.set("orientation", "landscape");
+    // "any" leaves the filter off entirely — see the note on `pick` above.
+    const orientation = want.orientation ?? "landscape";
+    if (orientation !== "any") url.searchParams.set("orientation", orientation);
     url.searchParams.set("per_page", "10");
 
     const res = await fetch(url, { headers: { Authorization: key } });

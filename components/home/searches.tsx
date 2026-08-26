@@ -26,7 +26,7 @@ export default function Searches() {
         </div>
 
         <div className="grid grid-cols-3 gap-5.5 max-[980px]:grid-cols-2 max-[640px]:grid-cols-1">
-          {searches.map((s) => (
+          {searches.map((s, i) => (
             /*
              * These pointed at /searches/<slug>, which was never built — six
              * dead links in one grid. The live catalogue is the products hub,
@@ -37,7 +37,12 @@ export default function Searches() {
             <Link
               key={s.id}
               href={routes.products}
-              className="flex flex-col rounded-hero border border-mist bg-white p-9.5 pb-8.5 transition duration-200 hover:-translate-y-1.5 hover:border-brand-light hover:shadow-[0_28px_56px_-34px_rgb(52_140_220_/_0.6)]"
+              /* `reveal` animates `transform`; the hover lift above uses the
+                 separate `translate` property, so the two compose instead of
+                 one overriding the other. Do not rewrite either in terms of
+                 the other. */
+              className="reveal flex flex-col rounded-hero border border-mist bg-white p-9.5 pb-8.5 transition duration-200 hover:-translate-y-1.5 hover:border-brand-light hover:shadow-[0_28px_56px_-34px_rgb(52_140_220_/_0.6)]"
+              style={{ ["--reveal-offset" as string]: `${(i % 3) * 6}%` }}
             >
               <h3 className="mb-3.5 text-[25px]">{s.name}</h3>
               <p className="mb-6.5 flex-1 text-[15px] leading-relaxed text-tx-mid">{s.blurb}</p>

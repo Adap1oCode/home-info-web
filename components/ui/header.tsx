@@ -20,7 +20,19 @@ export default function Header() {
       <div className="mx-auto flex h-[78px] max-w-[1240px] items-center gap-7 px-8 max-sm:h-[68px] max-sm:px-[18px]">
         <Logo />
 
-        <ul className="flex flex-1 list-none gap-6 max-[1120px]:hidden">
+        {/* Collapses to the burger at 1240px, not 1120px.
+            Six items need 1121px of content box; with this container's px-8 that
+            is 1185px of bar, which is what a 1200px viewport leaves once Windows
+            takes 15px for the scrollbar — an exact fit and no more. The nav now
+            appears only once the container reaches its own max-width, where there
+            is ~40px spare for a longer label or a wider font render.
+
+            Note `flex-1` does not grow this list: the sibling below carries
+            `ml-auto`, and auto margins absorb free space before flex-grow is
+            applied, so the row is packed and the 28px beside "FAQs" is the flex
+            gap rather than slack. Change this breakpoint with the two values
+            below; all three describe one boundary. */}
+        <ul className="flex flex-1 list-none gap-6 max-[1240px]:hidden">
           {nav.primary.map((item) => (
             <li key={item.href}>
               <Link
@@ -70,7 +82,7 @@ export default function Header() {
             onClick={() => setOpen(!open)}
             aria-expanded={open}
             aria-controls="mobile-nav"
-            className="hidden rounded-lg p-2 text-tx transition hover:bg-sky max-[1120px]:inline-flex"
+            className="hidden rounded-lg p-2 text-tx transition hover:bg-sky max-[1240px]:inline-flex"
           >
             <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
             <svg
@@ -89,7 +101,7 @@ export default function Header() {
       </div>
 
       {open && (
-        <nav id="mobile-nav" className="border-t border-mist bg-white px-6 py-4 min-[1121px]:hidden">
+        <nav id="mobile-nav" className="border-t border-mist bg-white px-6 py-4 min-[1241px]:hidden">
           <ul className="list-none space-y-1">
             {nav.primary.map((item) => (
               <li key={item.href}>

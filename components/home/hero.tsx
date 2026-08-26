@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { company, nav, routes } from "@/config/site";
+import { company, heroCycleSeconds, heroPhotos, nav, routes } from "@/config/site";
 import { formatInt, formatQuickest, type PerformancePayload } from "@/lib/performance";
 import { ConfigValue } from "@/components/ui/unconfirmed";
 
@@ -188,13 +188,43 @@ function HeroImagery({ fastest }: { fastest: { council: string; minutes: number 
       </Chip>
 
       {/* main roundel */}
-      <div className="relative aspect-square overflow-hidden rounded-full ring-8 ring-white/10 shadow-[0_40px_90px_-40px_rgb(0_0_0_/_0.85)]">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/images/hero-buyers.jpg"
-          alt="A couple with the keys to their new home, surrounded by moving boxes"
-          className="h-full w-full object-cover"
-        />
+      <div
+        className="relative aspect-square overflow-hidden rounded-full ring-8 ring-white/10 shadow-[0_40px_90px_-40px_rgb(0_0_0_/_0.85)]"
+        style={{ ["--hero-cycle" as string]: `${heroCycleSeconds}s` }}
+      >
+        {heroPhotos.map((photo, i) => {
+          /*
+           * Negative delay, and NOT `-i * slot`.
+           *
+           * A negative delay starts an animation part-way through, so it brings
+           * a photograph's turn forward rather than pushing it back. To put
+           * photo `i` in slot `i` it has to be advanced by the slots that come
+           * after it, which is `(count - i)`. Getting this backwards runs the
+           * set in reverse and puts the eagerly-loaded first photograph last.
+           */
+          const slot = heroCycleSeconds / heroPhotos.length;
+          const delay = i === 0 ? 0 : -(heroPhotos.length - i) * slot;
+
+          return (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              key={photo.src}
+              src={photo.src}
+              /* One announcement, not four. They all say the same thing to a
+                 screen reader, and only one is on screen at a time. */
+              alt={i === 0 ? photo.alt : ""}
+              aria-hidden={i === 0 ? undefined : true}
+              /* The first is the LCP element. The rest are not needed for
+                 seven seconds, so they must not compete for it. */
+              fetchPriority={i === 0 ? "high" : "low"}
+              decoding="async"
+              width={900}
+              height={900}
+              className="hero-photo"
+              style={{ animationDelay: `${delay}s` }}
+            />
+          );
+        })}
         <div aria-hidden className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,transparent_40%,rgb(13_31_51_/_0.45)_100%)]" />
       </div>
 

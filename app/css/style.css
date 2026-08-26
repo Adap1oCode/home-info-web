@@ -95,15 +95,79 @@
       transform: translateY(-9px);
     }
   }
-  @keyframes ping-soft {
-    0% {
-      transform: scale(0.5);
-      opacity: 0.6;
-    }
-    100% {
-      transform: scale(1.7);
-      opacity: 0;
-    }
+}
+
+/*
+ * Keyframes live OUT here, not inside @theme.
+ *
+ * Tailwind v4 treats @keyframes inside @theme as theme data and only emits
+ * them when a matching `--animate-*` utility is actually used. `chip-in` and
+ * `drift` survive that because `animate-chip-in` and `animate-drift` appear in
+ * the markup. `ping-soft` did not: it is referenced by a raw `animation:`
+ * declaration in `.pip::after`, which is not a utility, so it was quietly
+ * dropped from the build and the live indicator has not been pulsing at all.
+ * `hero-fade` hit the same trap the moment it was added.
+ *
+ * At the top level they are always emitted. Put new keyframes here.
+ */
+/*
+ * Hero roundel crossfade.
+ *
+ * The percentages below assume FOUR photographs. Each gets a 25% slot: it
+ * holds at full opacity to 21%, fades out by 25%, stays out, then fades back
+ * in over the last 4% so that 100% and 0% are both `1` and the loop has no
+ * seam. For a different count the rule is: hold to (100/n - 4)%, out at
+ * (100/n)%, back in from (100 - 4)%.
+ *
+ * The stagger is done with negative delays in the component, because a
+ * positive delay would leave every photograph sitting at its 0% state — all
+ * four visible at once — until its turn came round.
+ */
+@keyframes hero-fade {
+  0% { opacity: 1; }
+  21% { opacity: 1; }
+  25% { opacity: 0; }
+  96% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/*
+ * Scroll reveal. Cards settle into place as they come into view.
+ *
+ * Deliberately NOT the AOS scroll-fade that was torn out of this project (see
+ * app/(default)/layout.tsx). Three things make this different:
+ *
+ *   1. No JavaScript. It is a scroll-driven CSS animation, so there is no
+ *      observer to boot, nothing to hydrate, and no bundle cost.
+ *   2. Content is never hidden by default. The hiding lives entirely inside
+ *      `@supports (animation-timeline: view())`. A browser that cannot run the
+ *      animation — Firefox today — renders every card fully visible and
+ *      correct, rather than blank and waiting for a script that will not come.
+ *      This is the whole reason for doing it this way round.
+ *   3. It is applied to a handful of card grids, not to every element.
+ *
+ * 18px and 0.35 opacity: enough to read as movement, not enough to be a
+ * performance. Nothing translates sideways and nothing scales.
+ */
+@keyframes reveal {
+  from {
+    opacity: 0.35;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ping-soft {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
   }
 }
 
@@ -158,6 +222,56 @@
    */
   .section-y {
     @apply py-30 max-lg:py-19;
+  }
+
+  /*
+   * One photograph at a time in the hero roundel.
+   *
+   * The static rule is the whole behaviour when a visitor prefers reduced
+   * motion: first photograph shown, the rest hidden, nothing moving. The
+   * animation is added only under `no-preference` rather than being cancelled
+   * by the global reduce block further down — that block forces
+   * `animation-duration: 0.01ms`, which would snap all four to their final
+   * keyframe and stack them at full opacity instead of stopping cleanly.
+   */
+  .hero-photo {
+    @apply absolute inset-0 h-full w-full object-cover opacity-0;
+  }
+  .hero-photo:first-child {
+    @apply opacity-100;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-photo {
+      animation: hero-fade var(--hero-cycle, 28s) linear infinite both;
+    }
+  }
+
+  /*
+   * Opt in per element with `reveal`. `--reveal-offset` shifts the range so
+   * cards in the same row do not all arrive on the same frame — set it inline,
+   * a few percent per column.
+   *
+   * Longhands rather than the `animation` shorthand on purpose: the shorthand
+   * resets `animation-timeline` to `auto`, which silently turns this back into
+   * an ordinary time-based animation that fires once on load.
+   *
+   * The range closes at `entry 75%` rather than at `cover`, so an element that
+   * is still entering when the page runs out of scroll — anything in the last
+   * screenful — finishes rather than being stranded part-faded.
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .reveal {
+        --reveal-offset: 0%;
+        animation-name: reveal;
+        animation-duration: auto;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: entry calc(10% + var(--reveal-offset))
+          entry calc(75% + var(--reveal-offset));
+      }
+    }
   }
 
   /* Small-caps section label used above every heading. */

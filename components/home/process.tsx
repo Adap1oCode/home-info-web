@@ -37,8 +37,12 @@ export default function Process() {
             aria-hidden
             className="absolute top-10 right-[11%] left-[11%] h-0.5 bg-[repeating-linear-gradient(90deg,var(--color-mist)_0_8px,transparent_8px_16px)] max-[860px]:hidden"
           />
-          {steps.map((s) => (
-            <li key={s.n} className="group relative text-center">
+          {steps.map((s, i) => (
+            <li
+              key={s.n}
+              className="reveal group relative text-center"
+              style={{ ["--reveal-offset" as string]: `${i * 5}%` }}
+            >
               <span className="relative z-[2] mx-auto mb-6.5 grid h-20 w-20 place-items-center rounded-full border-2 border-mist bg-white font-display text-[26px] font-bold text-brand-dark transition group-hover:scale-105 group-hover:border-brand group-hover:bg-brand group-hover:text-white">
                 {s.n}
               </span>

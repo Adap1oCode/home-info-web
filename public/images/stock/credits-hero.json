@@ -1,14 +1,40 @@
 {
   "note": "Pexels licence: free to use, attribution appreciated but not required. Recorded here so the source of every photograph on the site is traceable.",
+  "rule": "These are the client moment, not our staff. See the scope rule in scripts/fetch-stock.mjs.",
+  "built": "Cropped to 900x900 by scripts/build-hero-images.mjs. Sources stay full size in this directory.",
+  "used_on": "Homepage hero roundel, cycled by CSS. Order is config/site.ts heroPhotos.",
   "images": [
     {
-      "file": "public/images/hero-buyers.jpg",
+      "file": "public/images/hero/keys-on-the-floor.jpg",
+      "source_file": "public/images/hero-buyers.jpg",
       "photographer": "Vitaly Gariev",
       "photographer_url": "https://www.pexels.com/@silverkblack",
       "source": "https://www.pexels.com/photo/happy-couple-enjoying-new-home-with-keys-36729696/",
-      "used_on": "Homepage hero roundel",
-      "temporary": true,
-      "why": "Placeholder while real photography is commissioned. See scripts/fetch-stock.mjs for the standing rule this departs from."
+      "query": null
+    },
+    {
+      "file": "public/images/hero/child-in-the-box.jpg",
+      "source_file": "public/images/stock/family-boxes.jpg",
+      "photographer": "cottonbro studio",
+      "photographer_url": "https://www.pexels.com/@cottonbro",
+      "source": "https://www.pexels.com/photo/woman-in-white-long-sleeve-shirt-sitting-beside-woman-in-white-long-sleeve-shirt-4569303/",
+      "query": "family moving house cardboard boxes"
+    },
+    {
+      "file": "public/images/hero/unpacking-together.jpg",
+      "source_file": "public/images/stock/family-kitchen.jpg",
+      "photographer": "MART  PRODUCTION",
+      "photographer_url": "https://www.pexels.com/@mart-production",
+      "source": "https://www.pexels.com/photo/girl-happy-seeing-the-gift-from-her-parents-8434754/",
+      "query": "family unpacking new home smiling"
+    },
+    {
+      "file": "public/images/hero/first-night-in.jpg",
+      "source_file": "public/images/stock/couple-boxes.jpg",
+      "photographer": "cottonbro studio",
+      "photographer_url": "https://www.pexels.com/@cottonbro",
+      "source": "https://www.pexels.com/photo/man-in-gray-long-sleeve-shirt-sitting-beside-woman-in-white-long-sleeve-shirt-4554240/",
+      "query": "moving day boxes living room"
     }
   ]
 }
